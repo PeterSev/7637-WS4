@@ -71,6 +71,12 @@
     <Compile Include="frmBPPP_Test.Designer.cs">
       <DependentUpon>frmBPPP_Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBU.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU.Designer.cs">
+      <DependentUpon>frmBU.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmBZ_Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBPPP_Test.resx">
       <DependentUpon>frmBPPP_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU.resx">
+      <DependentUpon>frmBU.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBZ_Help.resx">
       <DependentUpon>frmBZ_Help.cs</DependentUpon>

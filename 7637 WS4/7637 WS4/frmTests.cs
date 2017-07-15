@@ -154,5 +154,11 @@ namespace _7637_WS4
             this.Hide();
             _frmMain._frmPP_Help.Show();
         }
+
+        private void btnBU_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            _frmMain._frmBU.Show();
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace _7637_WS4
         public frmPP_InnerHelp _frmPP_InnerHelp;
         public frmPP_Test _frmPP_Test;
         public frmPP_Report _frmPP_Report;
+        public frmBU _frmBU;
 
 
         string listBoardsFileName = "bin\\ListBoards.xml";
@@ -77,11 +78,12 @@ namespace _7637_WS4
             _frmPP_InnerHelp = new frmPP_InnerHelp();
             _frmPP_Test = new frmPP_Test();
             _frmPP_Report = new frmPP_Report();
+            _frmBU = new frmBU();
 
             _frmTests._frmMain = _frmBZ_Help._frmMain = _frmBZ_Test._frmMain = _frmBZ_Report._frmMain = 
                 _frmBPPP._frmMain = _frmBPPP_Help._frmMain = _frmBPPP_Test._frmMain = _frmBPPP_Report._frmMain =
                 _frmPP_Help._frmMain = _frmPP._frmMain = _frmPP_InnerHelp._frmMain = _frmPP_Test._frmMain = 
-                _frmPP_Report._frmMain =  this;
+                _frmPP_Report._frmMain = _frmBU._frmMain =  this;
         }
 
         void ShowBoards(List<Board> list)

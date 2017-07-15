@@ -130,6 +130,7 @@
             this.btnBU.Size = new System.Drawing.Size(400, 260);
             this.btnBU.TabIndex = 1;
             this.btnBU.UseVisualStyleBackColor = true;
+            this.btnBU.Click += new System.EventHandler(this.btnBU_Click);
             this.btnBU.Enter += new System.EventHandler(this.btn_MouseEnter);
             this.btnBU.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
             // 
