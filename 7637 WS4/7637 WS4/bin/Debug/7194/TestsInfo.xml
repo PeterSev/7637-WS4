@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TESTS>
+	<TEST NAME = "БЗ">
+		<IMAGELINK>pict_BZ.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описание БЗ</COMMENT>
+	</TEST>
+	<TEST NAME = "БУ">
+		<IMAGELINK>pict_BU.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описание БУ</COMMENT>
+	</TEST>
+	<TEST NAME = "БППП">
+		<IMAGELINK>pict_BPPP.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описание БППП</COMMENT>
+	</TEST>
+	<TEST NAME = "ПП">
+		<IMAGELINK>pict_PP.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описание ПП</COMMENT>
+	</TEST>
+</TESTS>

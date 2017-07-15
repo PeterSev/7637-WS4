@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TESTS>
+	<TEST NAME = "БЗ">
+		<IMAGELINK>Pict1.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описание БЗ</COMMENT>
+	</TEST>
+	<TEST NAME = "БУ">
+		<IMAGELINK>Pict2.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описание БУ</COMMENT>
+	</TEST>
+	<TEST NAME = "БППП">
+		<IMAGELINK>Pict3.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описание БППП</COMMENT>
+	</TEST>
+	
+</TESTS>
