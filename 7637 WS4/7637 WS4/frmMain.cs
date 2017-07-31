@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExcelLib;
 
 namespace _7637_WS4
 {
@@ -42,6 +43,8 @@ namespace _7637_WS4
         public frmMain()
         {
             InitializeComponent();
+            var r = ExcelLib.Excel.ParseEx(@"D:\WORK\7637_тест файлы\тесты готово\7194\1_ и 2.xls");
+
         }
 
         void Init()
