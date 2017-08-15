@@ -44,7 +44,6 @@ namespace _7637_WS4
         {
             InitializeComponent();
             var r = ExcelLib.Excel.ParseEx(@"D:\WORK\7637_тест файлы\тесты готово\7194\1_ и 2.xls");
-
         }
 
         void Init()
@@ -61,6 +60,7 @@ namespace _7637_WS4
 
                 this.BackColor = Color.RoyalBlue;
                 txtComment.BackColor = Color.LightBlue;
+                //Hello
             }
             else
             {
