@@ -31,6 +31,14 @@ namespace _7637_WS4
         public frmPP_Test _frmPP_Test;
         public frmPP_Report _frmPP_Report;
         public frmBU _frmBU;
+        public frmBU_Prozv_Help _frmBU_Prozv_Help;
+        public frmBU_Prozv_Mode _frmBU_Prozv_Mode;
+        public frmBU_Prozv_Test _frmBU_Prozv_Test;
+        public frmBU_Prozv_Report _frmBU_Prozv_Report;
+        public frmBU_Ind_Help _frmBU_Ind_Help;
+        public frmBU_Ind_Test _frmBU_Ind_Test;
+        public frmBU_Osc_Help _frmBU_Osc_Help;
+        public frmBU_Osc_Test _frmBU_Osc_Test;
 
 
         string listBoardsFileName = "bin\\ListBoards.xml";
@@ -43,7 +51,7 @@ namespace _7637_WS4
         public frmMain()
         {
             InitializeComponent();
-            var r = ExcelLib.Excel.ParseEx(@"D:\WORK\7637_тест файлы\тесты готово\7194\1_ и 2.xls");
+            //var r = ExcelLib.Excel.ParseEx(@"D:\WORK\7637_тест файлы\тесты готово\7194\1_ и 2.xls");
         }
 
         void Init()
@@ -82,11 +90,21 @@ namespace _7637_WS4
             _frmPP_Test = new frmPP_Test();
             _frmPP_Report = new frmPP_Report();
             _frmBU = new frmBU();
+            _frmBU_Prozv_Help = new frmBU_Prozv_Help();
+            _frmBU_Prozv_Mode = new frmBU_Prozv_Mode();
+            _frmBU_Prozv_Report = new frmBU_Prozv_Report();
+            _frmBU_Prozv_Test = new frmBU_Prozv_Test();
+            _frmBU_Ind_Help = new frmBU_Ind_Help();
+            _frmBU_Ind_Test = new frmBU_Ind_Test();
+            _frmBU_Osc_Help = new frmBU_Osc_Help();
+            _frmBU_Osc_Test = new frmBU_Osc_Test();
 
             _frmTests._frmMain = _frmBZ_Help._frmMain = _frmBZ_Test._frmMain = _frmBZ_Report._frmMain = 
                 _frmBPPP._frmMain = _frmBPPP_Help._frmMain = _frmBPPP_Test._frmMain = _frmBPPP_Report._frmMain =
                 _frmPP_Help._frmMain = _frmPP._frmMain = _frmPP_InnerHelp._frmMain = _frmPP_Test._frmMain = 
-                _frmPP_Report._frmMain = _frmBU._frmMain =  this;
+                _frmPP_Report._frmMain = _frmBU._frmMain = _frmBU_Prozv_Help._frmMain = _frmBU_Prozv_Mode._frmMain = 
+                _frmBU_Prozv_Report._frmMain = _frmBU_Prozv_Test._frmMain = _frmBU_Ind_Help._frmMain = _frmBU_Ind_Test._frmMain = 
+                _frmBU_Osc_Help._frmMain = _frmBU_Osc_Test._frmMain = this;
         }
 
         void ShowBoards(List<Board> list)

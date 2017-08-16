@@ -30,9 +30,9 @@
         {
             this.txtComment = new System.Windows.Forms.TextBox();
             this.pict = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnProzvonka = new System.Windows.Forms.Button();
+            this.btnIndic = new System.Windows.Forms.Button();
+            this.btnOscill = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pict)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,44 +56,47 @@
             this.pict.TabIndex = 15;
             this.pict.TabStop = false;
             // 
-            // button1
+            // btnProzvonka
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(300, 230);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Прозвонка";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnProzvonka.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnProzvonka.Location = new System.Drawing.Point(12, 12);
+            this.btnProzvonka.Name = "btnProzvonka";
+            this.btnProzvonka.Size = new System.Drawing.Size(300, 230);
+            this.btnProzvonka.TabIndex = 17;
+            this.btnProzvonka.Text = "Прозвонка";
+            this.btnProzvonka.UseVisualStyleBackColor = true;
+            this.btnProzvonka.Click += new System.EventHandler(this.btnProzvonka_Click);
             // 
-            // button2
+            // btnIndic
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(12, 248);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(300, 230);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "Индикация";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnIndic.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnIndic.Location = new System.Drawing.Point(12, 248);
+            this.btnIndic.Name = "btnIndic";
+            this.btnIndic.Size = new System.Drawing.Size(300, 230);
+            this.btnIndic.TabIndex = 17;
+            this.btnIndic.Text = "Индикация";
+            this.btnIndic.UseVisualStyleBackColor = true;
+            this.btnIndic.Click += new System.EventHandler(this.btnIndic_Click);
             // 
-            // button3
+            // btnOscill
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(12, 484);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(300, 230);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "Осциллограф";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnOscill.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnOscill.Location = new System.Drawing.Point(12, 484);
+            this.btnOscill.Name = "btnOscill";
+            this.btnOscill.Size = new System.Drawing.Size(300, 230);
+            this.btnOscill.TabIndex = 17;
+            this.btnOscill.Text = "Осциллограф";
+            this.btnOscill.UseVisualStyleBackColor = true;
+            this.btnOscill.Click += new System.EventHandler(this.btnOscill_Click);
             // 
             // frmBU
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1136, 721);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnOscill);
+            this.Controls.Add(this.btnIndic);
+            this.Controls.Add(this.btnProzvonka);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.pict);
             this.MaximizeBox = false;
@@ -112,8 +115,8 @@
 
         private System.Windows.Forms.TextBox txtComment;
         private System.Windows.Forms.PictureBox pict;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnProzvonka;
+        private System.Windows.Forms.Button btnIndic;
+        private System.Windows.Forms.Button btnOscill;
     }
 }

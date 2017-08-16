@@ -58,5 +58,23 @@ namespace _7637_WS4
             this.Hide();
             _frmMain._frmTests.Show();
         }
+
+        private void btnProzvonka_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            _frmMain._frmBU_Prozv_Help.Show();
+        }
+
+        private void btnIndic_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            _frmMain._frmBU_Ind_Help.Show();
+        }
+
+        private void btnOscill_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            _frmMain._frmBU_Osc_Help.Show();
+        }
     }
 }

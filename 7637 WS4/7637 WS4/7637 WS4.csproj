@@ -81,6 +81,54 @@
     <Compile Include="frmBU.Designer.cs">
       <DependentUpon>frmBU.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBU_Ind_Help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Ind_Help.Designer.cs">
+      <DependentUpon>frmBU_Ind_Help.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Ind_Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Ind_Test.Designer.cs">
+      <DependentUpon>frmBU_Ind_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Osc_Help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Osc_Help.Designer.cs">
+      <DependentUpon>frmBU_Osc_Help.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Osc_Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Osc_Test.Designer.cs">
+      <DependentUpon>frmBU_Osc_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Prozv_Help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Prozv_Help.Designer.cs">
+      <DependentUpon>frmBU_Prozv_Help.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Prozv_Mode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Prozv_Mode.Designer.cs">
+      <DependentUpon>frmBU_Prozv_Mode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Prozv_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Prozv_Report.Designer.cs">
+      <DependentUpon>frmBU_Prozv_Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Prozv_Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Prozv_Test.Designer.cs">
+      <DependentUpon>frmBU_Prozv_Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmBZ_Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +213,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBU.resx">
       <DependentUpon>frmBU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Ind_Help.resx">
+      <DependentUpon>frmBU_Ind_Help.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Ind_Test.resx">
+      <DependentUpon>frmBU_Ind_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Osc_Help.resx">
+      <DependentUpon>frmBU_Osc_Help.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Osc_Test.resx">
+      <DependentUpon>frmBU_Osc_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Prozv_Help.resx">
+      <DependentUpon>frmBU_Prozv_Help.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Prozv_Mode.resx">
+      <DependentUpon>frmBU_Prozv_Mode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Prozv_Report.resx">
+      <DependentUpon>frmBU_Prozv_Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Prozv_Test.resx">
+      <DependentUpon>frmBU_Prozv_Test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBZ_Help.resx">
       <DependentUpon>frmBZ_Help.cs</DependentUpon>

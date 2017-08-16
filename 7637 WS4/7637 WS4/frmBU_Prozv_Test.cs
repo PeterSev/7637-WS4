@@ -10,13 +10,15 @@ using System.Windows.Forms;
 
 namespace _7637_WS4
 {
-    public partial class frmBPPP : Form
+    public partial class frmBU_Prozv_Test : Form
     {
         public frmMain _frmMain;
         bool bNeedReload = true;
+        string listBUProzvTest = "BU_Prozv_test.xls";
+        string catalog = string.Empty;
         Board curBoard = null;
 
-        public frmBPPP()
+        public frmBU_Prozv_Test()
         {
             InitializeComponent();
         }
@@ -25,29 +27,28 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
+            catalog = curBoard.Catalog + "/BU/";
 
-            this.Text = curBoard.Name + " БППП";
+            this.Text = curBoard.Name + " БУ. Прозвонка. Тесты";
             this.BackColor = Color.RoyalBlue;
         }
 
-        private void frmBPPP_Activated(object sender, EventArgs e)
+        private void frmBZ_Test_Activated(object sender, EventArgs e)
         {
             if (bNeedReload)
                 Init();
         }
-
-        private void frmBPPP_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmBZ_Test_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             bNeedReload = true;
             this.Hide();
-            _frmMain._frmTests.Show();
+            _frmMain._frmBU_Prozv_Mode.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnShowReport_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            _frmMain._frmBPPP_Help.Show();
+            _frmMain._frmBU_Prozv_Report.Show();
         }
     }
 }

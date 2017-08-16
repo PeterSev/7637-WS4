@@ -10,13 +10,15 @@ using System.Windows.Forms;
 
 namespace _7637_WS4
 {
-    public partial class frmBPPP : Form
+    public partial class frmBU_Ind_Test : Form
     {
         public frmMain _frmMain;
         bool bNeedReload = true;
+        string listBUIndTest = "BU_Ind_test.xls";
+        string catalog = string.Empty;
         Board curBoard = null;
 
-        public frmBPPP()
+        public frmBU_Ind_Test()
         {
             InitializeComponent();
         }
@@ -25,29 +27,24 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
+            catalog = curBoard.Catalog + "/BU/";
 
-            this.Text = curBoard.Name + " БППП";
+            this.Text = curBoard.Name + " БУ. Индикация. Тесты";
             this.BackColor = Color.RoyalBlue;
         }
 
-        private void frmBPPP_Activated(object sender, EventArgs e)
+        private void frmBU_Ind_Tests_Activated(object sender, EventArgs e)
         {
             if (bNeedReload)
                 Init();
         }
 
-        private void frmBPPP_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmBU_Ind_Tests_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             bNeedReload = true;
             this.Hide();
-            _frmMain._frmTests.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            _frmMain._frmBPPP_Help.Show();
+            _frmMain._frmBU.Show();
         }
     }
 }

@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace _7637_WS4
 {
-    public partial class frmBPPP : Form
+    public partial class frmBU_Prozv_Mode : Form
     {
         public frmMain _frmMain;
         bool bNeedReload = true;
         Board curBoard = null;
 
-        public frmBPPP()
+        public frmBU_Prozv_Mode()
         {
             InitializeComponent();
         }
@@ -26,7 +26,7 @@ namespace _7637_WS4
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
 
-            this.Text = curBoard.Name + " БППП";
+            this.Text = curBoard.Name + " БУ. Прозвонка. Выбор режима проверки";
             this.BackColor = Color.RoyalBlue;
         }
 
@@ -41,13 +41,13 @@ namespace _7637_WS4
             e.Cancel = true;
             bNeedReload = true;
             this.Hide();
-            _frmMain._frmTests.Show();
+            _frmMain._frmBU.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnObryv_Click(object sender, EventArgs e)
         {
             this.Hide();
-            _frmMain._frmBPPP_Help.Show();
+            _frmMain._frmBU_Prozv_Test.Show();
         }
     }
 }

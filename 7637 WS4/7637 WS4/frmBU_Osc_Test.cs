@@ -10,13 +10,15 @@ using System.Windows.Forms;
 
 namespace _7637_WS4
 {
-    public partial class frmBPPP : Form
+    public partial class frmBU_Osc_Test : Form
     {
         public frmMain _frmMain;
         bool bNeedReload = true;
+        string listBUOscTest = "BU_Osc_test.xls";
+        string catalog = string.Empty;
         Board curBoard = null;
 
-        public frmBPPP()
+        public frmBU_Osc_Test()
         {
             InitializeComponent();
         }
@@ -25,29 +27,24 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
+            catalog = curBoard.Catalog + "/BU/";
 
-            this.Text = curBoard.Name + " БППП";
+            this.Text = curBoard.Name + " БУ. Осциллограф. Тесты";
             this.BackColor = Color.RoyalBlue;
         }
 
-        private void frmBPPP_Activated(object sender, EventArgs e)
-        {
-            if (bNeedReload)
-                Init();
-        }
-
-        private void frmBPPP_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmBU_Osc_Test_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             bNeedReload = true;
             this.Hide();
-            _frmMain._frmTests.Show();
+            _frmMain._frmBU.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void frmBU_Osc_Test_Activated(object sender, EventArgs e)
         {
-            this.Hide();
-            _frmMain._frmBPPP_Help.Show();
+            if (bNeedReload)
+                Init();
         }
     }
 }
