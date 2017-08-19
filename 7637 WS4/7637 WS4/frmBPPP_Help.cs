@@ -41,7 +41,6 @@ namespace _7637_WS4
             if (Utils.isFileExist(catalog + listHelpFilename))
             {
                 listHelp = XMLParser.OpenListBZHelp(catalog + listHelpFilename);
-                //ShowHelp(indexPic);
             }
             else
             {
@@ -111,8 +110,6 @@ namespace _7637_WS4
             bNeedReload = true;
             this.Hide();
             _frmMain._frmBPPP_Test.Show();
-            
-
         }
     }
 }

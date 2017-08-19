@@ -37,7 +37,7 @@ namespace _7637_WS4
 
             listBpppBoards = null;
             catalog = curBoard.Catalog + "/BPPP/";
-            
+            panel.Controls.Clear();
 
             if(Utils.isFileExist(catalog + listBpppBoardsFileName))
             {
@@ -136,6 +136,7 @@ namespace _7637_WS4
         {
             e.Cancel = true;
             bNeedReload = true;
+            curBpppBoard = null;
             this.Hide();
             _frmMain._frmTests.Show();
         }
