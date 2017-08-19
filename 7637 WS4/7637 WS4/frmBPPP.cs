@@ -15,6 +15,10 @@ namespace _7637_WS4
         public frmMain _frmMain;
         bool bNeedReload = true;
         Board curBoard = null;
+        List<Board> listBpppBoards = new List<Board>();
+        public Board curBpppBoard = null;
+        string catalog = string.Empty;
+        string listBpppBoardsFileName = "listBpppBoards.xml";
 
         public frmBPPP()
         {
@@ -25,9 +29,101 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
+            grpBoards.ForeColor = Color.White;
 
             this.Text = curBoard.Name + " БППП";
             this.BackColor = Color.RoyalBlue;
+            txtComment.BackColor = Color.LightBlue;
+
+            listBpppBoards = null;
+            catalog = curBoard.Catalog + "/BPPP/";
+            
+
+            if(Utils.isFileExist(catalog + listBpppBoardsFileName))
+            {
+                listBpppBoards = XMLParser.OpenListBoards(catalog + listBpppBoardsFileName);
+                pict.SizeMode = PictureBoxSizeMode.StretchImage;
+                pict.Image = Properties.Resources.ListBpppBoardInitmage;
+                txtComment.Text = Properties.Resources.comment_ListBpppBoards_Initial;
+
+                ShowBoards(listBpppBoards);
+            }
+            else
+            {
+                MessageBox.Show("Список плат " + listBpppBoardsFileName + " не найден!", "Ошибка");
+            }
+        }
+
+        void ShowBoards(List<Board> list)
+        {
+            panel.Controls.Clear();
+            panel.SuspendLayout();
+
+            for(int i = 0; i < list.Count; i++)
+            {
+                Button btn = new Button();
+                string name = list[i].Name;
+                if (name.Length > 20) name = name.Substring(0, 20) + "..";
+                btn.Text = name;
+
+                btn.Name = "btn" + i.ToString();
+                btn.Click += Btn_Click;
+                btn.MouseEnter += Btn_MouseEnter;
+                btn.MouseLeave += Btn_MouseLeave;
+                btn.MouseHover += Btn_MouseHover;
+                btn.Enter += Btn_MouseEnter;
+                btn.Leave += Btn_MouseLeave;
+                btn.Font = new Font("Verdana", 16);
+                btn.Left = 10;
+                btn.Top = i * 50 + 0;
+                btn.Height = 42;
+                btn.Width = 280;
+
+                panel.Controls.Add(btn);
+            }
+
+            panel.ResumeLayout();
+        }
+
+        private void Btn_MouseHover(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int index = int.Parse(btn.Name.Substring(3, btn.Name.Length - 3));
+            tip.SetToolTip(btn, listBpppBoards[index].Name);
+        }
+
+        private void Btn_MouseLeave(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.RoyalBlue;
+            btn.ForeColor = Color.White;
+            pict.Image = Properties.Resources.ListBpppBoardInitmage;
+
+            txtComment.Text = Properties.Resources.comment_ListBpppBoards_Initial;
+        }
+
+        private void Btn_MouseEnter(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int index = int.Parse(btn.Name.Substring(3, btn.Name.Length - 3));
+            txtComment.Text = listBpppBoards[index].Comment;
+            btn.BackColor = Color.LightBlue;
+            btn.ForeColor = Color.Black;
+
+            string filename = catalog + listBpppBoards[index].Catalog + "/" + listBpppBoards[index].Imagelink;
+            if (Utils.isFileExist(filename))
+                pict.Image = Image.FromFile(filename);
+            else
+                pict.Image = Properties.Resources.pictLoadError;
+        }
+
+        private void Btn_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int index = int.Parse(btn.Name.Substring(3, btn.Name.Length - 3));
+            curBpppBoard = listBpppBoards[index];
+            this.Hide();
+            _frmMain._frmBPPP_Help.Show();
         }
 
         private void frmBPPP_Activated(object sender, EventArgs e)
@@ -42,12 +138,6 @@ namespace _7637_WS4
             bNeedReload = true;
             this.Hide();
             _frmMain._frmTests.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            _frmMain._frmBPPP_Help.Show();
         }
     }
 }

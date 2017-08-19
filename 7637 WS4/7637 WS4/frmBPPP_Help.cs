@@ -17,7 +17,7 @@ namespace _7637_WS4
         bool bNeedReload = true;
         List<Help> listHelp = null;
         int indexPic = 0;
-        string listHelpFilename = "BPPP_help.xml";
+        string listHelpFilename = "help.xml";
         string catalog = string.Empty;
 
         public frmBPPP_Help()
@@ -30,10 +30,11 @@ namespace _7637_WS4
             curBoard = _frmMain.curBoard;
             indexPic = 0;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
-            catalog = curBoard.Catalog + "/BPPP/";
+
+            catalog = curBoard.Catalog + "/BPPP/" + _frmMain._frmBPPP.curBpppBoard.Name + "/Help/";
             btnOK.Visible = false;
             listHelp = null;
-            this.Text = curBoard.Name + "БППП";
+            this.Text = curBoard.Name + " БППП. " + "Плата " + _frmMain._frmBPPP.curBpppBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 

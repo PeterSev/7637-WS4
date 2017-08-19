@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BOARDS>
+	<BOARD NAME="TestBOARD001">
+		<CATALOG>TestBOARD001</CATALOG>
+		<IMAGELINK>TestBOARD001.jpg</IMAGELINK>
+		<COMMENT>Первый комментарий</COMMENT>
+	</BOARD>
+	<BOARD NAME="TestBOARD002">
+		<CATALOG>TestBOARD002</CATALOG>
+		<IMAGELINK>TestBOARD002.jpg</IMAGELINK>
+		<COMMENT>Второй комментарий</COMMENT>
+	</BOARD>
+</BOARDS>

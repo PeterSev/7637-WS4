@@ -97,6 +97,15 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Слева выберите плату для проверки.
+        /// </summary>
+        internal static string comment_ListBpppBoards_Initial {
+            get {
+                return ResourceManager.GetString("comment_ListBpppBoards_Initial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Описание прозвонки плат.
         /// </summary>
         internal static string comment_PP {
@@ -111,6 +120,16 @@ namespace _7637_WS4.Properties {
         internal static System.Drawing.Bitmap ListBoardsInitImage {
             get {
                 object obj = ResourceManager.GetObject("ListBoardsInitImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ListBpppBoardInitmage {
+            get {
+                object obj = ResourceManager.GetObject("ListBpppBoardInitmage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
