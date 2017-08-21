@@ -166,6 +166,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmTests";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tests";
             this.Activated += new System.EventHandler(this.frmTests_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmTests_FormClosing);

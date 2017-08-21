@@ -66,110 +66,6 @@ namespace _7637_WS4
 
         }
 
-       /* #region Методы и функции, описывающие работу с источником питания DC
-
-        /// <summary>
-        /// Инициализация источника питания
-        /// </summary>
-        void InitDC()
-        {
-            try
-            {
-                iviDCPower = IviDCPwr.Create(DC_DeviceName, true, true);
-                ConfigureChannelName();
-                ConfigureCurrentlimitBehavior();
-                txtDCStatus.Text = "SUCCESS";
-
-                
-                thr = new Thread(updateDCProcessing);
-                thr.Start();
-            }
-            catch(Exception ex)
-            {
-                txtDCStatus.Text = ex.Message;
-            }
-        }
-
-        private void updateDCProcessing()
-        {
-            while (!bNeedExit)
-            {
-                if (bNeedUpdate)
-                {
-                    UpdateIVIDCPwrOutput();
-                    bNeedUpdate = false;
-                }
-                Thread.Sleep(100);
-            }
-        }
-
-        void UpdateIVIDCPwrOutput()
-        {
-            if (iviDCPower == null) return;
-
-            try
-            {
-                BeginInvoke((MethodInvoker)delegate
-                {
-                    //конфигурация и запуск источника питания
-                    curDCChannel = listDCChannels[0];
-                    iviDCPower.Outputs[curDCChannel].ConfigureCurrentLimit(curLimitBehavior, curLimit);
-                    iviDCPower.Outputs[curDCChannel].VoltageLevel = voltageLevel;
-
-                    iviDCPower.Outputs[curDCChannel].Enabled = true; //непосредственный запуск
-                });
-            }
-            catch(Exception ex)
-            {
-                txtDCStatus.Text = ex.Message;
-            }
-        }
-
-        void ConfigureChannelName()
-        {
-            listDCChannels.Clear();
-            foreach (IIviDCPwrOutput channel in iviDCPower.Outputs)
-            {
-                listDCChannels.Add(channel.Name);
-            }
-        }
-
-        void ConfigureCurrentlimitBehavior()
-        {
-            listDCCurLimitBehaviour.Clear();
-            foreach (CurrentLimitBehavior item in Enum.GetValues(typeof(CurrentLimitBehavior)))
-            {
-                listDCCurLimitBehaviour.Add(item);
-            }
-        }
-
-        void CloseDCIVISession()
-        {
-            bNeedExit = true;
-            if (iviDCPower != null)
-            {
-                try
-                {
-                    iviDCPower.Outputs[curDCChannel].Enabled = false;
-                    iviDCPower.Close();
-                    iviDCPower = null;
-                }
-                catch(Exception ex)
-                {
-                    txtDCStatus.Text = ex.Message;
-                }
-            }
-        }
-        #endregion*/
-
-
-
-
-
-
-
-
-
         public frmBPPP_Test()
         {
             InitializeComponent();
@@ -203,6 +99,16 @@ namespace _7637_WS4
         private void button2_Click(object sender, EventArgs e)
         {
             _frmMain.niControl.DCSetOnOff("1", 3.3, true);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            _frmMain.niControl.DCSetOnOff("0", 2.2, false);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            _frmMain.niControl.DCSetOnOff("1", 3.3, false);
         }
     }
 }

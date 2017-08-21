@@ -129,6 +129,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBPPP_Help";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmBPPP_Help";
             this.Activated += new System.EventHandler(this.frmBPPP_Help_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBPPP_Help_FormClosing);

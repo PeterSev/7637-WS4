@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblV1 = new System.Windows.Forms.Label();
-            this.lblV2 = new System.Windows.Forms.Label();
-            this.ind2 = new System.Windows.Forms.Button();
-            this.ind1 = new System.Windows.Forms.Button();
-            this.txtDCStatus = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.txtDCWarning = new System.Windows.Forms.TextBox();
+            this.txtDCStatus = new System.Windows.Forms.TextBox();
+            this.ind1 = new System.Windows.Forms.Button();
+            this.ind2 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblV2 = new System.Windows.Forms.Label();
+            this.lblV1 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,55 +56,28 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(228, 346);
+            this.groupBox1.Size = new System.Drawing.Size(228, 302);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Источник питания DC";
             // 
-            // label1
+            // txtDCWarning
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 33);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Канал 1";
+            this.txtDCWarning.Location = new System.Drawing.Point(9, 212);
+            this.txtDCWarning.Multiline = true;
+            this.txtDCWarning.Name = "txtDCWarning";
+            this.txtDCWarning.ReadOnly = true;
+            this.txtDCWarning.Size = new System.Drawing.Size(207, 76);
+            this.txtDCWarning.TabIndex = 2;
             // 
-            // label2
+            // txtDCStatus
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 85);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Канал 2";
-            // 
-            // lblV1
-            // 
-            this.lblV1.AutoSize = true;
-            this.lblV1.Location = new System.Drawing.Point(83, 33);
-            this.lblV1.Name = "lblV1";
-            this.lblV1.Size = new System.Drawing.Size(20, 13);
-            this.lblV1.TabIndex = 0;
-            this.lblV1.Text = "V: ";
-            // 
-            // lblV2
-            // 
-            this.lblV2.AutoSize = true;
-            this.lblV2.Location = new System.Drawing.Point(83, 85);
-            this.lblV2.Name = "lblV2";
-            this.lblV2.Size = new System.Drawing.Size(20, 13);
-            this.lblV2.TabIndex = 0;
-            this.lblV2.Text = "V: ";
-            // 
-            // ind2
-            // 
-            this.ind2.Enabled = false;
-            this.ind2.Location = new System.Drawing.Point(191, 79);
-            this.ind2.Name = "ind2";
-            this.ind2.Size = new System.Drawing.Size(25, 25);
-            this.ind2.TabIndex = 1;
-            this.ind2.UseVisualStyleBackColor = true;
+            this.txtDCStatus.Location = new System.Drawing.Point(9, 103);
+            this.txtDCStatus.Multiline = true;
+            this.txtDCStatus.Name = "txtDCStatus";
+            this.txtDCStatus.ReadOnly = true;
+            this.txtDCStatus.Size = new System.Drawing.Size(207, 76);
+            this.txtDCStatus.TabIndex = 2;
             // 
             // ind1
             // 
@@ -115,53 +88,82 @@
             this.ind1.TabIndex = 1;
             this.ind1.UseVisualStyleBackColor = true;
             // 
-            // txtDCStatus
+            // ind2
             // 
-            this.txtDCStatus.Location = new System.Drawing.Point(9, 149);
-            this.txtDCStatus.Multiline = true;
-            this.txtDCStatus.Name = "txtDCStatus";
-            this.txtDCStatus.ReadOnly = true;
-            this.txtDCStatus.Size = new System.Drawing.Size(207, 76);
-            this.txtDCStatus.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 133);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Статус";
+            this.ind2.Enabled = false;
+            this.ind2.Location = new System.Drawing.Point(191, 58);
+            this.ind2.Name = "ind2";
+            this.ind2.Size = new System.Drawing.Size(25, 25);
+            this.ind2.TabIndex = 1;
+            this.ind2.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 242);
+            this.label4.Location = new System.Drawing.Point(6, 196);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 13);
             this.label4.TabIndex = 0;
             this.label4.Text = "Warning";
             // 
-            // txtDCWarning
+            // label3
             // 
-            this.txtDCWarning.Location = new System.Drawing.Point(9, 258);
-            this.txtDCWarning.Multiline = true;
-            this.txtDCWarning.Name = "txtDCWarning";
-            this.txtDCWarning.ReadOnly = true;
-            this.txtDCWarning.Size = new System.Drawing.Size(207, 76);
-            this.txtDCWarning.TabIndex = 2;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 87);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Статус";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Канал 2";
+            // 
+            // lblV2
+            // 
+            this.lblV2.AutoSize = true;
+            this.lblV2.Location = new System.Drawing.Point(83, 64);
+            this.lblV2.Name = "lblV2";
+            this.lblV2.Size = new System.Drawing.Size(20, 13);
+            this.lblV2.TabIndex = 0;
+            this.lblV2.Text = "V: ";
+            // 
+            // lblV1
+            // 
+            this.lblV1.AutoSize = true;
+            this.lblV1.Location = new System.Drawing.Point(83, 33);
+            this.lblV1.Name = "lblV1";
+            this.lblV1.Size = new System.Drawing.Size(20, 13);
+            this.lblV1.TabIndex = 0;
+            this.lblV1.Text = "V: ";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 33);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Канал 1";
             // 
             // frmNI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(683, 406);
+            this.ClientSize = new System.Drawing.Size(683, 324);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmNI";
             this.Text = "Текущее состояние устройств NI";
+            this.Activated += new System.EventHandler(this.frmNI_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmNI_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

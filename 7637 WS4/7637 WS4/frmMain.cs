@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelLib;
+using System.Threading;
 
 namespace _7637_WS4
 {
@@ -112,9 +113,9 @@ namespace _7637_WS4
                 _frmBU_Osc_Help._frmMain = _frmBU_Osc_Test._frmMain = _frmNI._frmMain = this;
 
             niControl = new NIControl();
-            niControl.statusUpdate += _frmNI.NiControl_statusUpdate;
+            /*niControl.statusUpdate += _frmNI.NiControl_statusUpdate;
             niControl.warningUpdate += _frmNI.NiControl_warningUpdate;
-            niControl.updateStateDC += _frmNI.NiControl_updateStateDC;
+            niControl.updateStateDC += _frmNI.NiControl_updateStateDC;*/
             _frmNI.Show();
         }
 
@@ -207,7 +208,16 @@ namespace _7637_WS4
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _frmNI.Close();
+            Thread.Sleep(200);
             niControl.CloseDCIVISession();
+            
+            
+        }
+
+        private void frmMain_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            _frmNI.Show();
         }
     }
 }

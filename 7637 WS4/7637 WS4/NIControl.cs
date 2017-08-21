@@ -47,6 +47,7 @@ namespace _7637_WS4
                 statusUpdate("SUCCESS");
                 bOnOff = true;
                 bInitialized = true;
+                
 
                 thrDC = new Thread(updateDCProcessing);
                 thrDC.Start();
@@ -59,7 +60,7 @@ namespace _7637_WS4
 
         private void DriverOperation_Warning(object sender, Ivi.Driver.WarningEventArgs e)
         {
-            warningUpdate(e.Code.ToString() + " " + e.Text);
+            warningUpdate?.Invoke(e.Code.ToString() + " " + e.Text);
         }
 
         private void updateDCProcessing()
@@ -72,6 +73,8 @@ namespace _7637_WS4
                     bNeedUpdate = false;
                 }
                 Thread.Sleep(100);
+                updateStateDC?.Invoke(new StateDC("0", iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["0"].Enabled));
+                updateStateDC?.Invoke(new StateDC("1", iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["1"].Enabled));
             }
         }
 
@@ -88,11 +91,11 @@ namespace _7637_WS4
 
                 iviDCPower.Outputs[curDCChannel].Enabled = bOnOff; //непосредственный запуск
 
-                updateStateDC(new StateDC(curDCChannel, voltageLevel, bOnOff));
+                //updateStateDC(new StateDC(curDCChannel, iviDCPower.Outputs[curDCChannel].Measure(MeasurementType.Voltage), bOnOff));
             }
             catch (Exception ex)
             {
-                statusUpdate(ex.Message);
+                statusUpdate?.Invoke(ex.Message);
             }
         }
 
@@ -145,7 +148,7 @@ namespace _7637_WS4
                 }
                 catch (Exception ex)
                 {
-                    statusUpdate(ex.Message);
+                    statusUpdate?.Invoke(ex.Message);
                 }
             }
         }
