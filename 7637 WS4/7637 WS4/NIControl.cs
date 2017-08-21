@@ -42,6 +42,8 @@ namespace _7637_WS4
             {
                 iviDCPower = IviDCPwr.Create(DC_DeviceName, true, true);
                 iviDCPower.DriverOperation.Warning += DriverOperation_Warning;
+
+                //iviDCPower.Outputs["0"].OvpEnabled = true;
                 ConfigureChannelName();
                 ConfigureCurrentlimitBehavior();
                 statusUpdate("SUCCESS");
@@ -73,8 +75,8 @@ namespace _7637_WS4
                     bNeedUpdate = false;
                 }
                 Thread.Sleep(100);
-                updateStateDC?.Invoke(new StateDC("0", iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["0"].Enabled));
-                updateStateDC?.Invoke(new StateDC("1", iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["1"].Enabled));
+                updateStateDC?.Invoke(new StateDC("0", iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["0"].Enabled, iviDCPower.Outputs["0"].QueryState(OutputState.OverCurrent)));
+                updateStateDC?.Invoke(new StateDC("1", iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["1"].Enabled, iviDCPower.Outputs["0"].QueryState(OutputState.OverVoltage)));
             }
         }
 
@@ -160,16 +162,19 @@ namespace _7637_WS4
         string _ch;
         double _volt;
         bool _b;
+        bool _bOVP;
 
-        public StateDC(string ch, double volt, bool b)
+        public StateDC(string ch, double volt, bool b, bool bOVP)
         {
             _ch = ch;
             _volt = volt;
             _b = b;
+            _bOVP = bOVP;
         }
 
         public string Ch { get => _ch; }
         public double Volt { get => _volt; }
         public bool B { get => _b; }
+        public bool BOVP { get => _bOVP; }
     }
 }

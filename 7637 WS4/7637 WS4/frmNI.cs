@@ -45,12 +45,18 @@ namespace _7637_WS4
                     lblV1.Text = "V: " + Math.Round(obj.Volt,6).ToString();
                     if (obj.B) ind1.BackColor = Color.LightGreen;
                     else ind1.BackColor = Color.Red;
+
+                    if(obj.BOVP) ind1OVP.BackColor = Color.LightGreen;
+                    else ind1OVP.BackColor = Color.Red;
                 }
                 else
                 {
                     lblV2.Text = "V: " + Math.Round(obj.Volt,6).ToString();
                     if (obj.B) ind2.BackColor = Color.LightGreen;
                     else ind2.BackColor = Color.Red;
+
+                    if (obj.BOVP) ind2OVP.BackColor = Color.LightGreen;
+                    else ind2OVP.BackColor = Color.Red;
                 }
             });
         }
