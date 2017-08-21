@@ -21,8 +21,8 @@ namespace _7637_WS4
         Board curBoard = null;
         BPPPTest[] tests;
 
-        //Переменные для источника питания
-        IIviDCPwr iviDCPower;
+        //Переменные для источника питания. Перемещено в отдельный класс
+        /*IIviDCPwr iviDCPower;
         Thread thr;
         bool bNeedUpdate = false, bNeedExit = false;
         static string DC_DeviceName = "DC";
@@ -30,7 +30,7 @@ namespace _7637_WS4
         double curLimit = 0.02, voltageLevel = 1.0;
         List<string> listDCChannels = new List<string>();
         string curDCChannel = string.Empty;
-        List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();
+        List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();*/
         //--------------------------------
 
 
@@ -52,7 +52,8 @@ namespace _7637_WS4
                 tests = Excel.ParseBPPP(catalog + listBPPPTestFileName);    //открываем список тестов из экселевского файла
                 lblTEstCount.Text = tests.Length.ToString();
 
-                InitDC();
+                //RunTests(tests);
+                
             }
             else
             {
@@ -60,8 +61,12 @@ namespace _7637_WS4
             }
         }
 
+        void RunTests(BPPPTest[] tests)
+        {
 
-        #region Методы и функции, описывающие работу с источником питания DC
+        }
+
+       /* #region Методы и функции, описывающие работу с источником питания DC
 
         /// <summary>
         /// Инициализация источника питания
@@ -155,7 +160,7 @@ namespace _7637_WS4
                 }
             }
         }
-        #endregion
+        #endregion*/
 
 
 
@@ -180,7 +185,7 @@ namespace _7637_WS4
         {
             e.Cancel = true;
             bNeedReload = true;
-            CloseDCIVISession();
+            //CloseDCIVISession();
             this.Hide();
             _frmMain._frmBPPP.Show();
         }
@@ -188,6 +193,16 @@ namespace _7637_WS4
         private void btnShowReport_Click(object sender, EventArgs e)
         {
             _frmMain._frmBPPP_Report.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _frmMain.niControl.DCSetOnOff("0", 2.2, true);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _frmMain.niControl.DCSetOnOff("1", 3.3, true);
         }
     }
 }
