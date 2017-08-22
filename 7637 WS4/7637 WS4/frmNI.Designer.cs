@@ -31,6 +31,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtDCWarning = new System.Windows.Forms.TextBox();
             this.txtDCStatus = new System.Windows.Forms.TextBox();
+            this.ind1OVP = new System.Windows.Forms.Button();
+            this.ind2OVP = new System.Windows.Forms.Button();
             this.ind1 = new System.Windows.Forms.Button();
             this.ind2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -39,13 +41,20 @@
             this.lblV2 = new System.Windows.Forms.Label();
             this.lblV1 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.ind2OVP = new System.Windows.Forms.Button();
-            this.ind1OVP = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lstDMMValues = new System.Windows.Forms.ListBox();
+            this.txtDMMWarning = new System.Windows.Forms.TextBox();
+            this.txtDMMStatus = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtDCWarning);
             this.groupBox1.Controls.Add(this.txtDCStatus);
             this.groupBox1.Controls.Add(this.ind1OVP);
@@ -83,10 +92,28 @@
             this.txtDCStatus.Size = new System.Drawing.Size(239, 76);
             this.txtDCStatus.TabIndex = 2;
             // 
+            // ind1OVP
+            // 
+            this.ind1OVP.Enabled = false;
+            this.ind1OVP.Location = new System.Drawing.Point(207, 27);
+            this.ind1OVP.Name = "ind1OVP";
+            this.ind1OVP.Size = new System.Drawing.Size(25, 25);
+            this.ind1OVP.TabIndex = 1;
+            this.ind1OVP.UseVisualStyleBackColor = true;
+            // 
+            // ind2OVP
+            // 
+            this.ind2OVP.Enabled = false;
+            this.ind2OVP.Location = new System.Drawing.Point(207, 58);
+            this.ind2OVP.Name = "ind2OVP";
+            this.ind2OVP.Size = new System.Drawing.Size(25, 25);
+            this.ind2OVP.TabIndex = 1;
+            this.ind2OVP.UseVisualStyleBackColor = true;
+            // 
             // ind1
             // 
             this.ind1.Enabled = false;
-            this.ind1.Location = new System.Drawing.Point(165, 27);
+            this.ind1.Location = new System.Drawing.Point(151, 27);
             this.ind1.Name = "ind1";
             this.ind1.Size = new System.Drawing.Size(25, 25);
             this.ind1.TabIndex = 1;
@@ -95,7 +122,7 @@
             // ind2
             // 
             this.ind2.Enabled = false;
-            this.ind2.Location = new System.Drawing.Point(165, 58);
+            this.ind2.Location = new System.Drawing.Point(151, 58);
             this.ind2.Name = "ind2";
             this.ind2.Size = new System.Drawing.Size(25, 25);
             this.ind2.TabIndex = 1;
@@ -155,29 +182,79 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Канал 1";
             // 
-            // ind2OVP
+            // groupBox2
             // 
-            this.ind2OVP.Enabled = false;
-            this.ind2OVP.Location = new System.Drawing.Point(223, 58);
-            this.ind2OVP.Name = "ind2OVP";
-            this.ind2OVP.Size = new System.Drawing.Size(25, 25);
-            this.ind2OVP.TabIndex = 1;
-            this.ind2OVP.UseVisualStyleBackColor = true;
+            this.groupBox2.Controls.Add(this.lstDMMValues);
+            this.groupBox2.Controls.Add(this.txtDMMWarning);
+            this.groupBox2.Controls.Add(this.txtDMMStatus);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Location = new System.Drawing.Point(272, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(255, 300);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Мультиметр";
             // 
-            // ind1OVP
+            // lstDMMValues
             // 
-            this.ind1OVP.Enabled = false;
-            this.ind1OVP.Location = new System.Drawing.Point(223, 27);
-            this.ind1OVP.Name = "ind1OVP";
-            this.ind1OVP.Size = new System.Drawing.Size(25, 25);
-            this.ind1OVP.TabIndex = 1;
-            this.ind1OVP.UseVisualStyleBackColor = true;
+            this.lstDMMValues.FormattingEnabled = true;
+            this.lstDMMValues.Location = new System.Drawing.Point(6, 19);
+            this.lstDMMValues.Name = "lstDMMValues";
+            this.lstDMMValues.Size = new System.Drawing.Size(240, 134);
+            this.lstDMMValues.TabIndex = 7;
+            // 
+            // txtDMMWarning
+            // 
+            this.txtDMMWarning.Location = new System.Drawing.Point(6, 241);
+            this.txtDMMWarning.Multiline = true;
+            this.txtDMMWarning.Name = "txtDMMWarning";
+            this.txtDMMWarning.ReadOnly = true;
+            this.txtDMMWarning.Size = new System.Drawing.Size(240, 47);
+            this.txtDMMWarning.TabIndex = 5;
+            // 
+            // txtDMMStatus
+            // 
+            this.txtDMMStatus.Location = new System.Drawing.Point(6, 170);
+            this.txtDMMStatus.Multiline = true;
+            this.txtDMMStatus.Name = "txtDMMStatus";
+            this.txtDMMStatus.ReadOnly = true;
+            this.txtDMMStatus.Size = new System.Drawing.Size(240, 47);
+            this.txtDMMStatus.TabIndex = 6;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 225);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Warning";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 154);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(41, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Статус";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(187, 11);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(61, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "overcurrent";
             // 
             // frmNI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(683, 324);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -188,6 +265,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmNI_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -207,5 +286,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ind1OVP;
         private System.Windows.Forms.Button ind2OVP;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ListBox lstDMMValues;
+        private System.Windows.Forms.TextBox txtDMMWarning;
+        private System.Windows.Forms.TextBox txtDMMStatus;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }

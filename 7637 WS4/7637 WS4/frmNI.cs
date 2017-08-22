@@ -24,10 +24,36 @@ namespace _7637_WS4
         {
             bNeedReload = false;
 
-            _frmMain.niControl.statusUpdate += NiControl_statusUpdate;
-            _frmMain.niControl.warningUpdate += NiControl_warningUpdate;
+            _frmMain.niControl.statusDCUpdate += NiControl_statusUpdate;
+            _frmMain.niControl.warningDCUpdate += NiControl_warningUpdate;
             _frmMain.niControl.updateStateDC += NiControl_updateStateDC;
+
+            _frmMain.niControl.bufReadDMMReceived += NiControl_bufReadDMMReceived;
+            _frmMain.niControl.statusDMMUpdate += NiControl_statusDMMUpdate;
+            _frmMain.niControl.warningDMMUpdate += NiControl_warningDMMUpdate;
         }
+
+        #region EVENTS
+        //DMM events
+        private void NiControl_warningDMMUpdate(string msg)
+        {
+            txtDMMWarning.Text = msg;
+        }
+
+        private void NiControl_statusDMMUpdate(string msg)
+        {
+            txtDMMStatus.Text = msg;
+        }
+
+        private void NiControl_bufReadDMMReceived(double[] buf)
+        {
+            lstDMMValues.Items.Clear();
+            foreach (double d in buf)
+                lstDMMValues.Items.Add(d);
+        }
+
+
+        //DC events
         public void NiControl_warningUpdate(string msg)
         {
             BeginInvoke((MethodInvoker)delegate
@@ -40,24 +66,17 @@ namespace _7637_WS4
         {
             BeginInvoke((MethodInvoker)delegate
             {
-                if (obj.Ch == "0")
-                {
-                    lblV1.Text = "V: " + Math.Round(obj.Volt,6).ToString();
-                    if (obj.B) ind1.BackColor = Color.LightGreen;
-                    else ind1.BackColor = Color.Red;
+                lblV1.Text = "V: " + Math.Round(obj.Volt1, 6).ToString();
+                lblV2.Text = "V: " + Math.Round(obj.Volt2, 6).ToString();
+                ind1.BackColor = obj.B1 ? Color.LightGreen : Color.Red;
+                ind2.BackColor = obj.B2 ? Color.LightGreen : Color.Red;
+                ind1OVP.BackColor = obj.BOVP1 ? SystemColors.Control : Color.Red;
+                ind2OVP.BackColor = obj.BOVP2 ? SystemColors.Control : Color.Red;
 
-                    if(obj.BOVP) ind1OVP.BackColor = Color.LightGreen;
-                    else ind1OVP.BackColor = Color.Red;
-                }
-                else
-                {
-                    lblV2.Text = "V: " + Math.Round(obj.Volt,6).ToString();
-                    if (obj.B) ind2.BackColor = Color.LightGreen;
-                    else ind2.BackColor = Color.Red;
+                if(obj.B1 || obj.B2)
+                    //Инициируем запуск чтения мультиметра после прихода данных
+                    _frmMain.niControl.ReadDMM();
 
-                    if (obj.BOVP) ind2OVP.BackColor = Color.LightGreen;
-                    else ind2OVP.BackColor = Color.Red;
-                }
             });
         }
 
@@ -69,15 +88,20 @@ namespace _7637_WS4
             });
             
         }
+#endregion
 
         private void frmNI_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             bNeedReload = true;
             
-            _frmMain.niControl.statusUpdate -= NiControl_statusUpdate;
+            _frmMain.niControl.statusDCUpdate -= NiControl_statusUpdate;
             _frmMain.niControl.updateStateDC -= NiControl_updateStateDC;
-            _frmMain.niControl.warningUpdate -= NiControl_warningUpdate;
+            _frmMain.niControl.warningDCUpdate -= NiControl_warningUpdate;
+
+            _frmMain.niControl.statusDMMUpdate -= NiControl_statusDMMUpdate;
+            _frmMain.niControl.warningDMMUpdate -= NiControl_warningDMMUpdate;
+            _frmMain.niControl.bufReadDMMReceived -= NiControl_bufReadDMMReceived;
             this.Hide();
         }
 
@@ -85,6 +109,11 @@ namespace _7637_WS4
         {
             if (bNeedReload)
                 Init();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _frmMain.niControl.ReadDMM();
         }
     }
 }

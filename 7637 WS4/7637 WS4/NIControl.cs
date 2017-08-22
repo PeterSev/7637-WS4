@@ -5,15 +5,19 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Ivi.DCPwr;
+using NationalInstruments.ModularInstruments.NIDmm;
+using NationalInstruments;
+using NationalInstruments.ModularInstruments.SystemServices.DeviceServices;
 
 namespace _7637_WS4
 {
     public delegate void delStatusUpdate(string msg);
     public delegate void delStateDC(StateDC obj);
+    public delegate void delDMMBudReadReceived(double[] buf);
 
     public class NIControl
     {
-        //Переменные для источника питания
+        //Переменные для источника питания-----
         IIviDCPwr iviDCPower;
         Thread thrDC;
         bool bNeedUpdate = false, bNeedExit = false, bOnOff = false, bInitialized = false;
@@ -23,16 +27,36 @@ namespace _7637_WS4
         List<string> listDCChannels = new List<string>();
         string curDCChannel = string.Empty;
         List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();
-        public event delStatusUpdate statusUpdate;
-        public event delStatusUpdate warningUpdate;
+        public event delStatusUpdate statusDCUpdate, warningDCUpdate, warningDMMUpdate, statusDMMUpdate;
         public event delStateDC updateStateDC;
-        //--------------------------------
+        public event delDMMBudReadReceived bufReadDMMReceived;
+        //-------------------------------------
+
+        //Переменные для мультиметра------------------
+        NIDmm dmmSession;
+        //const int maxSamplesPerReading = 10000;
+        int samplesPerReading;
+        //int totalNumberOfSamples = 0;
+        //double averageReading, minReading = Double.PositiveInfinity, maxReading = double.NegativeInfinity;
+        //bool aqusitionStopped;
+        //double[] readBuf = new double[maxSamplesPerReading];
+        //bool isStartSuccessful = false;
+        List<string> listDeviceDMM = new List<string>(), listMeasureModeDMM = new List<string>();
+        static double[] powerlineFrequencyValues = { 50, 60 };
+        static double[] resolutionValues = { 3.5, 4.5, 5.5, 6.5, 7.5 };
+        double powerlineFrequencyDMM;
+        double resolutionDMM;
+        //--------------------------------------------
+
 
         public NIControl()
         {
             InitDC();
+            InitDMM();
         }
 
+
+        #region Управление источником питания
         /// <summary>
         /// Инициализация источника питания
         /// </summary>
@@ -46,7 +70,7 @@ namespace _7637_WS4
                 //iviDCPower.Outputs["0"].OvpEnabled = true;
                 ConfigureChannelName();
                 ConfigureCurrentlimitBehavior();
-                statusUpdate("SUCCESS");
+                statusDCUpdate("SUCCESS");
                 bOnOff = true;
                 bInitialized = true;
                 
@@ -56,13 +80,13 @@ namespace _7637_WS4
             }
             catch (Exception ex)
             {
-                statusUpdate?.Invoke(ex.Message);
+                statusDCUpdate?.Invoke(ex.Message);
             }
         }
 
         private void DriverOperation_Warning(object sender, Ivi.Driver.WarningEventArgs e)
         {
-            warningUpdate?.Invoke(e.Code.ToString() + " " + e.Text);
+            warningDCUpdate?.Invoke(e.Code.ToString() + " " + e.Text);
         }
 
         private void updateDCProcessing()
@@ -75,8 +99,16 @@ namespace _7637_WS4
                     bNeedUpdate = false;
                 }
                 Thread.Sleep(100);
-                updateStateDC?.Invoke(new StateDC("0", iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["0"].Enabled, iviDCPower.Outputs["0"].QueryState(OutputState.OverCurrent)));
-                updateStateDC?.Invoke(new StateDC("1", iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["1"].Enabled, iviDCPower.Outputs["0"].QueryState(OutputState.OverVoltage)));
+                updateStateDC?.Invoke(new StateDC(
+                    "0",
+                    iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage),
+                    iviDCPower.Outputs["0"].Enabled,
+                    iviDCPower.Outputs["0"].QueryState(OutputState.ConstantVoltage),
+                    "1",
+                    iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage),
+                    iviDCPower.Outputs["1"].Enabled,
+                    iviDCPower.Outputs["1"].QueryState(OutputState.ConstantVoltage)));
+                //updateStateDC?.Invoke(new StateDC("1", iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["1"].Enabled, iviDCPower.Outputs["1"].QueryState(OutputState.ConstantVoltage)));
             }
         }
 
@@ -97,7 +129,7 @@ namespace _7637_WS4
             }
             catch (Exception ex)
             {
-                statusUpdate?.Invoke(ex.Message);
+                statusDCUpdate?.Invoke(ex.Message);
             }
         }
 
@@ -150,31 +182,126 @@ namespace _7637_WS4
                 }
                 catch (Exception ex)
                 {
-                    statusUpdate?.Invoke(ex.Message);
+                    statusDCUpdate?.Invoke(ex.Message);
                 }
             }
         }
+
+        #endregion
+
+        #region Управление DMM, мультиметром, считывание данных
+        void InitDMM()
+        {
+            //aqusitionStopped = false;
+            listDeviceDMM.Clear();
+            listMeasureModeDMM.Clear();
+
+            powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
+            resolutionDMM = resolutionValues[1]; //6.5
+
+            //Составляем список DMM оборудования
+            ModularInstrumentsSystem modularInstrumentsSystem = new ModularInstrumentsSystem("NI-DMM");
+            foreach (DeviceInfo device in modularInstrumentsSystem.DeviceCollection)
+                listDeviceDMM.Add(device.Name);
+            if (listDeviceDMM.Count < 1)
+                warningDMMUpdate?.Invoke("No DMM device found!");
+            else
+                warningDMMUpdate?.Invoke("Device " + listDeviceDMM[0] + " found");
+
+            //Составляем список режимов измерения DMM
+            listMeasureModeDMM.AddRange(Enum.GetNames(typeof(DmmMeasurementFunction)));
+            listMeasureModeDMM.Remove(DmmMeasurementFunction.WaveformCurrent.ToString());
+            listMeasureModeDMM.Remove(DmmMeasurementFunction.WaveformVoltage.ToString());
+
+            
+        }
+
+        void ConfigureDMM()
+        {
+            DmmMeasurementFunction measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
+            DmmTriggerSource triggerSource = "Immediate";              //"Immediate", "External", "Software Trigger", "Ttl0", "Ttl1"
+            double range = 100;
+            //double triggerDelay = 0;
+            samplesPerReading = 10;
+            dmmSession.ConfigureMeasurementDigits(measurementMode, range, resolutionDMM);
+            dmmSession.Advanced.PowerlineFrequency = powerlineFrequencyDMM;
+
+            //dmmSession.Trigger.Configure(triggerSource, PrecisionTimeSpan.FromSeconds(triggerDelay));  //не находит почему то класс точного времени
+            dmmSession.Trigger.Configure(triggerSource, true);
+            dmmSession.Trigger.MultiPoint.SampleCount = samplesPerReading;
+        }
+
+        public void ReadDMM()
+        {
+            //Application.DoEvents();
+            double[] readBuf;
+            try
+            {
+                dmmSession = new NIDmm(listDeviceDMM[0], true, true);
+                ConfigureDMM();
+
+                dmmSession.Measurement.Initiate();
+
+                Application.DoEvents();
+                readBuf = dmmSession.Measurement.FetchMultiPoint(samplesPerReading);
+                statusDMMUpdate?.Invoke("SUCCESS");
+                bufReadDMMReceived?.Invoke(readBuf); 
+            }
+            catch(Exception ex)
+            {
+                warningDMMUpdate?.Invoke(ex.Message);
+            }
+            finally
+            {
+                if (dmmSession != null)
+                    dmmSession.Close();
+                Application.DoEvents();
+            }
+        }
+
+        #endregion
+
     }
+
+
+
+
+
 
     //хранит текущее состояние ИП
     public class StateDC
     {
-        string _ch;
-        double _volt;
-        bool _b;
-        bool _bOVP;
+        string _ch1;
+        double _volt1;
+        bool _b1;
+        bool _bOVP1;
+        string _ch2;
+        double _volt2;
+        bool _b2;
+        bool _bOVP2;
 
-        public StateDC(string ch, double volt, bool b, bool bOVP)
+        public StateDC(string ch1, double volt1, bool b1, bool bOVP1, string ch2, double volt2, bool b2, bool bOVP2)
         {
-            _ch = ch;
-            _volt = volt;
-            _b = b;
-            _bOVP = bOVP;
+            _ch1 = ch1;
+            _volt1 = volt1;
+            _b1 = b1;
+            _bOVP1 = bOVP1;
+            _ch2 = ch2;
+            _volt2 = volt2;
+            _b2 = b2;
+            _bOVP2 = bOVP2;
         }
 
-        public string Ch { get => _ch; }
-        public double Volt { get => _volt; }
-        public bool B { get => _b; }
-        public bool BOVP { get => _bOVP; }
+        public string Ch1 { get => _ch1; }
+        public double Volt1 { get => _volt1; }
+        public bool B1 { get => _b1; }
+        public bool BOVP1 { get => _bOVP1; }
+
+        public string Ch2 { get => _ch2; }
+        public double Volt2 { get => _volt2; }
+        public bool B2 { get => _b2; }
+        public bool BOVP2 { get => _bOVP2; }
     }
+
+
 }
