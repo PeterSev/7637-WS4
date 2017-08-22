@@ -8,6 +8,7 @@ using Ivi.DCPwr;
 using NationalInstruments.ModularInstruments.NIDmm;
 using NationalInstruments;
 using NationalInstruments.ModularInstruments.SystemServices.DeviceServices;
+using NationalInstruments.ModularInstruments.NISwitch;
 
 namespace _7637_WS4
 {
@@ -49,12 +50,37 @@ namespace _7637_WS4
         //--------------------------------------------
 
 
+        //Переменные для работы с блоками реле 2530В и 2569------------
+        NISwitch switchRelay;
+        PrecisionTimeSpan maxTime = new PrecisionTimeSpan(50);
+        string currentRelayToWorkWith = string.Empty;
+        const string sTopology2530 = "2530/1-Wire 128x1 Mux";
+        const string sTopology2569 = "2569/100-SPST";
+        List<string> listSwitchName = new List<string>();
+        //-------------------------------------------------------------
+
+
+
+
         public NIControl()
         {
             InitDC();
             InitDMM();
         }
 
+        #region Работа с блоками реле SWITCH RELAY
+        void LoadSwitchDeviceNames()
+        {
+            ModularInstrumentsSystem modularInstrumentsSystem = new ModularInstrumentsSystem("NI-SWITCH");
+            foreach (DeviceInfo device in modularInstrumentsSystem.DeviceCollection)
+            {
+                listSwitchName.Add(device.Name);
+            }
+                listSwitchName.Sort();
+        }
+
+
+        #endregion
 
         #region Управление источником питания
         /// <summary>
@@ -268,7 +294,9 @@ namespace _7637_WS4
 
 
 
-    //хранит текущее состояние ИП
+
+
+    //хранит текущее состояние ИП, его обоих каналов
     public class StateDC
     {
         string _ch1;

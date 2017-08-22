@@ -110,10 +110,5 @@ namespace _7637_WS4
         {
             _frmMain.niControl.DCSetOnOff("1", 3.3, false);
         }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            //_frmMain.niControl.ReadDMM();
-        }
     }
 }
