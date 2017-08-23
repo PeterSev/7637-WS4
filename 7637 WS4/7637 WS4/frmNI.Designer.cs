@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.txtDCWarning = new System.Windows.Forms.TextBox();
             this.txtDCStatus = new System.Windows.Forms.TextBox();
             this.ind1OVP = new System.Windows.Forms.Button();
@@ -47,9 +48,34 @@
             this.txtDMMStatus = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lstR1 = new System.Windows.Forms.ListBox();
+            this.txtR1Warning = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lstR2 = new System.Windows.Forms.ListBox();
+            this.txtR2Warning = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lstR3 = new System.Windows.Forms.ListBox();
+            this.txtR3Warning = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.lstR4 = new System.Windows.Forms.ListBox();
+            this.lstR5 = new System.Windows.Forms.ListBox();
+            this.lstR6 = new System.Windows.Forms.ListBox();
+            this.txtR4Warning = new System.Windows.Forms.TextBox();
+            this.txtR5Warning = new System.Windows.Forms.TextBox();
+            this.txtR6Warning = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lstR7 = new System.Windows.Forms.ListBox();
+            this.lstR8 = new System.Windows.Forms.ListBox();
+            this.txtR7Warning = new System.Windows.Forms.TextBox();
+            this.txtR8Warning = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -69,10 +95,19 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(254, 302);
+            this.groupBox1.Size = new System.Drawing.Size(255, 300);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Источник питания DC";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(187, 11);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(61, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "overcurrent";
             // 
             // txtDCWarning
             // 
@@ -240,20 +275,253 @@
             this.label6.TabIndex = 4;
             this.label6.Text = "Статус";
             // 
-            // label7
+            // groupBox3
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(187, 11);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(61, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "overcurrent";
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.txtR8Warning);
+            this.groupBox3.Controls.Add(this.txtR6Warning);
+            this.groupBox3.Controls.Add(this.txtR3Warning);
+            this.groupBox3.Controls.Add(this.txtR7Warning);
+            this.groupBox3.Controls.Add(this.txtR5Warning);
+            this.groupBox3.Controls.Add(this.txtR2Warning);
+            this.groupBox3.Controls.Add(this.txtR4Warning);
+            this.groupBox3.Controls.Add(this.txtR1Warning);
+            this.groupBox3.Controls.Add(this.lstR8);
+            this.groupBox3.Controls.Add(this.lstR6);
+            this.groupBox3.Controls.Add(this.lstR3);
+            this.groupBox3.Controls.Add(this.lstR7);
+            this.groupBox3.Controls.Add(this.lstR5);
+            this.groupBox3.Controls.Add(this.lstR2);
+            this.groupBox3.Controls.Add(this.lstR4);
+            this.groupBox3.Controls.Add(this.lstR1);
+            this.groupBox3.Location = new System.Drawing.Point(12, 318);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(1099, 300);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Блоки реле";
+            // 
+            // lstR1
+            // 
+            this.lstR1.FormattingEnabled = true;
+            this.lstR1.Location = new System.Drawing.Point(6, 19);
+            this.lstR1.Name = "lstR1";
+            this.lstR1.Size = new System.Drawing.Size(130, 199);
+            this.lstR1.TabIndex = 8;
+            // 
+            // txtR1Warning
+            // 
+            this.txtR1Warning.Location = new System.Drawing.Point(6, 241);
+            this.txtR1Warning.Multiline = true;
+            this.txtR1Warning.Name = "txtR1Warning";
+            this.txtR1Warning.ReadOnly = true;
+            this.txtR1Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR1Warning.TabIndex = 9;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 223);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Warning";
+            // 
+            // lstR2
+            // 
+            this.lstR2.FormattingEnabled = true;
+            this.lstR2.Location = new System.Drawing.Point(142, 19);
+            this.lstR2.Name = "lstR2";
+            this.lstR2.Size = new System.Drawing.Size(130, 199);
+            this.lstR2.TabIndex = 8;
+            // 
+            // txtR2Warning
+            // 
+            this.txtR2Warning.Location = new System.Drawing.Point(142, 241);
+            this.txtR2Warning.Multiline = true;
+            this.txtR2Warning.Name = "txtR2Warning";
+            this.txtR2Warning.ReadOnly = true;
+            this.txtR2Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR2Warning.TabIndex = 9;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(142, 223);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(47, 13);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Warning";
+            // 
+            // lstR3
+            // 
+            this.lstR3.FormattingEnabled = true;
+            this.lstR3.Location = new System.Drawing.Point(278, 19);
+            this.lstR3.Name = "lstR3";
+            this.lstR3.Size = new System.Drawing.Size(130, 199);
+            this.lstR3.TabIndex = 8;
+            // 
+            // txtR3Warning
+            // 
+            this.txtR3Warning.Location = new System.Drawing.Point(278, 241);
+            this.txtR3Warning.Multiline = true;
+            this.txtR3Warning.Name = "txtR3Warning";
+            this.txtR3Warning.ReadOnly = true;
+            this.txtR3Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR3Warning.TabIndex = 9;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(278, 223);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 13);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Warning";
+            // 
+            // lstR4
+            // 
+            this.lstR4.FormattingEnabled = true;
+            this.lstR4.Location = new System.Drawing.Point(414, 19);
+            this.lstR4.Name = "lstR4";
+            this.lstR4.Size = new System.Drawing.Size(130, 199);
+            this.lstR4.TabIndex = 8;
+            // 
+            // lstR5
+            // 
+            this.lstR5.FormattingEnabled = true;
+            this.lstR5.Location = new System.Drawing.Point(550, 19);
+            this.lstR5.Name = "lstR5";
+            this.lstR5.Size = new System.Drawing.Size(130, 199);
+            this.lstR5.TabIndex = 8;
+            // 
+            // lstR6
+            // 
+            this.lstR6.FormattingEnabled = true;
+            this.lstR6.Location = new System.Drawing.Point(686, 19);
+            this.lstR6.Name = "lstR6";
+            this.lstR6.Size = new System.Drawing.Size(130, 199);
+            this.lstR6.TabIndex = 8;
+            // 
+            // txtR4Warning
+            // 
+            this.txtR4Warning.Location = new System.Drawing.Point(414, 241);
+            this.txtR4Warning.Multiline = true;
+            this.txtR4Warning.Name = "txtR4Warning";
+            this.txtR4Warning.ReadOnly = true;
+            this.txtR4Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR4Warning.TabIndex = 9;
+            // 
+            // txtR5Warning
+            // 
+            this.txtR5Warning.Location = new System.Drawing.Point(550, 241);
+            this.txtR5Warning.Multiline = true;
+            this.txtR5Warning.Name = "txtR5Warning";
+            this.txtR5Warning.ReadOnly = true;
+            this.txtR5Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR5Warning.TabIndex = 9;
+            // 
+            // txtR6Warning
+            // 
+            this.txtR6Warning.Location = new System.Drawing.Point(686, 241);
+            this.txtR6Warning.Multiline = true;
+            this.txtR6Warning.Name = "txtR6Warning";
+            this.txtR6Warning.ReadOnly = true;
+            this.txtR6Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR6Warning.TabIndex = 9;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(414, 223);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(47, 13);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Warning";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(550, 223);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(47, 13);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "Warning";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(686, 223);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(47, 13);
+            this.label13.TabIndex = 10;
+            this.label13.Text = "Warning";
+            // 
+            // lstR7
+            // 
+            this.lstR7.FormattingEnabled = true;
+            this.lstR7.Location = new System.Drawing.Point(822, 19);
+            this.lstR7.Name = "lstR7";
+            this.lstR7.Size = new System.Drawing.Size(130, 199);
+            this.lstR7.TabIndex = 8;
+            // 
+            // lstR8
+            // 
+            this.lstR8.FormattingEnabled = true;
+            this.lstR8.Location = new System.Drawing.Point(958, 19);
+            this.lstR8.Name = "lstR8";
+            this.lstR8.Size = new System.Drawing.Size(130, 199);
+            this.lstR8.TabIndex = 8;
+            // 
+            // txtR7Warning
+            // 
+            this.txtR7Warning.Location = new System.Drawing.Point(822, 241);
+            this.txtR7Warning.Multiline = true;
+            this.txtR7Warning.Name = "txtR7Warning";
+            this.txtR7Warning.ReadOnly = true;
+            this.txtR7Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR7Warning.TabIndex = 9;
+            // 
+            // txtR8Warning
+            // 
+            this.txtR8Warning.Location = new System.Drawing.Point(958, 241);
+            this.txtR8Warning.Multiline = true;
+            this.txtR8Warning.Name = "txtR8Warning";
+            this.txtR8Warning.ReadOnly = true;
+            this.txtR8Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR8Warning.TabIndex = 9;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(822, 223);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(47, 13);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "Warning";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(958, 223);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(47, 13);
+            this.label15.TabIndex = 10;
+            this.label15.Text = "Warning";
             // 
             // frmNI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(905, 324);
+            this.ClientSize = new System.Drawing.Size(1121, 626);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -267,6 +535,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -293,5 +563,30 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtR8Warning;
+        private System.Windows.Forms.TextBox txtR6Warning;
+        private System.Windows.Forms.TextBox txtR3Warning;
+        private System.Windows.Forms.TextBox txtR7Warning;
+        private System.Windows.Forms.TextBox txtR5Warning;
+        private System.Windows.Forms.TextBox txtR2Warning;
+        private System.Windows.Forms.TextBox txtR4Warning;
+        private System.Windows.Forms.TextBox txtR1Warning;
+        private System.Windows.Forms.ListBox lstR8;
+        private System.Windows.Forms.ListBox lstR6;
+        private System.Windows.Forms.ListBox lstR3;
+        private System.Windows.Forms.ListBox lstR7;
+        private System.Windows.Forms.ListBox lstR5;
+        private System.Windows.Forms.ListBox lstR2;
+        private System.Windows.Forms.ListBox lstR4;
+        private System.Windows.Forms.ListBox lstR1;
     }
 }

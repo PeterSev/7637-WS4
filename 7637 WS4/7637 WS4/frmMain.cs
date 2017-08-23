@@ -211,7 +211,8 @@ namespace _7637_WS4
             _frmNI.Close();
             Thread.Sleep(200);
             niControl.CloseDCIVISession();
-            
+            niControl.CloseRelaySession();
+
             
         }
 

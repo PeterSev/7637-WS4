@@ -46,6 +46,9 @@ namespace _7637_WS4
             this.Text = curBoard.Name + " БППП. " + "Плата " + _frmMain._frmBPPP.curBpppBoard.Name + ". Прохождение тестов";
             this.BackColor = Color.RoyalBlue;
             grpTestInfo.ForeColor = Color.White;
+            grpDC.ForeColor = Color.White;
+            grpSwitch.ForeColor = Color.White;
+            cmbSwitchName.SelectedIndex = 0;
 
             if(Utils.isFileExist(catalog + listBPPPTestFileName))
             {
@@ -93,22 +96,32 @@ namespace _7637_WS4
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.DCSetOnOff("0", 2.2, true);
+            _frmMain.niControl.DCSetOnOff("0", (double)numDCV1.Value, true);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.DCSetOnOff("1", 3.3, true);
+            _frmMain.niControl.DCSetOnOff("1", (double)numDCV2.Value, true);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.DCSetOnOff("0", 2.2, false);
+            _frmMain.niControl.DCSetOnOff("0", (double)numDCV1.Value, false);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.DCSetOnOff("1", 3.3, false);
+            _frmMain.niControl.DCSetOnOff("1", (double)numDCV2.Value, false);
+        }
+
+        private void btnOpenRelay_Click(object sender, EventArgs e)
+        {
+            _frmMain.niControl.OpenCloseRelay(true, cmbSwitchName.SelectedItem.ToString(),numSwitchChannel.Value.ToString());
+        }
+
+        private void btnCloseRelay_Click(object sender, EventArgs e)
+        {
+            _frmMain.niControl.OpenCloseRelay(false, cmbSwitchName.SelectedItem.ToString(), numSwitchChannel.Value.ToString());
         }
     }
 }

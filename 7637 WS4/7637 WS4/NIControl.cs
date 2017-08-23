@@ -13,6 +13,7 @@ using NationalInstruments.ModularInstruments.NISwitch;
 namespace _7637_WS4
 {
     public delegate void delStatusUpdate(string msg);
+    public delegate void delSwitchStatus(string name, string msg);
     public delegate void delStateDC(StateDC obj);
     public delegate void delDMMBudReadReceived(double[] buf);
 
@@ -28,7 +29,7 @@ namespace _7637_WS4
         List<string> listDCChannels = new List<string>();
         string curDCChannel = string.Empty;
         List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();
-        public event delStatusUpdate statusDCUpdate, warningDCUpdate, warningDMMUpdate, statusDMMUpdate;
+        public event delStatusUpdate statusDCUpdate, warningDCUpdate, warningDMMUpdate, statusDMMUpdate, warningSwitchUpdate, statusSwitchUpdate;
         public event delStateDC updateStateDC;
         public event delDMMBudReadReceived bufReadDMMReceived;
         //-------------------------------------
@@ -51,12 +52,7 @@ namespace _7637_WS4
 
 
         //Переменные для работы с блоками реле 2530В и 2569------------
-        NISwitch switchRelay;
-        PrecisionTimeSpan maxTime = new PrecisionTimeSpan(50);
-        string currentRelayToWorkWith = string.Empty;
-        const string sTopology2530 = "2530/1-Wire 128x1 Mux";
-        const string sTopology2569 = "2569/100-SPST";
-        List<string> listSwitchName = new List<string>();
+        public SwitchRelay relayR1, relayR2, relayR3, relayR4, relayR5, relayR6, relayR7, relayR8;
         //-------------------------------------------------------------
 
 
@@ -66,19 +62,51 @@ namespace _7637_WS4
         {
             InitDC();
             InitDMM();
+            InitSwitch();
         }
 
         #region Работа с блоками реле SWITCH RELAY
-        void LoadSwitchDeviceNames()
+        void InitSwitch()
         {
-            ModularInstrumentsSystem modularInstrumentsSystem = new ModularInstrumentsSystem("NI-SWITCH");
-            foreach (DeviceInfo device in modularInstrumentsSystem.DeviceCollection)
-            {
-                listSwitchName.Add(device.Name);
-            }
-                listSwitchName.Sort();
+            relayR1 = new SwitchRelay("R1");
+            relayR2 = new SwitchRelay("R2");
+            relayR3 = new SwitchRelay("R3");
+            relayR4 = new SwitchRelay("R4");
+            relayR5 = new SwitchRelay("R5");
+            relayR6 = new SwitchRelay("R6");
+            relayR7 = new SwitchRelay("R7");
+            relayR8 = new SwitchRelay("R8");
         }
 
+        public void OpenCloseRelay(bool b, string name, string channel)
+        {
+            SwitchRelay curRelay = null;
+            switch (name)
+            {
+                case "R1":  curRelay = relayR1; break;
+                case "R2":  curRelay = relayR2; break;
+                case "R3":  curRelay = relayR3; break;
+                case "R4":  curRelay = relayR4; break;
+                case "R5":  curRelay = relayR5; break;
+                case "R6":  curRelay = relayR6; break;
+                case "R7":  curRelay = relayR7; break;
+                case "R8":  curRelay = relayR8; break;
+            }
+            //curRelay.InitRelay();
+            curRelay.ChangeRelayState(b, "k"+channel);
+        }
+
+        public void CloseRelaySession()
+        {
+            relayR1.CloseRelay();
+            relayR2.CloseRelay();
+            relayR3.CloseRelay();
+            relayR4.CloseRelay();
+            relayR5.CloseRelay();
+            relayR6.CloseRelay();
+            relayR7.CloseRelay();
+            relayR8.CloseRelay();
+        }
 
         #endregion
 
@@ -91,7 +119,7 @@ namespace _7637_WS4
             try
             {
                 iviDCPower = IviDCPwr.Create(DC_DeviceName, true, true);
-                iviDCPower.DriverOperation.Warning += DriverOperation_Warning;
+                iviDCPower.DriverOperation.Warning += DriverOperationDC_Warning;
 
                 //iviDCPower.Outputs["0"].OvpEnabled = true;
                 ConfigureChannelName();
@@ -110,7 +138,7 @@ namespace _7637_WS4
             }
         }
 
-        private void DriverOperation_Warning(object sender, Ivi.Driver.WarningEventArgs e)
+        private void DriverOperationDC_Warning(object sender, Ivi.Driver.WarningEventArgs e)
         {
             warningDCUpdate?.Invoke(e.Code.ToString() + " " + e.Text);
         }
@@ -329,6 +357,97 @@ namespace _7637_WS4
         public double Volt2 { get => _volt2; }
         public bool B2 { get => _b2; }
         public bool BOVP2 { get => _bOVP2; }
+    }
+
+    public class SwitchRelay
+    {
+        NISwitch relay;
+        const string sTopology2530 = "2530/1-Wire 128x1 Mux";
+        const string sTopology2569 = "2569/100-SPST";
+        public event delSwitchStatus warningSWITCH, statusSWITCH;
+        PrecisionTimeSpan maxTime ;
+        string _name;
+        public SwitchRelay(string name)
+        {
+            maxTime = new PrecisionTimeSpan(50);
+            _name = name;
+            InitRelay();
+        }
+    /// <summary>
+    /// Инициализация блока реле. Топология будет выбрана автоматически в соответствии с указанным именем.
+    /// </summary>
+    /// <param name="name">Имя, указанное в NI MAX</param>
+        public void InitRelay()
+        {
+            string curTopology = _name.Contains("R6") || _name.Contains("R7") || _name.Contains("R8") ? sTopology2569 : sTopology2530;
+            try
+            {
+                Init(curTopology);
+                //_name = name;
+            }
+            catch(Exception ex)
+            {
+                warningSWITCH(_name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Закрытие текущего реле
+        /// </summary>
+        public void CloseRelay()
+        {
+            if (relay != null)
+            {
+                try
+                {
+                    relay.Utility.Reset();
+                    relay.Close();
+                    relay = null;
+                }
+                catch (Exception ex)
+                {
+                    warningSWITCH(_name, "Невозможно закрыть сессию  " + ex.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Управление реле. Открывает и закрывает определенный канал.
+        /// </summary>
+        /// <param name="action">Действие над каналом. true - закрыть, false - открыть</param>
+        /// <param name="curChannelToWorkWith">Канал, над которым производится действия. Например, ch17</param>
+        public void ChangeRelayState(bool action, string curChannelToWorkWith)
+        {
+            if (relay != null)
+            {
+                try
+                {
+                    SwitchRelayAction relayAction = action ? SwitchRelayAction.CloseRelay : SwitchRelayAction.OpenRelay;
+                    relay.RelayOperations.RelayControl(curChannelToWorkWith, relayAction);
+                    relay.Path.WaitForDebounce(maxTime);
+
+                    string res = action ? " закрыто" : " открыто";
+                    statusSWITCH(_name, "Реле " + curChannelToWorkWith + res);
+                }
+                catch (Exception ex)
+                {
+                    warningSWITCH(_name, ex.Message);
+                }
+            }
+            else
+                warningSWITCH(_name, "указанный блок реле не существует или не инициализирован");
+        }
+
+        void Init(string topology)
+        {
+            relay = new NISwitch(_name, topology, false, true);
+            relay.DriverOperation.Warning += DriverOperation_Warning;
+        }
+
+        private void DriverOperation_Warning(object sender, SwitchWarningEventArgs e)
+        {
+            warningSWITCH(_name, e.Message);
+        }
     }
 
 
