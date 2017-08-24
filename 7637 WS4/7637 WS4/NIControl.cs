@@ -15,7 +15,7 @@ namespace _7637_WS4
     public delegate void delStatusUpdate(string msg);
     public delegate void delSwitchStatus(string name, string msg);
     public delegate void delStateDC(StateDC obj);
-    public delegate void delDMMBudReadReceived(double[] buf);
+    public delegate void delDMMBudReadReceived(DMMResult dmmResult);
 
     public class NIControl
     {
@@ -48,6 +48,7 @@ namespace _7637_WS4
         static double[] resolutionValues = { 3.5, 4.5, 5.5, 6.5, 7.5 };
         double powerlineFrequencyDMM;
         double resolutionDMM;
+        DMMResult dmmResult;
         //--------------------------------------------
 
 
@@ -152,7 +153,7 @@ namespace _7637_WS4
                     UpdateIVIDCPwrOutput();
                     bNeedUpdate = false;
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(10);
                 updateStateDC?.Invoke(new StateDC(
                     "0",
                     iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage),
@@ -247,6 +248,7 @@ namespace _7637_WS4
         void InitDMM()
         {
             //aqusitionStopped = false;
+            dmmResult = new DMMResult();
             listDeviceDMM.Clear();
             listMeasureModeDMM.Clear();
 
@@ -270,13 +272,18 @@ namespace _7637_WS4
             
         }
 
-        void ConfigureDMM()
+        void ConfigureDMM(string measurementFunction)
         {
-            DmmMeasurementFunction measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
+            DmmMeasurementFunction measurementMode = DmmMeasurementFunction.DCVolts;
+            if(measurementFunction == "DCVolts")
+                measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
+            else if(measurementFunction == "Resistance")
+                measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[4]);
+            //DmmMeasurementFunction measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
             DmmTriggerSource triggerSource = "Immediate";              //"Immediate", "External", "Software Trigger", "Ttl0", "Ttl1"
-            double range = 100;
+            double range = 100000;
             //double triggerDelay = 0;
-            samplesPerReading = 10;
+            samplesPerReading = 7;
             dmmSession.ConfigureMeasurementDigits(measurementMode, range, resolutionDMM);
             dmmSession.Advanced.PowerlineFrequency = powerlineFrequencyDMM;
 
@@ -285,21 +292,27 @@ namespace _7637_WS4
             dmmSession.Trigger.MultiPoint.SampleCount = samplesPerReading;
         }
 
-        public void ReadDMM()
+        public void ReadDMM(string measurementFunction)
         {
             //Application.DoEvents();
             double[] readBuf;
             try
             {
                 dmmSession = new NIDmm(listDeviceDMM[0], true, true);
-                ConfigureDMM();
+                ConfigureDMM(measurementFunction);
 
                 dmmSession.Measurement.Initiate();
 
                 Application.DoEvents();
                 readBuf = dmmSession.Measurement.FetchMultiPoint(samplesPerReading);
                 statusDMMUpdate?.Invoke("SUCCESS");
-                bufReadDMMReceived?.Invoke(readBuf); 
+
+                dmmResult.buf = readBuf;
+                //dmmResult.temp = dmmSession.Temperature.ToString();
+                dmmResult.measurementMode = dmmSession.MeasurementFunction.ToString();
+
+                bufReadDMMReceived?.Invoke(dmmResult); 
+                
             }
             catch(Exception ex)
             {
@@ -369,7 +382,7 @@ namespace _7637_WS4
         string _name;
         public SwitchRelay(string name)
         {
-            maxTime = new PrecisionTimeSpan(50);
+            maxTime = new PrecisionTimeSpan(500);
             _name = name;
             InitRelay();
         }
@@ -450,5 +463,10 @@ namespace _7637_WS4
         }
     }
 
-
+    public class DMMResult
+    {
+        public double[] buf;
+        public string measurementMode;
+        //public string temp;
+    }
 }

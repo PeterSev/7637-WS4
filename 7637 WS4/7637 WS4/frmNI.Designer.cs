@@ -49,30 +49,31 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lstR1 = new System.Windows.Forms.ListBox();
-            this.txtR1Warning = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.lstR2 = new System.Windows.Forms.ListBox();
-            this.txtR2Warning = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.lstR3 = new System.Windows.Forms.ListBox();
-            this.txtR3Warning = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.lstR4 = new System.Windows.Forms.ListBox();
-            this.lstR5 = new System.Windows.Forms.ListBox();
-            this.lstR6 = new System.Windows.Forms.ListBox();
-            this.txtR4Warning = new System.Windows.Forms.TextBox();
-            this.txtR5Warning = new System.Windows.Forms.TextBox();
-            this.txtR6Warning = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.lstR7 = new System.Windows.Forms.ListBox();
-            this.lstR8 = new System.Windows.Forms.ListBox();
-            this.txtR7Warning = new System.Windows.Forms.TextBox();
-            this.txtR8Warning = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtR8Warning = new System.Windows.Forms.TextBox();
+            this.txtR6Warning = new System.Windows.Forms.TextBox();
+            this.txtR3Warning = new System.Windows.Forms.TextBox();
+            this.txtR7Warning = new System.Windows.Forms.TextBox();
+            this.txtR5Warning = new System.Windows.Forms.TextBox();
+            this.txtR2Warning = new System.Windows.Forms.TextBox();
+            this.txtR4Warning = new System.Windows.Forms.TextBox();
+            this.txtR1Warning = new System.Windows.Forms.TextBox();
+            this.lstR8 = new System.Windows.Forms.ListBox();
+            this.lstR6 = new System.Windows.Forms.ListBox();
+            this.lstR3 = new System.Windows.Forms.ListBox();
+            this.lstR7 = new System.Windows.Forms.ListBox();
+            this.lstR5 = new System.Windows.Forms.ListBox();
+            this.lstR2 = new System.Windows.Forms.ListBox();
+            this.lstR4 = new System.Windows.Forms.ListBox();
+            this.lstR1 = new System.Windows.Forms.ListBox();
+            this.txtDMMMeasurementMode = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -219,6 +220,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtDMMMeasurementMode);
             this.groupBox2.Controls.Add(this.lstDMMValues);
             this.groupBox2.Controls.Add(this.txtDMMWarning);
             this.groupBox2.Controls.Add(this.txtDMMStatus);
@@ -236,7 +238,7 @@
             this.lstDMMValues.FormattingEnabled = true;
             this.lstDMMValues.Location = new System.Drawing.Point(6, 19);
             this.lstDMMValues.Name = "lstDMMValues";
-            this.lstDMMValues.Size = new System.Drawing.Size(240, 134);
+            this.lstDMMValues.Size = new System.Drawing.Size(240, 95);
             this.lstDMMValues.TabIndex = 7;
             // 
             // txtDMMWarning
@@ -308,152 +310,14 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Блоки реле";
             // 
-            // lstR1
+            // label15
             // 
-            this.lstR1.FormattingEnabled = true;
-            this.lstR1.Location = new System.Drawing.Point(6, 19);
-            this.lstR1.Name = "lstR1";
-            this.lstR1.Size = new System.Drawing.Size(130, 199);
-            this.lstR1.TabIndex = 8;
-            // 
-            // txtR1Warning
-            // 
-            this.txtR1Warning.Location = new System.Drawing.Point(6, 241);
-            this.txtR1Warning.Multiline = true;
-            this.txtR1Warning.Name = "txtR1Warning";
-            this.txtR1Warning.ReadOnly = true;
-            this.txtR1Warning.Size = new System.Drawing.Size(130, 47);
-            this.txtR1Warning.TabIndex = 9;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 223);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 13);
-            this.label8.TabIndex = 10;
-            this.label8.Text = "Warning";
-            // 
-            // lstR2
-            // 
-            this.lstR2.FormattingEnabled = true;
-            this.lstR2.Location = new System.Drawing.Point(142, 19);
-            this.lstR2.Name = "lstR2";
-            this.lstR2.Size = new System.Drawing.Size(130, 199);
-            this.lstR2.TabIndex = 8;
-            // 
-            // txtR2Warning
-            // 
-            this.txtR2Warning.Location = new System.Drawing.Point(142, 241);
-            this.txtR2Warning.Multiline = true;
-            this.txtR2Warning.Name = "txtR2Warning";
-            this.txtR2Warning.ReadOnly = true;
-            this.txtR2Warning.Size = new System.Drawing.Size(130, 47);
-            this.txtR2Warning.TabIndex = 9;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(142, 223);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(47, 13);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "Warning";
-            // 
-            // lstR3
-            // 
-            this.lstR3.FormattingEnabled = true;
-            this.lstR3.Location = new System.Drawing.Point(278, 19);
-            this.lstR3.Name = "lstR3";
-            this.lstR3.Size = new System.Drawing.Size(130, 199);
-            this.lstR3.TabIndex = 8;
-            // 
-            // txtR3Warning
-            // 
-            this.txtR3Warning.Location = new System.Drawing.Point(278, 241);
-            this.txtR3Warning.Multiline = true;
-            this.txtR3Warning.Name = "txtR3Warning";
-            this.txtR3Warning.ReadOnly = true;
-            this.txtR3Warning.Size = new System.Drawing.Size(130, 47);
-            this.txtR3Warning.TabIndex = 9;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(278, 223);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(47, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Warning";
-            // 
-            // lstR4
-            // 
-            this.lstR4.FormattingEnabled = true;
-            this.lstR4.Location = new System.Drawing.Point(414, 19);
-            this.lstR4.Name = "lstR4";
-            this.lstR4.Size = new System.Drawing.Size(130, 199);
-            this.lstR4.TabIndex = 8;
-            // 
-            // lstR5
-            // 
-            this.lstR5.FormattingEnabled = true;
-            this.lstR5.Location = new System.Drawing.Point(550, 19);
-            this.lstR5.Name = "lstR5";
-            this.lstR5.Size = new System.Drawing.Size(130, 199);
-            this.lstR5.TabIndex = 8;
-            // 
-            // lstR6
-            // 
-            this.lstR6.FormattingEnabled = true;
-            this.lstR6.Location = new System.Drawing.Point(686, 19);
-            this.lstR6.Name = "lstR6";
-            this.lstR6.Size = new System.Drawing.Size(130, 199);
-            this.lstR6.TabIndex = 8;
-            // 
-            // txtR4Warning
-            // 
-            this.txtR4Warning.Location = new System.Drawing.Point(414, 241);
-            this.txtR4Warning.Multiline = true;
-            this.txtR4Warning.Name = "txtR4Warning";
-            this.txtR4Warning.ReadOnly = true;
-            this.txtR4Warning.Size = new System.Drawing.Size(130, 47);
-            this.txtR4Warning.TabIndex = 9;
-            // 
-            // txtR5Warning
-            // 
-            this.txtR5Warning.Location = new System.Drawing.Point(550, 241);
-            this.txtR5Warning.Multiline = true;
-            this.txtR5Warning.Name = "txtR5Warning";
-            this.txtR5Warning.ReadOnly = true;
-            this.txtR5Warning.Size = new System.Drawing.Size(130, 47);
-            this.txtR5Warning.TabIndex = 9;
-            // 
-            // txtR6Warning
-            // 
-            this.txtR6Warning.Location = new System.Drawing.Point(686, 241);
-            this.txtR6Warning.Multiline = true;
-            this.txtR6Warning.Name = "txtR6Warning";
-            this.txtR6Warning.ReadOnly = true;
-            this.txtR6Warning.Size = new System.Drawing.Size(130, 47);
-            this.txtR6Warning.TabIndex = 9;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(414, 223);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(47, 13);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Warning";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(550, 223);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(47, 13);
-            this.label12.TabIndex = 10;
-            this.label12.Text = "Warning";
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(958, 223);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(47, 13);
+            this.label15.TabIndex = 10;
+            this.label15.Text = "Warning";
             // 
             // label13
             // 
@@ -464,39 +328,14 @@
             this.label13.TabIndex = 10;
             this.label13.Text = "Warning";
             // 
-            // lstR7
+            // label10
             // 
-            this.lstR7.FormattingEnabled = true;
-            this.lstR7.Location = new System.Drawing.Point(822, 19);
-            this.lstR7.Name = "lstR7";
-            this.lstR7.Size = new System.Drawing.Size(130, 199);
-            this.lstR7.TabIndex = 8;
-            // 
-            // lstR8
-            // 
-            this.lstR8.FormattingEnabled = true;
-            this.lstR8.Location = new System.Drawing.Point(958, 19);
-            this.lstR8.Name = "lstR8";
-            this.lstR8.Size = new System.Drawing.Size(130, 199);
-            this.lstR8.TabIndex = 8;
-            // 
-            // txtR7Warning
-            // 
-            this.txtR7Warning.Location = new System.Drawing.Point(822, 241);
-            this.txtR7Warning.Multiline = true;
-            this.txtR7Warning.Name = "txtR7Warning";
-            this.txtR7Warning.ReadOnly = true;
-            this.txtR7Warning.Size = new System.Drawing.Size(130, 47);
-            this.txtR7Warning.TabIndex = 9;
-            // 
-            // txtR8Warning
-            // 
-            this.txtR8Warning.Location = new System.Drawing.Point(958, 241);
-            this.txtR8Warning.Multiline = true;
-            this.txtR8Warning.Name = "txtR8Warning";
-            this.txtR8Warning.ReadOnly = true;
-            this.txtR8Warning.Size = new System.Drawing.Size(130, 47);
-            this.txtR8Warning.TabIndex = 9;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(278, 223);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 13);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Warning";
             // 
             // label14
             // 
@@ -507,14 +346,193 @@
             this.label14.TabIndex = 10;
             this.label14.Text = "Warning";
             // 
-            // label15
+            // label12
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(958, 223);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(47, 13);
-            this.label15.TabIndex = 10;
-            this.label15.Text = "Warning";
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(550, 223);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(47, 13);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "Warning";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(142, 223);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(47, 13);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Warning";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(414, 223);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(47, 13);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Warning";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 223);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Warning";
+            // 
+            // txtR8Warning
+            // 
+            this.txtR8Warning.Location = new System.Drawing.Point(958, 241);
+            this.txtR8Warning.Multiline = true;
+            this.txtR8Warning.Name = "txtR8Warning";
+            this.txtR8Warning.ReadOnly = true;
+            this.txtR8Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR8Warning.TabIndex = 9;
+            // 
+            // txtR6Warning
+            // 
+            this.txtR6Warning.Location = new System.Drawing.Point(686, 241);
+            this.txtR6Warning.Multiline = true;
+            this.txtR6Warning.Name = "txtR6Warning";
+            this.txtR6Warning.ReadOnly = true;
+            this.txtR6Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR6Warning.TabIndex = 9;
+            // 
+            // txtR3Warning
+            // 
+            this.txtR3Warning.Location = new System.Drawing.Point(278, 241);
+            this.txtR3Warning.Multiline = true;
+            this.txtR3Warning.Name = "txtR3Warning";
+            this.txtR3Warning.ReadOnly = true;
+            this.txtR3Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR3Warning.TabIndex = 9;
+            // 
+            // txtR7Warning
+            // 
+            this.txtR7Warning.Location = new System.Drawing.Point(822, 241);
+            this.txtR7Warning.Multiline = true;
+            this.txtR7Warning.Name = "txtR7Warning";
+            this.txtR7Warning.ReadOnly = true;
+            this.txtR7Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR7Warning.TabIndex = 9;
+            // 
+            // txtR5Warning
+            // 
+            this.txtR5Warning.Location = new System.Drawing.Point(550, 241);
+            this.txtR5Warning.Multiline = true;
+            this.txtR5Warning.Name = "txtR5Warning";
+            this.txtR5Warning.ReadOnly = true;
+            this.txtR5Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR5Warning.TabIndex = 9;
+            // 
+            // txtR2Warning
+            // 
+            this.txtR2Warning.Location = new System.Drawing.Point(142, 241);
+            this.txtR2Warning.Multiline = true;
+            this.txtR2Warning.Name = "txtR2Warning";
+            this.txtR2Warning.ReadOnly = true;
+            this.txtR2Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR2Warning.TabIndex = 9;
+            // 
+            // txtR4Warning
+            // 
+            this.txtR4Warning.Location = new System.Drawing.Point(414, 241);
+            this.txtR4Warning.Multiline = true;
+            this.txtR4Warning.Name = "txtR4Warning";
+            this.txtR4Warning.ReadOnly = true;
+            this.txtR4Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR4Warning.TabIndex = 9;
+            // 
+            // txtR1Warning
+            // 
+            this.txtR1Warning.Location = new System.Drawing.Point(6, 241);
+            this.txtR1Warning.Multiline = true;
+            this.txtR1Warning.Name = "txtR1Warning";
+            this.txtR1Warning.ReadOnly = true;
+            this.txtR1Warning.Size = new System.Drawing.Size(130, 47);
+            this.txtR1Warning.TabIndex = 9;
+            // 
+            // lstR8
+            // 
+            this.lstR8.FormattingEnabled = true;
+            this.lstR8.Location = new System.Drawing.Point(958, 19);
+            this.lstR8.Name = "lstR8";
+            this.lstR8.Size = new System.Drawing.Size(130, 199);
+            this.lstR8.TabIndex = 8;
+            this.lstR8.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
+            // 
+            // lstR6
+            // 
+            this.lstR6.FormattingEnabled = true;
+            this.lstR6.Location = new System.Drawing.Point(686, 19);
+            this.lstR6.Name = "lstR6";
+            this.lstR6.Size = new System.Drawing.Size(130, 199);
+            this.lstR6.TabIndex = 8;
+            this.lstR6.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
+            // 
+            // lstR3
+            // 
+            this.lstR3.FormattingEnabled = true;
+            this.lstR3.Location = new System.Drawing.Point(278, 19);
+            this.lstR3.Name = "lstR3";
+            this.lstR3.Size = new System.Drawing.Size(130, 199);
+            this.lstR3.TabIndex = 8;
+            this.lstR3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
+            // 
+            // lstR7
+            // 
+            this.lstR7.FormattingEnabled = true;
+            this.lstR7.Location = new System.Drawing.Point(822, 19);
+            this.lstR7.Name = "lstR7";
+            this.lstR7.Size = new System.Drawing.Size(130, 199);
+            this.lstR7.TabIndex = 8;
+            this.lstR7.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
+            // 
+            // lstR5
+            // 
+            this.lstR5.FormattingEnabled = true;
+            this.lstR5.Location = new System.Drawing.Point(550, 19);
+            this.lstR5.Name = "lstR5";
+            this.lstR5.Size = new System.Drawing.Size(130, 199);
+            this.lstR5.TabIndex = 8;
+            this.lstR5.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
+            // 
+            // lstR2
+            // 
+            this.lstR2.FormattingEnabled = true;
+            this.lstR2.Location = new System.Drawing.Point(142, 19);
+            this.lstR2.Name = "lstR2";
+            this.lstR2.Size = new System.Drawing.Size(130, 199);
+            this.lstR2.TabIndex = 8;
+            this.lstR2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
+            // 
+            // lstR4
+            // 
+            this.lstR4.FormattingEnabled = true;
+            this.lstR4.Location = new System.Drawing.Point(414, 19);
+            this.lstR4.Name = "lstR4";
+            this.lstR4.Size = new System.Drawing.Size(130, 199);
+            this.lstR4.TabIndex = 8;
+            this.lstR4.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
+            // 
+            // lstR1
+            // 
+            this.lstR1.FormattingEnabled = true;
+            this.lstR1.Location = new System.Drawing.Point(6, 19);
+            this.lstR1.Name = "lstR1";
+            this.lstR1.Size = new System.Drawing.Size(130, 199);
+            this.lstR1.TabIndex = 8;
+            this.lstR1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
+            // 
+            // txtDMMMeasurementMode
+            // 
+            this.txtDMMMeasurementMode.Location = new System.Drawing.Point(6, 129);
+            this.txtDMMMeasurementMode.Name = "txtDMMMeasurementMode";
+            this.txtDMMMeasurementMode.ReadOnly = true;
+            this.txtDMMMeasurementMode.Size = new System.Drawing.Size(240, 20);
+            this.txtDMMMeasurementMode.TabIndex = 9;
             // 
             // frmNI
             // 
@@ -588,5 +606,6 @@
         private System.Windows.Forms.ListBox lstR2;
         private System.Windows.Forms.ListBox lstR4;
         private System.Windows.Forms.ListBox lstR1;
+        private System.Windows.Forms.TextBox txtDMMMeasurementMode;
     }
 }

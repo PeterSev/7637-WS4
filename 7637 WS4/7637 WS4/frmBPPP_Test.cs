@@ -54,9 +54,11 @@ namespace _7637_WS4
             {
                 tests = Excel.ParseBPPP(catalog + listBPPPTestFileName);    //открываем список тестов из экселевского файла
                 lblTEstCount.Text = tests.Length.ToString();
+                _frmMain.niControl.DCSetOnOff("1", 0.1, false);
+                _frmMain.niControl.DCSetOnOff("1", 0.1, false);
 
                 //RunTests(tests);
-                
+
             }
             else
             {
@@ -64,9 +66,23 @@ namespace _7637_WS4
             }
         }
 
-        void RunTests(BPPPTest[] tests)
+        //void RunTests(BPPPTest[] tests)
+        void RunBPPPAllTests(int cnt)
         {
+            //_frmMain.niControl.DCSetOnOff("0", 24, true);
+            //_frmMain.niControl.OpenCloseRelay(true, "R6", "64");
+            //_frmMain.niControl.OpenCloseRelay(true, "R7", "66");
 
+            for(int i = 0; i < cnt; i++)
+            {
+                RunBPPPTest(i, cnt);
+            }
+            
+
+
+            //_frmMain.niControl.OpenCloseRelay(false, "R6", "64");
+            //_frmMain.niControl.OpenCloseRelay(false, "R7", "66");
+            //_frmMain.niControl.DCSetOnOff("0", 24, false);
         }
 
         public frmBPPP_Test()
@@ -122,6 +138,135 @@ namespace _7637_WS4
         private void btnCloseRelay_Click(object sender, EventArgs e)
         {
             _frmMain.niControl.OpenCloseRelay(false, cmbSwitchName.SelectedItem.ToString(), numSwitchChannel.Value.ToString());
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //RunTests((int)numTest.Value);
+            RunBPPPTest((int)numTest.Value, 1);
+
+        }
+
+        BPPPTest lastTest = null;
+        private void RunBPPPTest(int num, int cntTotal)
+        {
+            BPPPTest test = tests[num]; //получаем текущий тес из общего списка
+
+            if (lastTest != null) //будет НУЛЛОМ только в первый заход в цикл
+            {
+                for(int i = 0; i < lastTest.Input.Length; i++)
+                {
+                    if((lastTest.Input[i].Channel != test.Input[i].Channel) || (lastTest.Input[i].Device != test.Input[i].Device))
+                    {
+                        //выключение
+                        string dev = lastTest.Input[i].Device;
+                        string ch = lastTest.Input[i].Channel.ToString();
+                        _frmMain.niControl.OpenCloseRelay(false, dev, ch);
+
+                        //включение
+                        dev = test.Input[i].Device;
+                        ch = test.Input[i].Channel.ToString();
+                        _frmMain.niControl.OpenCloseRelay(true, dev, ch);
+                    }
+                    if ((lastTest.Output[i].Channel != test.Output[i].Channel) || (lastTest.Output[i].Device != test.Output[i].Device))
+                    {
+                        string dev = lastTest.Output[i].Device;
+                        string ch = lastTest.Output[i].Channel.ToString();
+                        _frmMain.niControl.OpenCloseRelay(false, dev, ch);
+
+
+                        dev = test.Output[i].Device;
+                        ch = test.Output[i].Channel.ToString();
+                        _frmMain.niControl.OpenCloseRelay(true, dev, ch);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Contact input in test.Input)
+                {
+                    string dev = input.Device;
+                    string ch = input.Channel.ToString();
+                    _frmMain.niControl.OpenCloseRelay(true, dev, ch);
+                }
+                foreach (Contact output in test.Output)
+                {
+                    string dev = output.Device;
+                    string ch = output.Channel.ToString();
+                    _frmMain.niControl.OpenCloseRelay(true, dev, ch);
+                }
+            }
+
+            lastTest = test;
+
+            //ВКЛючение определенных каналов в реле
+            /*foreach (Contact input in test.Input)
+            {
+                string dev = input.Device;
+                string ch = input.Channel.ToString();
+                _frmMain.niControl.OpenCloseRelay(true, dev, ch);
+            }
+            foreach (Contact output in test.Output)
+            {
+                string dev = output.Device;
+                string ch = output.Channel.ToString();
+                _frmMain.niControl.OpenCloseRelay(true, dev, ch);
+            }*/
+            //-------------------------------------------------------
+
+            //Thread.Sleep((int)numTimeout.Value);
+
+            //_frmMain.bNeedRewrite = true;
+            //while (!_frmMain.bReadyToRead) { Application.DoEvents(); Thread.Sleep(50); }
+
+            //_frmMain.bReadyToRead = false;
+
+
+            //Проведение измерений---------------------------------------------
+            _frmMain.niControl.ReadDMM("Resistance");   //инициирование чтения мультиметра
+            lblResultOfDMM.Text = Math.Round(_frmMain.resultOfMeasurementDMM, 6).ToString();    //запоминаем последнее значение от мультиметра
+            tests[num].Value = Math.Round(_frmMain.resultOfMeasurementDMM, 6);
+            lblRunCount.Text = "CNT: " + _frmMain.cntOfResMeasurementDMM;
+            //-----------------------------------------------------------------
+
+            //if (num >= tests.Length - 1)
+            if (num >= cntTotal-1)
+            {
+                //ВЫКЛючение включенных каналов----------------------------
+                foreach (Contact input in test.Input)
+                {
+                    string dev = input.Device;
+                    string ch = input.Channel.ToString();
+                    _frmMain.niControl.OpenCloseRelay(false, dev, ch);
+                }
+                foreach (Contact output in test.Output)
+                {
+                    string dev = output.Device;
+                    string ch = output.Channel.ToString();
+                    _frmMain.niControl.OpenCloseRelay(false, dev, ch);
+                }
+                //-------------------------------------------------------
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+            //_frmMain.niControl.DCSetOnOff("0", 24, true);
+            //_frmMain.niControl.OpenCloseRelay(true, "R6", "64");
+            //_frmMain.niControl.OpenCloseRelay(true, "R7", "66");
+            //Thread.Sleep(200);
+
+                //RunTest((int)numTest.Value);
+            RunBPPPAllTests(tests.Length);
+
+            //_frmMain.niControl.OpenCloseRelay(false, "R6", "64");
+            //_frmMain.niControl.OpenCloseRelay(false, "R7", "66");
+            //_frmMain.niControl.DCSetOnOff("0", 24, false);
+            sw.Stop();
+            lblT.Text = sw.Elapsed.ToString();
+            var obj = tests.Where(p => p.Value > 0);
         }
     }
 }

@@ -17,6 +17,11 @@ namespace _7637_WS4
         List<Board> listBoards = new List<Board>();
         public Board curBoard = null;
 
+        public double resultOfMeasurementDMM = 0;
+        public int cntOfResMeasurementDMM = 0;
+        public bool bNeedRewrite = false;
+        public bool bReadyToRead = false;
+
         //new comment Попробовал открыть репозиторий с домашнего компьютера
 
         public frmTests _frmTests;

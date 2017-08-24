@@ -64,11 +64,20 @@ namespace _7637_WS4
             txtDMMStatus.Text = msg;
         }
 
-        private void NiControl_bufReadDMMReceived(double[] buf)
+        private void NiControl_bufReadDMMReceived(DMMResult dmmResult)
         {
             lstDMMValues.Items.Clear();
-            foreach (double d in buf)
+            foreach (double d in dmmResult.buf)
                 lstDMMValues.Items.Add(d);
+            txtDMMMeasurementMode.Text = dmmResult.measurementMode;
+
+            //if (_frmMain.bNeedRewrite)
+            //{
+                _frmMain.resultOfMeasurementDMM = dmmResult.buf[0];
+                _frmMain.cntOfResMeasurementDMM++;
+                //_frmMain.bNeedRewrite = false;
+                //_frmMain.bReadyToRead = true;
+            //}
         }
 
         //SWITCH events
@@ -130,10 +139,12 @@ namespace _7637_WS4
                 ind1OVP.BackColor = obj.BOVP1 ? SystemColors.Control : Color.Red;
                 ind2OVP.BackColor = obj.BOVP2 ? SystemColors.Control : Color.Red;
 
-                if(obj.B1 || obj.B2)
-                    //Инициируем запуск чтения мультиметра после прихода данных
-                    _frmMain.niControl.ReadDMM();
-
+                //if(obj.B1 || obj.B2)
+                //Инициируем запуск чтения мультиметра после прихода данных
+                //_frmMain.niControl.ReadDMM("Resistance");
+                //_frmMain.niControl.ReadDMM("Resistance");
+                /*if (obj.B1 && obj.BOVP1)
+                    _frmMain.bNeedRewrite = true;*/
             });
         }
 
@@ -168,9 +179,10 @@ namespace _7637_WS4
                 Init();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void lstR6_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            _frmMain.niControl.ReadDMM();
+            ListBox lst = (ListBox)sender;
+            lst.Items.Clear();
         }
     }
 }

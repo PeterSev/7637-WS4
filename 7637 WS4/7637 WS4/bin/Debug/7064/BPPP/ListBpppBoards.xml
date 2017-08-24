@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BOARDS>
-	<BOARD NAME="TestBOARD001">
-		<CATALOG>TestBOARD001</CATALOG>
-		<IMAGELINK>TestBOARD001.jpg</IMAGELINK>
-		<COMMENT>Первый комментарий</COMMENT>
+	<BOARD NAME="Test1">
+		<CATALOG>Test1</CATALOG>
+		<IMAGELINK>Test1.jpg</IMAGELINK>
+		<COMMENT>тест 1 R 400 Ом</COMMENT>
 	</BOARD>
 	<BOARD NAME="TestBOARD002">
 		<CATALOG>TestBOARD002</CATALOG>
