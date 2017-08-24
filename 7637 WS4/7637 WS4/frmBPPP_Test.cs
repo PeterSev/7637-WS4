@@ -53,10 +53,17 @@ namespace _7637_WS4
             if(Utils.isFileExist(catalog + listBPPPTestFileName))
             {
                 tests = Excel.ParseBPPP(catalog + listBPPPTestFileName);    //открываем список тестов из экселевского файла
-                lblTEstCount.Text = tests.Length.ToString();
-                _frmMain.niControl.DCSetOnOff("1", 0.1, false);
-                _frmMain.niControl.DCSetOnOff("1", 0.1, false);
+                if (tests != null)
+                {
+                    lblTEstCount.Text = tests.Length.ToString();
+                    _frmMain.niControl.DCSetOnOff("1", 0.1, false);
+                    _frmMain.niControl.DCSetOnOff("1", 0.1, false);
+                }
+                else
+                {
+                    MessageBox.Show("Файл поврежден или имеет неверный формат");
 
+                }
                 //RunTests(tests);
 
             }
@@ -72,8 +79,8 @@ namespace _7637_WS4
             //_frmMain.niControl.DCSetOnOff("0", 24, true);
             //_frmMain.niControl.OpenCloseRelay(true, "R6", "64");
             //_frmMain.niControl.OpenCloseRelay(true, "R7", "66");
-
-            for(int i = 0; i < cnt; i++)
+            
+            for (int i = 0; i < cnt; i++)
             {
                 RunBPPPTest(i, cnt);
             }
@@ -143,7 +150,13 @@ namespace _7637_WS4
         private void button5_Click(object sender, EventArgs e)
         {
             //RunTests((int)numTest.Value);
-            RunBPPPTest((int)numTest.Value, 1);
+            int num = (int)numTest.Value;
+            if(num>=tests.Length)
+            {
+                MessageBox.Show("Такого номера теста в файле тестов нет!", "Ошибка");
+                return;
+            }
+            RunBPPPTest(num, 1);
 
         }
 
@@ -245,6 +258,7 @@ namespace _7637_WS4
                     string ch = output.Channel.ToString();
                     _frmMain.niControl.OpenCloseRelay(false, dev, ch);
                 }
+                lastTest = null;
                 //-------------------------------------------------------
             }
         }
@@ -266,7 +280,13 @@ namespace _7637_WS4
             //_frmMain.niControl.DCSetOnOff("0", 24, false);
             sw.Stop();
             lblT.Text = sw.Elapsed.ToString();
-            var obj = tests.Where(p => p.Value > 0);
+            //var obj = tests.Where(p => p.Value > 0);
+
+            lstResult.Items.Clear();
+            for (int i = 0; i < tests.Length; i++)
+            {
+                lstResult.Items.Add(tests[i].Index + "  " + tests[i].Value);
+            }
         }
     }
 }

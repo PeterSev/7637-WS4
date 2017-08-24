@@ -55,6 +55,7 @@
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.lblT = new System.Windows.Forms.Label();
+            this.lstResult = new System.Windows.Forms.ListBox();
             this.grpTestInfo.SuspendLayout();
             this.grpDC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV2)).BeginInit();
@@ -79,6 +80,7 @@
             // grpTestInfo
             // 
             this.grpTestInfo.Controls.Add(this.lblTEstCount);
+            this.grpTestInfo.Controls.Add(this.lblT);
             this.grpTestInfo.Controls.Add(this.label1);
             this.grpTestInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.grpTestInfo.Location = new System.Drawing.Point(12, 12);
@@ -290,11 +292,12 @@
             this.groupBox1.Controls.Add(this.lblRunCount);
             this.groupBox1.Controls.Add(this.lblResultOfDMM);
             this.groupBox1.Controls.Add(this.numTest);
+            this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Controls.Add(this.button5);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(444, 179);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(377, 82);
+            this.groupBox1.Size = new System.Drawing.Size(377, 158);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Тесты";
@@ -311,7 +314,7 @@
             // lblResultOfDMM
             // 
             this.lblResultOfDMM.AutoSize = true;
-            this.lblResultOfDMM.Location = new System.Drawing.Point(309, 36);
+            this.lblResultOfDMM.Location = new System.Drawing.Point(275, 36);
             this.lblResultOfDMM.Name = "lblResultOfDMM";
             this.lblResultOfDMM.Size = new System.Drawing.Size(16, 17);
             this.lblResultOfDMM.TabIndex = 3;
@@ -346,11 +349,11 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(547, 280);
+            this.button6.Location = new System.Drawing.Point(103, 94);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.Size = new System.Drawing.Size(97, 23);
             this.button6.TabIndex = 8;
-            this.button6.Text = "button6";
+            this.button6.Text = "RunAllTest";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -384,21 +387,29 @@
             // lblT
             // 
             this.lblT.AutoSize = true;
-            this.lblT.Location = new System.Drawing.Point(346, 217);
+            this.lblT.Location = new System.Drawing.Point(27, 59);
             this.lblT.Name = "lblT";
-            this.lblT.Size = new System.Drawing.Size(13, 13);
+            this.lblT.Size = new System.Drawing.Size(16, 17);
             this.lblT.TabIndex = 11;
             this.lblT.Text = "t:";
+            // 
+            // lstResult
+            // 
+            this.lstResult.FormattingEnabled = true;
+            this.lstResult.Location = new System.Drawing.Point(862, 142);
+            this.lstResult.Name = "lstResult";
+            this.lstResult.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lstResult.Size = new System.Drawing.Size(294, 212);
+            this.lstResult.TabIndex = 12;
             // 
             // frmBPPP_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1169, 381);
-            this.Controls.Add(this.lblT);
+            this.Controls.Add(this.lstResult);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.numTimeout);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grpSwitch);
             this.Controls.Add(this.grpDC);
@@ -458,5 +469,6 @@
         private System.Windows.Forms.NumericUpDown numTimeout;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblT;
+        private System.Windows.Forms.ListBox lstResult;
     }
 }
