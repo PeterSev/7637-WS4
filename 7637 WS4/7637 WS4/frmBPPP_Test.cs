@@ -236,7 +236,7 @@ namespace _7637_WS4
 
 
             //Проведение измерений---------------------------------------------
-            _frmMain.niControl.ReadDMM("Resistance");   //инициирование чтения мультиметра
+            _frmMain.niControl.ReadDMM("Resistance", test.Range);   //инициирование чтения мультиметра
             lblResultOfDMM.Text = Math.Round(_frmMain.resultOfMeasurementDMM, 6).ToString();    //запоминаем последнее значение от мультиметра
             tests[num].Value = Math.Round(_frmMain.resultOfMeasurementDMM, 6);
             lblRunCount.Text = "CNT: " + _frmMain.cntOfResMeasurementDMM;

@@ -272,7 +272,7 @@ namespace _7637_WS4
             
         }
 
-        void ConfigureDMM(string measurementFunction)
+        void ConfigureDMM(string measurementFunction, double range)
         {
             DmmMeasurementFunction measurementMode = DmmMeasurementFunction.DCVolts;
             if(measurementFunction == "DCVolts")
@@ -281,7 +281,7 @@ namespace _7637_WS4
                 measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[4]);
             //DmmMeasurementFunction measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
             DmmTriggerSource triggerSource = "Immediate";              //"Immediate", "External", "Software Trigger", "Ttl0", "Ttl1"
-            double range = 100000;
+            //double range = 100000;
             //double triggerDelay = 0;
             samplesPerReading = 7;
             dmmSession.ConfigureMeasurementDigits(measurementMode, range, resolutionDMM);
@@ -292,14 +292,14 @@ namespace _7637_WS4
             dmmSession.Trigger.MultiPoint.SampleCount = samplesPerReading;
         }
 
-        public void ReadDMM(string measurementFunction)
+        public void ReadDMM(string measurementFunction, double range)
         {
             //Application.DoEvents();
             double[] readBuf;
             try
             {
                 dmmSession = new NIDmm(listDeviceDMM[0], true, true);
-                ConfigureDMM(measurementFunction);
+                ConfigureDMM(measurementFunction, range);
 
                 dmmSession.Measurement.Initiate();
 
