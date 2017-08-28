@@ -74,7 +74,7 @@ namespace _7637_WS4
             //if (_frmMain.bNeedRewrite)
             //{
                 _frmMain.resultOfMeasurementDMM = dmmResult.buf[0];
-                _frmMain.cntOfResMeasurementDMM++;
+                //_frmMain.cntOfResMeasurementDMM++;
                 //_frmMain.bNeedRewrite = false;
                 //_frmMain.bReadyToRead = true;
             //}

@@ -81,17 +81,19 @@ namespace _7637_WS4
 
         public void OpenCloseRelay(bool b, string name, string channel)
         {
+            name = name.ToLower();
             SwitchRelay curRelay = null;
             switch (name)
             {
-                case "R1":  curRelay = relayR1; break;
-                case "R2":  curRelay = relayR2; break;
-                case "R3":  curRelay = relayR3; break;
-                case "R4":  curRelay = relayR4; break;
-                case "R5":  curRelay = relayR5; break;
-                case "R6":  curRelay = relayR6; break;
-                case "R7":  curRelay = relayR7; break;
-                case "R8":  curRelay = relayR8; break;
+                case "r1":  curRelay = relayR1; break;
+                case "r2":  curRelay = relayR2; break;
+                case "r3":  curRelay = relayR3; break;
+                case "r4":  curRelay = relayR4; break;
+                case "r5":  curRelay = relayR5; break;
+                case "r6":  curRelay = relayR6; break;
+                case "r7":  curRelay = relayR7; break;
+                case "r8":  curRelay = relayR8; break;
+                default: return;
             }
             //curRelay.InitRelay();
             curRelay.ChangeRelayState(b, "k"+channel);

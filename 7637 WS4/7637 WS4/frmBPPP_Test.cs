@@ -19,7 +19,10 @@ namespace _7637_WS4
         string listBPPPTestFileName = String.Empty; //"BPPP_test.xls";
         string catalog = string.Empty;
         Board curBoard = null;
+        bool bNeedStop = false;
+        int numCurTest = 0;
         BPPPTest[] tests;
+        BPPPTest lastTest = null;
 
         //Переменные для источника питания. Перемещено в отдельный класс
         /*IIviDCPwr iviDCPower;
@@ -45,10 +48,11 @@ namespace _7637_WS4
 
             this.Text = curBoard.Name + " БППП. " + "Плата " + _frmMain._frmBPPP.curBpppBoard.Name + ". Прохождение тестов";
             this.BackColor = Color.RoyalBlue;
-            grpTestInfo.ForeColor = Color.White;
+            grpBPPPTest.ForeColor = Color.White;
             grpDC.ForeColor = Color.White;
             grpSwitch.ForeColor = Color.White;
             cmbSwitchName.SelectedIndex = 0;
+            numCurTest = 0;
 
             if(Utils.isFileExist(catalog + listBPPPTestFileName))
             {
@@ -82,6 +86,11 @@ namespace _7637_WS4
             
             for (int i = 0; i < cnt; i++)
             {
+                lblRunCount.Text = "Выполняется № " + (i + 1).ToString();
+                int v = ((i + 1) * 100 / cnt);
+                if (progressBar.Value != v) progressBar.Value = v;
+
+                if (bNeedStop) break;
                 RunBPPPTest(i, cnt);
             }
             
@@ -107,6 +116,7 @@ namespace _7637_WS4
         {
             e.Cancel = true;
             bNeedReload = true;
+            bNeedStop = true;
             //CloseDCIVISession();
             this.Hide();
             _frmMain._frmBPPP.Show();
@@ -160,10 +170,10 @@ namespace _7637_WS4
 
         }
 
-        BPPPTest lastTest = null;
+        
         private void RunBPPPTest(int num, int cntTotal)
         {
-            BPPPTest test = tests[num]; //получаем текущий тес из общего списка
+            BPPPTest test = tests[num]; //получаем текущий тест из общего списка
 
             if (lastTest != null) //будет НУЛЛОМ только в первый заход в цикл
             {
@@ -237,12 +247,44 @@ namespace _7637_WS4
 
             //Проведение измерений---------------------------------------------
             _frmMain.niControl.ReadDMM("Resistance", test.Range);   //инициирование чтения мультиметра
-            lblResultOfDMM.Text = Math.Round(_frmMain.resultOfMeasurementDMM, 6).ToString();    //запоминаем последнее значение от мультиметра
-            tests[num].Value = Math.Round(_frmMain.resultOfMeasurementDMM, 6);
-            lblRunCount.Text = "CNT: " + _frmMain.cntOfResMeasurementDMM;
-            //-----------------------------------------------------------------
+            if (_frmMain.resultOfMeasurementDMM > tests[num].Min && _frmMain.resultOfMeasurementDMM < tests[num].Max)   //проверяем измеренное значение на минимум-максимум
+                lblResultOfDMM.ForeColor = Color.LightGreen;
+            else
+                lblResultOfDMM.ForeColor = Color.Red;
 
-            //if (num >= tests.Length - 1)
+            if (_frmMain.resultOfMeasurementDMM < 10)   //искусственно зануляем значения ниже 10 Ом
+                _frmMain.resultOfMeasurementDMM = 0;
+
+            lblResultOfDMM.Text = Math.Round(_frmMain.resultOfMeasurementDMM, 6).ToString();    //запоминаем последнее значение от мультиметра
+            tests[num].Value = Math.Round(_frmMain.resultOfMeasurementDMM, 6);                  //записываем измеренное значение в текущий тест
+
+            //Видоизменяем комментарии в текущем тесте--------------
+            if (char.IsDigit(tests[num].Comment[0]))
+            {
+                string[] mas = tests[num].Comment.Split(' ');
+                for(int i = 0; i < mas.Length; i++)
+                {
+                    int val = 0;
+                    val = int.Parse(mas[i]);
+                    if (tests.Length >= 2000)
+                    {
+                        if (val <= 30)
+                            mas[i] = "A" + val.ToString();
+                        else
+                            mas[i] = "B" + (val - 30).ToString();
+                    }
+                    else
+                    {
+                        if (val <= 22)
+                            mas[i] = "A" + val.ToString();
+                        else
+                            mas[i] = "B" + (val - 22).ToString();
+                    }
+                }
+                tests[num].Comment = mas[0] + " " + mas[1];
+            }
+            //------------------------------------------------------------
+
             if (num >= cntTotal-1)
             {
                 //ВЫКЛючение включенных каналов----------------------------
@@ -263,8 +305,12 @@ namespace _7637_WS4
             }
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void btnRunAllBPPPTest_Click(object sender, EventArgs e)
         {
+            bNeedStop = false;
+            btnStopAllTest.Enabled = true;
+            btnRunAllBPPPTest.Enabled = false;
+            progressBar.Visible = true;
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             //_frmMain.niControl.DCSetOnOff("0", 24, true);
@@ -280,6 +326,9 @@ namespace _7637_WS4
             //_frmMain.niControl.DCSetOnOff("0", 24, false);
             sw.Stop();
             lblT.Text = sw.Elapsed.ToString();
+            btnStopAllTest.Enabled = false;
+            btnRunAllBPPPTest.Enabled = true;
+            progressBar.Visible = false;
             //var obj = tests.Where(p => p.Value > 0);
 
             lstResult.Items.Clear();
@@ -287,6 +336,30 @@ namespace _7637_WS4
             {
                 lstResult.Items.Add(tests[i].Index + "  " + tests[i].Value);
             }
+
+
+            try
+            {
+                //Excel.SaveBPPP(tests, catalog + "Report.xls");
+                MessageBox.Show(Excel.SaveBPPP(tests, Application.StartupPath + @"\"+catalog + "Report_" + listBPPPTestFileName));
+                if(Excel.SaveBPPP(tests, Application.StartupPath + @"\" + catalog + "Report_" + listBPPPTestFileName) != "Success")
+                {
+                    MessageBox.Show("Ошибка сохранения файла репорта! Проверьте в отладчике причину", "Ошибка");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка сохранения файла отчета Excel " + ex.Message, "Сохранение");
+            }
+        }
+
+        private void btnStopAllTest_Click(object sender, EventArgs e)
+        {
+            bNeedStop = true;
+
+            btnStopAllTest.Enabled = false;
+            btnRunAllBPPPTest.Enabled = true;
         }
     }
 }

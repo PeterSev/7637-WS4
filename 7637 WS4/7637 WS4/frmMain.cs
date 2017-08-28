@@ -18,7 +18,7 @@ namespace _7637_WS4
         public Board curBoard = null;
 
         public double resultOfMeasurementDMM = 0;
-        public int cntOfResMeasurementDMM = 0;
+        //public int cntOfResMeasurementDMM = 0;
         public bool bNeedRewrite = false;
         public bool bReadyToRead = false;
 
