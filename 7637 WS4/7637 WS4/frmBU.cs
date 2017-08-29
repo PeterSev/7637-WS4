@@ -63,8 +63,6 @@ namespace _7637_WS4
             btn0.MouseHover += Btn_MouseHover;
             btn1.MouseHover += Btn_MouseHover;
             btn2.MouseHover += Btn_MouseHover;
-
-
         }
 
         private void Btn_MouseHover(object sender, EventArgs e)

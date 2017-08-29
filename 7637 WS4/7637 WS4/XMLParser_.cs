@@ -142,9 +142,60 @@ namespace _7637_WS4
 
         public static List<Help> OpenListBZHelp(string filename)
         {
-            
+            List<Help> listHelp = new List<Help>();
 
-            return new List<Help>();
+            XmlTextReader reader = new XmlTextReader(filename);
+            string paramName = string.Empty;
+            string catalog = string.Empty;
+            
+            string imageLinkString = string.Empty;
+            string commentString = string.Empty;
+            while (reader.Read())
+            {
+                switch (reader.NodeType)
+                {
+                    case XmlNodeType.Element: // Узел является элементом.
+                        paramName = reader.Name;
+                        if (reader.Name == "HELP")
+                        {
+                      
+                        }
+
+                        break;
+
+                    case XmlNodeType.Text: // Вывести текст в каждом элементе.
+
+
+                        if (paramName == "COMMENT")
+                        {
+                            commentString = reader.Value;
+                        }
+
+                        if (paramName == "IMAGELINK")
+                        {
+                            imageLinkString = reader.Value;
+                        }
+
+
+                        break;
+
+                    case XmlNodeType.EndElement: // Вывести конец элемента.
+                        if (reader.Name == "HELP")
+                        {
+                            Help board = new Help( imageLinkString, commentString);
+                            listHelp.Add(board);
+                            commentString = string.Empty;
+                            imageLinkString = string.Empty;
+                            catalog = string.Empty;
+                        }
+
+                        break;
+                }
+            }
+
+
+            return listHelp;
+
         }
     }
 

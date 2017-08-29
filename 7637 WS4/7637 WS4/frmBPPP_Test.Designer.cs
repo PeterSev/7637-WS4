@@ -48,6 +48,7 @@
             this.numSwitchChannel = new System.Windows.Forms.NumericUpDown();
             this.cmbSwitchName = new System.Windows.Forms.ComboBox();
             this.grpBPPPTest = new System.Windows.Forms.GroupBox();
+            this.colorProgressBar = new _7637_WS4.ColorProgressBar();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@
             this.numTest = new System.Windows.Forms.NumericUpDown();
             this.btnRunAllBPPPTest = new System.Windows.Forms.Button();
             this.btnRunBPPPTest = new System.Windows.Forms.Button();
-            this.colorProgressBar = new _7637_WS4.ColorProgressBar();
             this.grpDC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV1)).BeginInit();
@@ -82,7 +82,7 @@
             // lblRunCount
             // 
             this.lblRunCount.AutoSize = true;
-            this.lblRunCount.Location = new System.Drawing.Point(299, 24);
+            this.lblRunCount.Location = new System.Drawing.Point(273, 24);
             this.lblRunCount.Name = "lblRunCount";
             this.lblRunCount.Size = new System.Drawing.Size(16, 17);
             this.lblRunCount.TabIndex = 4;
@@ -318,6 +318,24 @@
             this.grpBPPPTest.TabStop = false;
             this.grpBPPPTest.Text = "Тесты";
             // 
+            // colorProgressBar
+            // 
+            this.colorProgressBar.BackColor = System.Drawing.Color.White;
+            this.colorProgressBar.BorderColor = System.Drawing.Color.Black;
+            this.colorProgressBar.BorderWidth = 0;
+            this.colorProgressBar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.colorProgressBar.Location = new System.Drawing.Point(9, 120);
+            this.colorProgressBar.MaxValue = 100;
+            this.colorProgressBar.MinValue = 0;
+            this.colorProgressBar.Name = "colorProgressBar";
+            this.colorProgressBar.ProgressColor = System.Drawing.Color.LightGreen;
+            this.colorProgressBar.ProgressTextType = _7637_WS4.ColorProgressBar.FsProgressTextType.Percent;
+            this.colorProgressBar.ShowProgressText = true;
+            this.colorProgressBar.Size = new System.Drawing.Size(541, 25);
+            this.colorProgressBar.TabIndex = 13;
+            this.colorProgressBar.Value = 0;
+            this.colorProgressBar.Visible = false;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -409,24 +427,6 @@
             this.btnRunBPPPTest.Text = "Запуск";
             this.btnRunBPPPTest.UseVisualStyleBackColor = false;
             this.btnRunBPPPTest.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // colorProgressBar
-            // 
-            this.colorProgressBar.BackColor = System.Drawing.Color.White;
-            this.colorProgressBar.BorderColor = System.Drawing.Color.Black;
-            this.colorProgressBar.BorderWidth = 0;
-            this.colorProgressBar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.colorProgressBar.Location = new System.Drawing.Point(9, 120);
-            this.colorProgressBar.MaxValue = 100;
-            this.colorProgressBar.MinValue = 0;
-            this.colorProgressBar.Name = "colorProgressBar";
-            this.colorProgressBar.ProgressColor = System.Drawing.Color.LightGreen;
-            this.colorProgressBar.ProgressTextType = _7637_WS4.ColorProgressBar.FsProgressTextType.Percent;
-            this.colorProgressBar.ShowProgressText = true;
-            this.colorProgressBar.Size = new System.Drawing.Size(541, 25);
-            this.colorProgressBar.TabIndex = 13;
-            this.colorProgressBar.Value = 0;
-            this.colorProgressBar.Visible = false;
             // 
             // frmBPPP_Test
             // 

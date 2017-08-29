@@ -72,7 +72,7 @@ namespace _7637_WS4
                 }
             }
 
-
+            reader.Dispose();
             return listBoards;
         }
 
@@ -130,16 +130,15 @@ namespace _7637_WS4
                             imageLinkString = string.Empty;
                             catalog = string.Empty;
                         }
+                        paramName = string.Empty;
 
                         break;
                 }
             }
 
-
+            reader.Dispose();
             return listTests;
         }
-
-
         public static List<Help> OpenListBZHelp(string filename)
         {
             List<Help> listHelp = new List<Help>();
@@ -147,7 +146,7 @@ namespace _7637_WS4
             XmlTextReader reader = new XmlTextReader(filename);
             string paramName = string.Empty;
             string catalog = string.Empty;
-            
+
             string imageLinkString = string.Empty;
             string commentString = string.Empty;
             while (reader.Read())
@@ -158,7 +157,7 @@ namespace _7637_WS4
                         paramName = reader.Name;
                         if (reader.Name == "HELP")
                         {
-                      
+
                         }
 
                         break;
@@ -182,7 +181,7 @@ namespace _7637_WS4
                     case XmlNodeType.EndElement: // Вывести конец элемента.
                         if (reader.Name == "HELP")
                         {
-                            Help board = new Help( imageLinkString, commentString);
+                            Help board = new Help(imageLinkString, commentString);
                             listHelp.Add(board);
                             commentString = string.Empty;
                             imageLinkString = string.Empty;
@@ -197,6 +196,8 @@ namespace _7637_WS4
             return listHelp;
 
         }
+
+
     }
 
 
