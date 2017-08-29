@@ -79,10 +79,13 @@ namespace _7637_WS4
 
         private void frmPP_InnerHelp_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            this.Hide();
-            _frmMain._frmPP.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                this.Hide();
+                _frmMain._frmPP.Show();
+            }
         }
 
         private void lblLeft_Click(object sender, EventArgs e)

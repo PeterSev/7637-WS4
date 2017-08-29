@@ -22,6 +22,7 @@ namespace _7637_WS4
         bool bNeedStop = false;
         int numCurTest = 0;
         BPPPTest[] tests;
+        public List<BPPPTest> badTests;
         BPPPTest lastTest = null;
 
         //Переменные для источника питания. Перемещено в отдельный класс
@@ -53,6 +54,7 @@ namespace _7637_WS4
             grpSwitch.ForeColor = Color.White;
             cmbSwitchName.SelectedIndex = 0;
             numCurTest = 0;
+            badTests = new List<BPPPTest>();
 
             if(Utils.isFileExist(catalog + listBPPPTestFileName))
             {
@@ -88,7 +90,7 @@ namespace _7637_WS4
             {
                 lblRunCount.Text = "Выполняется № " + (i + 1).ToString();
                 int v = ((i + 1) * 100 / cnt);
-                if (progressBar.Value != v) progressBar.Value = v;
+                if (colorProgressBar.Value != v) colorProgressBar.Value = v;
 
                 if (bNeedStop) break;
                 RunBPPPTest(i, cnt);
@@ -114,12 +116,15 @@ namespace _7637_WS4
 
         private void frmBPPP_Test_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            bNeedStop = true;
-            //CloseDCIVISession();
-            this.Hide();
-            _frmMain._frmBPPP.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                bNeedStop = true;
+                //CloseDCIVISession();
+                this.Hide();
+                _frmMain._frmBPPP.Show();
+            }
         }
 
         private void btnShowReport_Click(object sender, EventArgs e)
@@ -247,16 +252,32 @@ namespace _7637_WS4
 
             //Проведение измерений---------------------------------------------
             _frmMain.niControl.ReadDMM("Resistance", test.Range);   //инициирование чтения мультиметра
-            if (_frmMain.resultOfMeasurementDMM > tests[num].Min && _frmMain.resultOfMeasurementDMM < tests[num].Max)   //проверяем измеренное значение на минимум-максимум
-                lblResultOfDMM.ForeColor = Color.LightGreen;
-            else
-                lblResultOfDMM.ForeColor = Color.Red;
+
+            if (double.IsNaN(_frmMain.resultOfMeasurementDMM))
+                _frmMain.resultOfMeasurementDMM = double.PositiveInfinity - 1;
 
             if (_frmMain.resultOfMeasurementDMM < 10)   //искусственно зануляем значения ниже 10 Ом
                 _frmMain.resultOfMeasurementDMM = 0;
 
+            string sRes = string.Empty;
+            if (_frmMain.resultOfMeasurementDMM >= tests[num].Min && _frmMain.resultOfMeasurementDMM <= tests[num].Max)   //проверяем измеренное значение на минимум-максимум
+            {
+                lblResultOfDMM.ForeColor = Color.LightGreen;
+                sRes = "PASSED";
+            }
+
+            else
+            {
+                lblResultOfDMM.ForeColor = Color.Red;
+                badTests.Add(tests[num]);
+                sRes = "FAILED";
+            }
+
+            
+
             lblResultOfDMM.Text = Math.Round(_frmMain.resultOfMeasurementDMM, 6).ToString();    //запоминаем последнее значение от мультиметра
             tests[num].Value = Math.Round(_frmMain.resultOfMeasurementDMM, 6);                  //записываем измеренное значение в текущий тест
+            tests[num].Result = sRes;                                                           //записываем результат проверки
 
             //Видоизменяем комментарии в текущем тесте--------------
             if (char.IsDigit(tests[num].Comment[0]))
@@ -307,10 +328,12 @@ namespace _7637_WS4
 
         private void btnRunAllBPPPTest_Click(object sender, EventArgs e)
         {
+            btnShowReport.Visible = false;
             bNeedStop = false;
             btnStopAllTest.Enabled = true;
             btnRunAllBPPPTest.Enabled = false;
-            progressBar.Visible = true;
+            colorProgressBar.Visible = true;
+            badTests.Clear();
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             //_frmMain.niControl.DCSetOnOff("0", 24, true);
@@ -328,20 +351,15 @@ namespace _7637_WS4
             lblT.Text = sw.Elapsed.ToString();
             btnStopAllTest.Enabled = false;
             btnRunAllBPPPTest.Enabled = true;
-            progressBar.Visible = false;
+            colorProgressBar.Visible = false;
+            btnShowReport.Visible = true;
             //var obj = tests.Where(p => p.Value > 0);
-
-            lstResult.Items.Clear();
-            for (int i = 0; i < tests.Length; i++)
-            {
-                lstResult.Items.Add(tests[i].Index + "  " + tests[i].Value);
-            }
-
+            _frmMain._frmBPPP_Report.Show();
 
             try
             {
                 //Excel.SaveBPPP(tests, catalog + "Report.xls");
-                MessageBox.Show(Excel.SaveBPPP(tests, Application.StartupPath + @"\"+catalog + "Report_" + listBPPPTestFileName));
+                //MessageBox.Show(Excel.SaveBPPP(tests, Application.StartupPath + @"\"+catalog + "Report_" + listBPPPTestFileName));
                 if(Excel.SaveBPPP(tests, Application.StartupPath + @"\" + catalog + "Report_" + listBPPPTestFileName) != "Success")
                 {
                     MessageBox.Show("Ошибка сохранения файла репорта! Проверьте в отладчике причину", "Ошибка");

@@ -38,10 +38,13 @@ namespace _7637_WS4
 
         private void frmBPPP_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            this.Hide();
-            _frmMain._frmBU.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                this.Hide();
+                _frmMain._frmBU.Show();
+            }
         }
 
         private void btnObryv_Click(object sender, EventArgs e)

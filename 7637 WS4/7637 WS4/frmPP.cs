@@ -39,11 +39,14 @@ namespace _7637_WS4
 
         private void frmPP_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            selectedBoard = string.Empty;
-            this.Hide();
-            _frmMain._frmTests.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                selectedBoard = string.Empty;
+                this.Hide();
+                _frmMain._frmTests.Show();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

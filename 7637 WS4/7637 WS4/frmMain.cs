@@ -121,7 +121,10 @@ namespace _7637_WS4
             /*niControl.statusUpdate += _frmNI.NiControl_statusUpdate;
             niControl.warningUpdate += _frmNI.NiControl_warningUpdate;
             niControl.updateStateDC += _frmNI.NiControl_updateStateDC;*/
+            
+            
             _frmNI.Show();
+            _frmNI.Hide();
         }
 
         

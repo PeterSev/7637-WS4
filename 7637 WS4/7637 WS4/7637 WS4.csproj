@@ -79,6 +79,9 @@
     <Compile Include="Classes\Board.cs" />
     <Compile Include="Classes\Help.cs" />
     <Compile Include="Classes\TestInfo.cs" />
+    <Compile Include="ColorProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="frmBPPP.cs">
       <SubType>Form</SubType>
     </Compile>

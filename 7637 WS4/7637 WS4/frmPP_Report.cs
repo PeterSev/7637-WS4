@@ -38,9 +38,12 @@ namespace _7637_WS4
 
         private void frmPP_Report_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            this.Hide();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                this.Hide();
+            }
         }
     }
 }

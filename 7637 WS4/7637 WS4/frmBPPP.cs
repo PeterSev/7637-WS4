@@ -142,11 +142,14 @@ namespace _7637_WS4
 
         private void frmBPPP_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            curBpppBoard = null;
-            this.Hide();
-            _frmMain._frmTests.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                curBpppBoard = null;
+                this.Hide();
+                _frmMain._frmTests.Show();
+            }
         }
     }
 }

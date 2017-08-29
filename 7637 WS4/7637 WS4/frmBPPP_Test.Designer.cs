@@ -48,16 +48,15 @@
             this.numSwitchChannel = new System.Windows.Forms.NumericUpDown();
             this.cmbSwitchName = new System.Windows.Forms.ComboBox();
             this.grpBPPPTest = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.btnStopAllTest = new System.Windows.Forms.Button();
             this.lblResultOfDMM = new System.Windows.Forms.Label();
             this.numTest = new System.Windows.Forms.NumericUpDown();
             this.btnRunAllBPPPTest = new System.Windows.Forms.Button();
             this.btnRunBPPPTest = new System.Windows.Forms.Button();
-            this.lstResult = new System.Windows.Forms.ListBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.colorProgressBar = new _7637_WS4.ColorProgressBar();
             this.grpDC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV1)).BeginInit();
@@ -69,12 +68,15 @@
             // 
             // btnShowReport
             // 
-            this.btnShowReport.Location = new System.Drawing.Point(767, 12);
+            this.btnShowReport.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnShowReport.ForeColor = System.Drawing.Color.White;
+            this.btnShowReport.Location = new System.Drawing.Point(475, 16);
             this.btnShowReport.Name = "btnShowReport";
-            this.btnShowReport.Size = new System.Drawing.Size(75, 23);
+            this.btnShowReport.Size = new System.Drawing.Size(75, 25);
             this.btnShowReport.TabIndex = 1;
-            this.btnShowReport.Text = "Report";
-            this.btnShowReport.UseVisualStyleBackColor = true;
+            this.btnShowReport.Text = "Отчет";
+            this.btnShowReport.UseVisualStyleBackColor = false;
+            this.btnShowReport.Visible = false;
             this.btnShowReport.Click += new System.EventHandler(this.btnShowReport_Click);
             // 
             // lblRunCount
@@ -166,7 +168,7 @@
             this.grpDC.Controls.Add(this.button3);
             this.grpDC.Controls.Add(this.button4);
             this.grpDC.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.grpDC.Location = new System.Drawing.Point(12, 12);
+            this.grpDC.Location = new System.Drawing.Point(12, 234);
             this.grpDC.Name = "grpDC";
             this.grpDC.Size = new System.Drawing.Size(254, 105);
             this.grpDC.TabIndex = 5;
@@ -218,7 +220,7 @@
             this.grpSwitch.Controls.Add(this.numSwitchChannel);
             this.grpSwitch.Controls.Add(this.cmbSwitchName);
             this.grpSwitch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.grpSwitch.Location = new System.Drawing.Point(272, 12);
+            this.grpSwitch.Location = new System.Drawing.Point(272, 234);
             this.grpSwitch.Name = "grpSwitch";
             this.grpSwitch.Size = new System.Drawing.Size(296, 105);
             this.grpSwitch.TabIndex = 6;
@@ -294,9 +296,10 @@
             // 
             // grpBPPPTest
             // 
-            this.grpBPPPTest.Controls.Add(this.progressBar);
+            this.grpBPPPTest.Controls.Add(this.colorProgressBar);
             this.grpBPPPTest.Controls.Add(this.lblT);
             this.grpBPPPTest.Controls.Add(this.lblRunCount);
+            this.grpBPPPTest.Controls.Add(this.btnShowReport);
             this.grpBPPPTest.Controls.Add(this.label6);
             this.grpBPPPTest.Controls.Add(this.label5);
             this.grpBPPPTest.Controls.Add(this.lblTEstCount);
@@ -308,23 +311,51 @@
             this.grpBPPPTest.Controls.Add(this.btnRunAllBPPPTest);
             this.grpBPPPTest.Controls.Add(this.btnRunBPPPTest);
             this.grpBPPPTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.grpBPPPTest.Location = new System.Drawing.Point(12, 123);
+            this.grpBPPPTest.Location = new System.Drawing.Point(12, 12);
             this.grpBPPPTest.Name = "grpBPPPTest";
-            this.grpBPPPTest.Size = new System.Drawing.Size(556, 169);
+            this.grpBPPPTest.Size = new System.Drawing.Size(556, 154);
             this.grpBPPPTest.TabIndex = 7;
             this.grpBPPPTest.TabStop = false;
             this.grpBPPPTest.Text = "Тесты";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(300, 94);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(54, 17);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Время:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(335, 51);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(108, 17);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Результат, Ом:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 51);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(176, 17);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Запуск одиночного теста";
+            // 
             // btnStopAllTest
             // 
+            this.btnStopAllTest.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnStopAllTest.Enabled = false;
-            this.btnStopAllTest.ForeColor = System.Drawing.Color.Black;
+            this.btnStopAllTest.ForeColor = System.Drawing.Color.White;
             this.btnStopAllTest.Location = new System.Drawing.Point(189, 91);
             this.btnStopAllTest.Name = "btnStopAllTest";
             this.btnStopAllTest.Size = new System.Drawing.Size(75, 25);
             this.btnStopAllTest.TabIndex = 9;
             this.btnStopAllTest.Text = "Стоп";
-            this.btnStopAllTest.UseVisualStyleBackColor = true;
+            this.btnStopAllTest.UseVisualStyleBackColor = false;
             this.btnStopAllTest.Click += new System.EventHandler(this.btnStopAllTest_Click);
             // 
             // lblResultOfDMM
@@ -338,6 +369,8 @@
             // 
             // numTest
             // 
+            this.numTest.BackColor = System.Drawing.Color.RoyalBlue;
+            this.numTest.ForeColor = System.Drawing.Color.White;
             this.numTest.Location = new System.Drawing.Point(189, 49);
             this.numTest.Maximum = new decimal(new int[] {
             5000,
@@ -355,81 +388,54 @@
             // 
             // btnRunAllBPPPTest
             // 
-            this.btnRunAllBPPPTest.ForeColor = System.Drawing.Color.Black;
+            this.btnRunAllBPPPTest.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRunAllBPPPTest.ForeColor = System.Drawing.Color.White;
             this.btnRunAllBPPPTest.Location = new System.Drawing.Point(9, 91);
             this.btnRunAllBPPPTest.Name = "btnRunAllBPPPTest";
             this.btnRunAllBPPPTest.Size = new System.Drawing.Size(172, 25);
             this.btnRunAllBPPPTest.TabIndex = 8;
             this.btnRunAllBPPPTest.Text = "Запуск всех тестов";
-            this.btnRunAllBPPPTest.UseVisualStyleBackColor = true;
+            this.btnRunAllBPPPTest.UseVisualStyleBackColor = false;
             this.btnRunAllBPPPTest.Click += new System.EventHandler(this.btnRunAllBPPPTest_Click);
             // 
             // btnRunBPPPTest
             // 
-            this.btnRunBPPPTest.ForeColor = System.Drawing.Color.Black;
+            this.btnRunBPPPTest.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRunBPPPTest.ForeColor = System.Drawing.Color.White;
             this.btnRunBPPPTest.Location = new System.Drawing.Point(256, 48);
             this.btnRunBPPPTest.Name = "btnRunBPPPTest";
             this.btnRunBPPPTest.Size = new System.Drawing.Size(75, 25);
             this.btnRunBPPPTest.TabIndex = 0;
             this.btnRunBPPPTest.Text = "Запуск";
-            this.btnRunBPPPTest.UseVisualStyleBackColor = true;
+            this.btnRunBPPPTest.UseVisualStyleBackColor = false;
             this.btnRunBPPPTest.Click += new System.EventHandler(this.button5_Click);
             // 
-            // lstResult
+            // colorProgressBar
             // 
-            this.lstResult.FormattingEnabled = true;
-            this.lstResult.Location = new System.Drawing.Point(574, 12);
-            this.lstResult.Name = "lstResult";
-            this.lstResult.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstResult.Size = new System.Drawing.Size(187, 277);
-            this.lstResult.TabIndex = 12;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 51);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(176, 17);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Запуск одиночного теста";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(335, 51);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(108, 17);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Результат, Ом:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(300, 94);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(54, 17);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Время:";
-            // 
-            // progressBar
-            // 
-            this.progressBar.Location = new System.Drawing.Point(9, 132);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(541, 23);
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar.TabIndex = 12;
-            this.progressBar.Visible = false;
+            this.colorProgressBar.BackColor = System.Drawing.Color.White;
+            this.colorProgressBar.BorderColor = System.Drawing.Color.Black;
+            this.colorProgressBar.BorderWidth = 0;
+            this.colorProgressBar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.colorProgressBar.Location = new System.Drawing.Point(9, 120);
+            this.colorProgressBar.MaxValue = 100;
+            this.colorProgressBar.MinValue = 0;
+            this.colorProgressBar.Name = "colorProgressBar";
+            this.colorProgressBar.ProgressColor = System.Drawing.Color.LightGreen;
+            this.colorProgressBar.ProgressTextType = _7637_WS4.ColorProgressBar.FsProgressTextType.Percent;
+            this.colorProgressBar.ShowProgressText = true;
+            this.colorProgressBar.Size = new System.Drawing.Size(541, 25);
+            this.colorProgressBar.TabIndex = 13;
+            this.colorProgressBar.Value = 0;
+            this.colorProgressBar.Visible = false;
             // 
             // frmBPPP_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(852, 302);
-            this.Controls.Add(this.lstResult);
+            this.ClientSize = new System.Drawing.Size(580, 175);
             this.Controls.Add(this.grpBPPPTest);
             this.Controls.Add(this.grpSwitch);
             this.Controls.Add(this.grpDC);
-            this.Controls.Add(this.btnShowReport);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -477,11 +483,10 @@
         private System.Windows.Forms.Label lblRunCount;
         private System.Windows.Forms.Button btnRunAllBPPPTest;
         private System.Windows.Forms.Label lblT;
-        private System.Windows.Forms.ListBox lstResult;
         private System.Windows.Forms.Button btnStopAllTest;
-        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private ColorProgressBar colorProgressBar;
     }
 }

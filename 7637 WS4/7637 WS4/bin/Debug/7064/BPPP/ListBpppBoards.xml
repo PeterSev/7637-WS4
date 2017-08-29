@@ -80,6 +80,11 @@
 		<IMAGELINK>7194.03.01.000.jpg</IMAGELINK>
 		<COMMENT>Модуль управления малогабаритного гироскопа (МУМГ)</COMMENT>
 	</BOARD>
+	<BOARD NAME="7194.03.09.000">
+		<CATALOG>7194.03.09.000</CATALOG>
+		<IMAGELINK>7194.03.09.000.jpg</IMAGELINK>
+		<COMMENT>Источник питания (ИП)</COMMENT>
+	</BOARD>
 
 
 
