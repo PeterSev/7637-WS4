@@ -334,6 +334,7 @@ namespace _7637_WS4
             btnRunAllBPPPTest.Enabled = false;
             colorProgressBar.Visible = true;
             badTests.Clear();
+            _frmMain._frmBPPP_Report.Hide();
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             //_frmMain.niControl.DCSetOnOff("0", 24, true);
