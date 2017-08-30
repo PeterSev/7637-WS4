@@ -14,6 +14,7 @@ namespace _7637_WS4
 {
     public partial class frmMain : Form
     {
+        //TEst
         List<Board> listBoards = new List<Board>();
         public Board curBoard = null;
 
