@@ -49,6 +49,7 @@
             this.btn2.TabIndex = 20;
             this.btn2.Text = "Выборочная";
             this.btn2.UseVisualStyleBackColor = false;
+            this.btn2.Click += new System.EventHandler(this.btn2_Click);
             // 
             // btn1
             // 
@@ -61,6 +62,7 @@
             this.btn1.TabIndex = 21;
             this.btn1.Text = "КЗ";
             this.btn1.UseVisualStyleBackColor = false;
+            this.btn1.Click += new System.EventHandler(this.btn1_Click);
             // 
             // btn0
             // 

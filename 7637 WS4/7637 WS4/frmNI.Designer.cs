@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtDCWarning = new System.Windows.Forms.TextBox();
@@ -43,6 +47,7 @@
             this.lblV1 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtDMMMeasurementMode = new System.Windows.Forms.TextBox();
             this.lstDMMValues = new System.Windows.Forms.ListBox();
             this.txtDMMWarning = new System.Windows.Forms.TextBox();
             this.txtDMMStatus = new System.Windows.Forms.TextBox();
@@ -73,10 +78,19 @@
             this.lstR2 = new System.Windows.Forms.ListBox();
             this.lstR4 = new System.Windows.Forms.ListBox();
             this.lstR1 = new System.Windows.Forms.ListBox();
-            this.txtDMMMeasurementMode = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lstDAQEtalonValues = new System.Windows.Forms.ListBox();
+            this.txtDAQWarning = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.lstDAQMeasuredValues = new System.Windows.Forms.ListBox();
+            this.lblMaxEtalon = new System.Windows.Forms.Label();
+            this.lblMaxMeasured = new System.Windows.Forms.Label();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -232,6 +246,14 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Мультиметр";
+            // 
+            // txtDMMMeasurementMode
+            // 
+            this.txtDMMMeasurementMode.Location = new System.Drawing.Point(6, 129);
+            this.txtDMMMeasurementMode.Name = "txtDMMMeasurementMode";
+            this.txtDMMMeasurementMode.ReadOnly = true;
+            this.txtDMMMeasurementMode.Size = new System.Drawing.Size(240, 20);
+            this.txtDMMMeasurementMode.TabIndex = 9;
             // 
             // lstDMMValues
             // 
@@ -526,19 +548,102 @@
             this.lstR1.TabIndex = 8;
             this.lstR1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
-            // txtDMMMeasurementMode
+            // groupBox4
             // 
-            this.txtDMMMeasurementMode.Location = new System.Drawing.Point(6, 129);
-            this.txtDMMMeasurementMode.Name = "txtDMMMeasurementMode";
-            this.txtDMMMeasurementMode.ReadOnly = true;
-            this.txtDMMMeasurementMode.Size = new System.Drawing.Size(240, 20);
-            this.txtDMMMeasurementMode.TabIndex = 9;
+            this.groupBox4.Controls.Add(this.lblMaxMeasured);
+            this.groupBox4.Controls.Add(this.lblMaxEtalon);
+            this.groupBox4.Controls.Add(this.lstDAQMeasuredValues);
+            this.groupBox4.Controls.Add(this.txtDAQWarning);
+            this.groupBox4.Controls.Add(this.label16);
+            this.groupBox4.Controls.Add(this.lstDAQEtalonValues);
+            this.groupBox4.Location = new System.Drawing.Point(533, 12);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(887, 300);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "DAQ";
+            // 
+            // lstDAQEtalonValues
+            // 
+            this.lstDAQEtalonValues.FormattingEnabled = true;
+            this.lstDAQEtalonValues.Location = new System.Drawing.Point(218, 24);
+            this.lstDAQEtalonValues.Name = "lstDAQEtalonValues";
+            this.lstDAQEtalonValues.Size = new System.Drawing.Size(170, 264);
+            this.lstDAQEtalonValues.TabIndex = 8;
+            // 
+            // txtDAQWarning
+            // 
+            this.txtDAQWarning.Location = new System.Drawing.Point(9, 129);
+            this.txtDAQWarning.Multiline = true;
+            this.txtDAQWarning.Name = "txtDAQWarning";
+            this.txtDAQWarning.ReadOnly = true;
+            this.txtDAQWarning.Size = new System.Drawing.Size(203, 159);
+            this.txtDAQWarning.TabIndex = 11;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 106);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(47, 13);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "Warning";
+            // 
+            // lstDAQMeasuredValues
+            // 
+            this.lstDAQMeasuredValues.FormattingEnabled = true;
+            this.lstDAQMeasuredValues.Location = new System.Drawing.Point(394, 24);
+            this.lstDAQMeasuredValues.Name = "lstDAQMeasuredValues";
+            this.lstDAQMeasuredValues.Size = new System.Drawing.Size(170, 264);
+            this.lstDAQMeasuredValues.TabIndex = 13;
+            // 
+            // lblMaxEtalon
+            // 
+            this.lblMaxEtalon.AutoSize = true;
+            this.lblMaxEtalon.Location = new System.Drawing.Point(26, 27);
+            this.lblMaxEtalon.Name = "lblMaxEtalon";
+            this.lblMaxEtalon.Size = new System.Drawing.Size(66, 13);
+            this.lblMaxEtalon.TabIndex = 14;
+            this.lblMaxEtalon.Text = "Etalon MAX:";
+            // 
+            // lblMaxMeasured
+            // 
+            this.lblMaxMeasured.AutoSize = true;
+            this.lblMaxMeasured.Location = new System.Drawing.Point(26, 58);
+            this.lblMaxMeasured.Name = "lblMaxMeasured";
+            this.lblMaxMeasured.Size = new System.Drawing.Size(83, 13);
+            this.lblMaxMeasured.TabIndex = 14;
+            this.lblMaxMeasured.Text = "Measured MAX:";
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(766, 254);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.Name = "Series2";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(648, 300);
+            this.chart1.TabIndex = 16;
+            this.chart1.Text = "chart1";
             // 
             // frmNI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1121, 626);
+            this.ClientSize = new System.Drawing.Size(1432, 626);
+            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -555,6 +660,9 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -607,5 +715,13 @@
         private System.Windows.Forms.ListBox lstR4;
         private System.Windows.Forms.ListBox lstR1;
         private System.Windows.Forms.TextBox txtDMMMeasurementMode;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox txtDAQWarning;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ListBox lstDAQEtalonValues;
+        private System.Windows.Forms.ListBox lstDAQMeasuredValues;
+        private System.Windows.Forms.Label lblMaxMeasured;
+        private System.Windows.Forms.Label lblMaxEtalon;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

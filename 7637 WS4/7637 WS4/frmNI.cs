@@ -48,9 +48,58 @@ namespace _7637_WS4
             _frmMain.niControl.relayR7.warningSWITCH += Relay_warningSWITCH;
             _frmMain.niControl.relayR8.statusSWITCH += Relay_statusSWITCH;
             _frmMain.niControl.relayR8.warningSWITCH += Relay_warningSWITCH;
+
+            _frmMain.niControl.warningDAQUpdate += NiControl_warningDAQUpdate;
+            _frmMain.niControl.bufReadDAQEtalonReceived += NiControl_bufReadDAQReceived;
+            _frmMain.niControl.bufReadDAQMeasuredReceived += NiControl_bufReadDAQMeasuredReceived;
         }
 
-        
+        private void NiControl_bufReadDAQMeasuredReceived(double[] buf)
+        {
+            BeginInvoke((MethodInvoker)delegate
+            {
+                lstDAQMeasuredValues.Items.Clear();
+                foreach (double d in buf)
+                    lstDAQMeasuredValues.Items.Add(d);
+                lblMaxMeasured.Text = "Measured MAX: " + buf.Max();
+
+                chart1.Series[1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                chart1.Series[1].Points.Clear();
+                for (int i = 0; i < buf.Length; i++)
+                {
+                    chart1.Series[1].Points.AddXY(i, buf[i]);
+                }
+
+            });
+        }
+
+        private void NiControl_bufReadDAQReceived(double[] buf)
+        {
+            BeginInvoke((MethodInvoker)delegate
+            {
+                lstDAQEtalonValues.Items.Clear();
+                foreach (double d in buf)
+                    lstDAQEtalonValues.Items.Add(d);
+                lblMaxEtalon.Text = "Etalon MAX: " + buf.Max();
+
+                chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                chart1.Series[0].Points.Clear();
+                for(int i = 0; i < buf.Length; i++)
+                {
+                    chart1.Series[0].Points.AddXY(i, buf[i]);
+                }
+            });
+        }
+
+        private void NiControl_warningDAQUpdate(string msg)
+        {
+            BeginInvoke((MethodInvoker)delegate
+            {
+                txtDAQWarning.Text = msg;
+            });
+        }
+
+
 
         #region EVENTS
         //DMM events

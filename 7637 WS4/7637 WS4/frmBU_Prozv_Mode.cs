@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace _7637_WS4
 {
+    public enum ProzvMode { КонтрольОбрыв, КонтрольКЗ, Выборочная }
     public partial class frmBU_Prozv_Mode : Form
     {
         public frmMain _frmMain;
@@ -18,7 +19,7 @@ namespace _7637_WS4
         string listTestFilename = "BU_ProzvMode.xml";
         string catalog = string.Empty;
         List<TestInfo> lstTests = null;
-
+        public ProzvMode curMode = ProzvMode.КонтрольОбрыв;
 
         void Init()
         {
@@ -124,6 +125,21 @@ namespace _7637_WS4
 
         private void btnObryv_Click(object sender, EventArgs e)
         {
+            curMode = ProzvMode.КонтрольОбрыв;
+            this.Hide();
+            _frmMain._frmBU_Prozv_Test.Show();
+        }
+
+        private void btn1_Click(object sender, EventArgs e)
+        {
+            curMode = ProzvMode.КонтрольКЗ;
+            this.Hide();
+            _frmMain._frmBU_Prozv_Test.Show();
+        }
+
+        private void btn2_Click(object sender, EventArgs e)
+        {
+            curMode = ProzvMode.Выборочная;
             this.Hide();
             _frmMain._frmBU_Prozv_Test.Show();
         }

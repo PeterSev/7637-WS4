@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TESTS>
-	<TEST NAME = "ПРОЗВОНКАQWERTYUIOP">
+	<TEST NAME = "ПРОЗВОНКА">
 		<IMAGELINK>Pict1.jpg</IMAGELINK>
 		<COMMENT>Комментарий к описание Прозвонки</COMMENT> 
 	</TEST>

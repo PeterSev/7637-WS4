@@ -47,6 +47,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\NationalInstruments.Common.dll</HintPath>
     </Reference>
+    <Reference Include="NationalInstruments.DAQmx, Version=15.5.45.109, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NationalInstruments.DAQmx.dll</HintPath>
+    </Reference>
     <Reference Include="NationalInstruments.ModularInstruments.Common, Version=1.4.45.19, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\NationalInstruments.ModularInstruments.Common.dll</HintPath>
@@ -63,6 +67,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\NationalInstruments.ModularInstruments.NISwitch.Fx45.dll</HintPath>
     </Reference>
+    <Reference Include="NationalInstruments.UI, Version=15.0.45.49153, Culture=neutral, PublicKeyToken=4febd62461bf11a4" />
+    <Reference Include="NationalInstruments.UI.WindowsForms, Version=15.0.45.49153, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=MSIL" />
     <Reference Include="NPOI, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\NPOI.dll</HintPath>
@@ -81,6 +87,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,13 +99,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Board.cs" />
+    <Compile Include="Classes\FunctionGenerator.cs" />
     <Compile Include="Classes\Help.cs" />
     <Compile Include="Classes\TestInfo.cs" />
     <Compile Include="ColorProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ExcelLib\BPPPTest.cs" />
-    <Compile Include="ExcelLib\EData1and2.cs" />
+    <Compile Include="ExcelLib\DAQTest.cs" />
     <Compile Include="ExcelLib\EData3.cs" />
     <Compile Include="ExcelLib\EData4.cs" />
     <Compile Include="ExcelLib\Excel.cs" />
@@ -252,11 +260,11 @@
     <Compile Include="frmTests.Designer.cs">
       <DependentUpon>frmTests.cs</DependentUpon>
     </Compile>
-    <Compile Include="NIControl.cs" />
+    <Compile Include="Classes\NIControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils.cs" />
-    <Compile Include="XMLParser.cs" />
+    <Compile Include="Classes\Utils.cs" />
+    <Compile Include="Classes\XMLParser.cs" />
     <EmbeddedResource Include="frmBPPP.resx">
       <DependentUpon>frmBPPP.cs</DependentUpon>
     </EmbeddedResource>
@@ -332,6 +340,7 @@
     <EmbeddedResource Include="frmTests.resx">
       <DependentUpon>frmTests.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

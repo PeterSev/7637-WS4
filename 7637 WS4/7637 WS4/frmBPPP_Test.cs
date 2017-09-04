@@ -20,7 +20,7 @@ namespace _7637_WS4
         string catalog = string.Empty;
         Board curBoard = null;
         bool bNeedStop = false;
-        int numCurTest = 0;
+        //int numCurTest = 0;
         BPPPTest[] tests;
         public List<BPPPTest> badTests;
         BPPPTest lastTest = null;
@@ -53,7 +53,7 @@ namespace _7637_WS4
             grpDC.ForeColor = Color.White;
             grpSwitch.ForeColor = Color.White;
             cmbSwitchName.SelectedIndex = 0;
-            numCurTest = 0;
+            //numCurTest = 0;
             badTests = new List<BPPPTest>();
 
             if(Utils.isFileExist(catalog + listBPPPTestFileName))
@@ -68,7 +68,6 @@ namespace _7637_WS4
                 else
                 {
                     MessageBox.Show("Файл поврежден или имеет неверный формат");
-
                 }
                 //RunTests(tests);
 
