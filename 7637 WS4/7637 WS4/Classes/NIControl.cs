@@ -31,7 +31,7 @@ namespace _7637_WS4
         List<string> listDCChannels = new List<string>();
         string curDCChannel = string.Empty;
         List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();
-        public event delStatusUpdate statusDCUpdate, warningDCUpdate, warningDAQUpdate, warningDMMUpdate, statusDMMUpdate;
+        public event delStatusUpdate statusDCUpdate, warningDCUpdate, warningDMMUpdate, statusDMMUpdate;
         public event delStateDC updateStateDC;
         
         //-------------------------------------
@@ -61,23 +61,8 @@ namespace _7637_WS4
 
 
         //Переменные для работы с DAQ--------------------------
-        NationalInstruments.DAQmx.Task inputTaskEtalon, /*inputTaskMeasured,*/ outputTask, runningTask;
-        AnalogSingleChannelReader readerDAQEtalon/*, readerDAQMeasured*/;
-        AnalogSingleChannelWriter writerDAQ;
-        AsyncCallback inputCallbackDAQEtalon/*, inputCallbackDAQMeasured*/;
-        double[] DAQoutput;
-        double inputDAQMinValue, inputDAQMaxValue, outputDAQMinValue, outputDAQMaxValue;
-        string sDAQDeviceName;
-        string sInputEtalonName;
-        //string sInputMeasuredName;
-        string sOutputName;
-        double dDAQRateIO; //Частота дискредитизации на приеме/посылке сигнала, Hz
-        int iDAQInputOutputSamples;  //Кол-во точек на чтение
-        string sDAQAmplitude;    //амплитуда
-        double dDAQRateGen;     //частота дискредитизации генератора синусоиды
-        public event delDAQBufReadReceived bufReadDAQEtalonReceived, bufReadDAQMeasuredReceived;
+        public DAQ_Device daqEtalon, daqMeasured;
 
-        //System.ComponentModel.Container components = null;
         //----------------------------------------------------
 
 
@@ -358,167 +343,10 @@ namespace _7637_WS4
 
         public void InitDAQ()
         {
-            inputDAQMinValue =  outputDAQMinValue = -10;
-            inputDAQMaxValue = outputDAQMaxValue = 10;
-            sDAQDeviceName = "DAQ";
-            sInputEtalonName = sDAQDeviceName + "/ai1";
-            //sInputMeasuredName = sDAQDeviceName + "/ai0";
-            sOutputName = sDAQDeviceName + "/ao0";
-            dDAQRateIO = 4000000;
-            iDAQInputOutputSamples = 100;
-            sDAQAmplitude = "10";
-            dDAQRateGen = 40000;
+            daqEtalon = new DAQ_Device("/ai1");
+            daqMeasured = new DAQ_Device("/ai0");
         }
 
-        public void RunDAQ(string inputName)
-        {
-            sInputEtalonName = inputName;
-            DigitalEdgeStartTriggerEdge triggerEdge = DigitalEdgeStartTriggerEdge.Rising;
-
-            try
-            {
-                inputTaskEtalon = new Task("inputTask");
-                //inputTaskMeasured = new Task("inputTaskMeasured");
-                outputTask = new Task("outputTask");
-
-                inputTaskEtalon.AIChannels.CreateVoltageChannel(sInputEtalonName, "", AITerminalConfiguration.Pseudodifferential, inputDAQMinValue, inputDAQMaxValue, AIVoltageUnits.Volts);
-                //inputTaskMeasured.AIChannels.CreateVoltageChannel(sInputMeasuredName, "", AITerminalConfiguration.Pseudodifferential, inputDAQMinValue, inputDAQMaxValue, AIVoltageUnits.Volts);
-
-                outputTask.AOChannels.CreateVoltageChannel(sOutputName, "", outputDAQMinValue, outputDAQMaxValue, AOVoltageUnits.Volts);
-
-                inputTaskEtalon.Timing.ConfigureSampleClock("", dDAQRateIO, SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples, iDAQInputOutputSamples);
-                //inputTaskMeasured.Timing.ConfigureSampleClock("", dDAQRateIO, SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples, iDAQInputOutputSamples);
-
-                outputTask.Timing.ConfigureSampleClock("", dDAQRateIO, SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples, iDAQInputOutputSamples);
-
-                string terminalNameBase = "/" + GetDAQDeviceName(sDAQDeviceName) + "/";
-                outputTask.Triggers.StartTrigger.ConfigureDigitalEdgeTrigger(terminalNameBase + "ai/StartTrigger", triggerEdge);
-
-
-                inputTaskEtalon.Control(TaskAction.Verify);
-                //inputTaskMeasured.Control(TaskAction.Verify);
-                outputTask.Control(TaskAction.Verify);
-
-                FunctionGenerator fGen = new FunctionGenerator(
-                    dDAQRateGen.ToString(),
-                    iDAQInputOutputSamples.ToString(),
-                    (dDAQRateGen / (dDAQRateIO / iDAQInputOutputSamples)).ToString(),
-                    "Sine",
-                    sDAQAmplitude);
-                DAQoutput = fGen.Data;
-
-                writerDAQ = new AnalogSingleChannelWriter(outputTask.Stream);
-                writerDAQ.WriteMultiSample(false, DAQoutput);
-
-                DAQStartTask();
-
-                outputTask.Start();
-                inputTaskEtalon.Start();
-                //inputTaskMeasured.Start();
-
-                inputCallbackDAQEtalon = new AsyncCallback(InputRead);
-                readerDAQEtalon = new AnalogSingleChannelReader(inputTaskEtalon.Stream);
-
-                //inputCallbackDAQMeasured = new AsyncCallback(InputReadMeasured);
-                //readerDAQMeasured = new AnalogSingleChannelReader(inputTaskMeasured.Stream);
-
-
-                // Use SynchronizeCallbacks to specify that the object 
-                // marshals callbacks across threads appropriately.
-                readerDAQEtalon.SynchronizeCallbacks = false;
-
-                //readerDAQMeasured.SynchronizeCallbacks = false;
-
-                readerDAQEtalon.BeginReadMultiSample(iDAQInputOutputSamples, inputCallbackDAQEtalon, inputTaskEtalon);
-                //readerDAQMeasured.BeginReadMultiSample(iDAQInputOutputSamples, inputCallbackDAQMeasured, inputTaskMeasured);
-            }
-            catch(Exception ex)
-            {
-                DAQStopTask();
-                warningDAQUpdate?.Invoke(ex.Message);
-            }
-
-        }
-
-        /*private void InputReadMeasured(IAsyncResult ar)
-        {
-            try
-            {
-                //if (runningTask != null && runningTask == ar.AsyncState)
-                //{
-                    double[] data = readerDAQMeasured.EndReadMultiSample(ar);  // Читаем данные
-                    bufReadDAQMeasuredReceived?.Invoke(data);   // Инициируем событие и передаем буфер в обработчик
-
-                    DAQStopTask();
-                //}
-            }
-            catch (Exception ex)
-            {
-                DAQStopTask();
-                warningDAQUpdate?.Invoke(ex.Message);
-            }
-        }*/
-
-        private void InputRead(IAsyncResult ar)
-        {
-            try
-            {
-                //if (runningTask != null && runningTask == ar.AsyncState)
-                //{
-                    double[] data = readerDAQEtalon.EndReadMultiSample(ar);  // Читаем данные
-                if (sInputEtalonName == "/DAQ/ai1")
-                    bufReadDAQEtalonReceived?.Invoke(data);   // Инициируем событие и передаем буфер в обработчик
-                else
-                    bufReadDAQMeasuredReceived?.Invoke(data);
-                    DAQStopTask();
-                //}
-            }
-            catch (Exception ex)
-            {
-                DAQStopTask();
-                warningDAQUpdate?.Invoke(ex.Message);
-            }
-        }
-
-        void DAQStartTask()
-        {
-            if (runningTask == null)
-                runningTask = inputTaskEtalon;
-        }
-
-        void DAQStopTask()
-        {
-            runningTask = null;
-
-            DAQDispose();
-        }
-
-        void DAQDispose()
-        {
-            if (inputTaskEtalon != null)
-            {
-                runningTask = null;
-                inputTaskEtalon.Dispose();
-            }
-            /*if (inputTaskMeasured != null)
-            {
-                runningTask = null;
-                inputTaskMeasured.Dispose();
-            }*/
-            if (outputTask != null)
-            {
-                outputTask.Dispose();
-            }
-        }
-
-        static string GetDAQDeviceName(string deviceName)
-        {
-            Device device = DaqSystem.Local.LoadDevice(deviceName);
-            if (device.BusType != DeviceBusType.CompactDaq)
-                return deviceName;
-            else
-                return device.CompactDaqChassisDeviceName;
-        }
         #endregion
     }
 

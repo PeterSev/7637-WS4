@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Board.cs" />
+    <Compile Include="Classes\DAQ_Device.cs" />
     <Compile Include="Classes\FunctionGenerator.cs" />
     <Compile Include="Classes\Help.cs" />
     <Compile Include="Classes\TestInfo.cs" />

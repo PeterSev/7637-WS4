@@ -19,6 +19,8 @@ namespace _7637_WS4
         public Board curBoard = null;
 
         public double resultOfMeasurementDMM = 0;
+        public double maxOfEtalonSignal = 0, maxOfMeasuredSignal = 0;
+
         //public int cntOfResMeasurementDMM = 0;
         public bool bNeedRewrite = false;
         public bool bReadyToRead = false;
@@ -221,6 +223,8 @@ namespace _7637_WS4
             Thread.Sleep(200);
             niControl.CloseDCIVISession();
             niControl.CloseRelaySession();
+            niControl.daqEtalon.Dispose();
+            niControl.daqMeasured.Dispose();
 
             
         }

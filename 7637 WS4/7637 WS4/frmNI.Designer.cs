@@ -79,12 +79,12 @@
             this.lstR4 = new System.Windows.Forms.ListBox();
             this.lstR1 = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.lstDAQEtalonValues = new System.Windows.Forms.ListBox();
+            this.lblMaxMeasured = new System.Windows.Forms.Label();
+            this.lblMaxEtalon = new System.Windows.Forms.Label();
+            this.lstDAQMeasuredValues = new System.Windows.Forms.ListBox();
             this.txtDAQWarning = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.lstDAQMeasuredValues = new System.Windows.Forms.ListBox();
-            this.lblMaxEtalon = new System.Windows.Forms.Label();
-            this.lblMaxMeasured = new System.Windows.Forms.Label();
+            this.lstDAQEtalonValues = new System.Windows.Forms.ListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -325,9 +325,9 @@
             this.groupBox3.Controls.Add(this.lstR2);
             this.groupBox3.Controls.Add(this.lstR4);
             this.groupBox3.Controls.Add(this.lstR1);
-            this.groupBox3.Location = new System.Drawing.Point(12, 318);
+            this.groupBox3.Location = new System.Drawing.Point(12, 540);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1099, 300);
+            this.groupBox3.Size = new System.Drawing.Size(1099, 200);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Блоки реле";
@@ -335,7 +335,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(958, 223);
+            this.label15.Location = new System.Drawing.Point(958, 121);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(47, 13);
             this.label15.TabIndex = 10;
@@ -344,7 +344,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(686, 223);
+            this.label13.Location = new System.Drawing.Point(686, 121);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(47, 13);
             this.label13.TabIndex = 10;
@@ -353,7 +353,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(278, 223);
+            this.label10.Location = new System.Drawing.Point(278, 121);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(47, 13);
             this.label10.TabIndex = 10;
@@ -362,7 +362,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(822, 223);
+            this.label14.Location = new System.Drawing.Point(822, 121);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(47, 13);
             this.label14.TabIndex = 10;
@@ -371,7 +371,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(550, 223);
+            this.label12.Location = new System.Drawing.Point(550, 121);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(47, 13);
             this.label12.TabIndex = 10;
@@ -380,7 +380,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(142, 223);
+            this.label9.Location = new System.Drawing.Point(142, 121);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(47, 13);
             this.label9.TabIndex = 10;
@@ -389,7 +389,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(414, 223);
+            this.label11.Location = new System.Drawing.Point(414, 121);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(47, 13);
             this.label11.TabIndex = 10;
@@ -398,7 +398,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 223);
+            this.label8.Location = new System.Drawing.Point(6, 121);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 13);
             this.label8.TabIndex = 10;
@@ -406,7 +406,7 @@
             // 
             // txtR8Warning
             // 
-            this.txtR8Warning.Location = new System.Drawing.Point(958, 241);
+            this.txtR8Warning.Location = new System.Drawing.Point(958, 139);
             this.txtR8Warning.Multiline = true;
             this.txtR8Warning.Name = "txtR8Warning";
             this.txtR8Warning.ReadOnly = true;
@@ -415,7 +415,7 @@
             // 
             // txtR6Warning
             // 
-            this.txtR6Warning.Location = new System.Drawing.Point(686, 241);
+            this.txtR6Warning.Location = new System.Drawing.Point(686, 139);
             this.txtR6Warning.Multiline = true;
             this.txtR6Warning.Name = "txtR6Warning";
             this.txtR6Warning.ReadOnly = true;
@@ -424,7 +424,7 @@
             // 
             // txtR3Warning
             // 
-            this.txtR3Warning.Location = new System.Drawing.Point(278, 241);
+            this.txtR3Warning.Location = new System.Drawing.Point(278, 139);
             this.txtR3Warning.Multiline = true;
             this.txtR3Warning.Name = "txtR3Warning";
             this.txtR3Warning.ReadOnly = true;
@@ -433,7 +433,7 @@
             // 
             // txtR7Warning
             // 
-            this.txtR7Warning.Location = new System.Drawing.Point(822, 241);
+            this.txtR7Warning.Location = new System.Drawing.Point(822, 139);
             this.txtR7Warning.Multiline = true;
             this.txtR7Warning.Name = "txtR7Warning";
             this.txtR7Warning.ReadOnly = true;
@@ -442,7 +442,7 @@
             // 
             // txtR5Warning
             // 
-            this.txtR5Warning.Location = new System.Drawing.Point(550, 241);
+            this.txtR5Warning.Location = new System.Drawing.Point(550, 139);
             this.txtR5Warning.Multiline = true;
             this.txtR5Warning.Name = "txtR5Warning";
             this.txtR5Warning.ReadOnly = true;
@@ -451,7 +451,7 @@
             // 
             // txtR2Warning
             // 
-            this.txtR2Warning.Location = new System.Drawing.Point(142, 241);
+            this.txtR2Warning.Location = new System.Drawing.Point(142, 139);
             this.txtR2Warning.Multiline = true;
             this.txtR2Warning.Name = "txtR2Warning";
             this.txtR2Warning.ReadOnly = true;
@@ -460,7 +460,7 @@
             // 
             // txtR4Warning
             // 
-            this.txtR4Warning.Location = new System.Drawing.Point(414, 241);
+            this.txtR4Warning.Location = new System.Drawing.Point(414, 139);
             this.txtR4Warning.Multiline = true;
             this.txtR4Warning.Name = "txtR4Warning";
             this.txtR4Warning.ReadOnly = true;
@@ -469,7 +469,7 @@
             // 
             // txtR1Warning
             // 
-            this.txtR1Warning.Location = new System.Drawing.Point(6, 241);
+            this.txtR1Warning.Location = new System.Drawing.Point(6, 139);
             this.txtR1Warning.Multiline = true;
             this.txtR1Warning.Name = "txtR1Warning";
             this.txtR1Warning.ReadOnly = true;
@@ -481,7 +481,7 @@
             this.lstR8.FormattingEnabled = true;
             this.lstR8.Location = new System.Drawing.Point(958, 19);
             this.lstR8.Name = "lstR8";
-            this.lstR8.Size = new System.Drawing.Size(130, 199);
+            this.lstR8.Size = new System.Drawing.Size(130, 95);
             this.lstR8.TabIndex = 8;
             this.lstR8.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
@@ -490,7 +490,7 @@
             this.lstR6.FormattingEnabled = true;
             this.lstR6.Location = new System.Drawing.Point(686, 19);
             this.lstR6.Name = "lstR6";
-            this.lstR6.Size = new System.Drawing.Size(130, 199);
+            this.lstR6.Size = new System.Drawing.Size(130, 95);
             this.lstR6.TabIndex = 8;
             this.lstR6.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
@@ -499,7 +499,7 @@
             this.lstR3.FormattingEnabled = true;
             this.lstR3.Location = new System.Drawing.Point(278, 19);
             this.lstR3.Name = "lstR3";
-            this.lstR3.Size = new System.Drawing.Size(130, 199);
+            this.lstR3.Size = new System.Drawing.Size(130, 95);
             this.lstR3.TabIndex = 8;
             this.lstR3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
@@ -508,7 +508,7 @@
             this.lstR7.FormattingEnabled = true;
             this.lstR7.Location = new System.Drawing.Point(822, 19);
             this.lstR7.Name = "lstR7";
-            this.lstR7.Size = new System.Drawing.Size(130, 199);
+            this.lstR7.Size = new System.Drawing.Size(130, 95);
             this.lstR7.TabIndex = 8;
             this.lstR7.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
@@ -517,7 +517,7 @@
             this.lstR5.FormattingEnabled = true;
             this.lstR5.Location = new System.Drawing.Point(550, 19);
             this.lstR5.Name = "lstR5";
-            this.lstR5.Size = new System.Drawing.Size(130, 199);
+            this.lstR5.Size = new System.Drawing.Size(130, 95);
             this.lstR5.TabIndex = 8;
             this.lstR5.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
@@ -526,7 +526,7 @@
             this.lstR2.FormattingEnabled = true;
             this.lstR2.Location = new System.Drawing.Point(142, 19);
             this.lstR2.Name = "lstR2";
-            this.lstR2.Size = new System.Drawing.Size(130, 199);
+            this.lstR2.Size = new System.Drawing.Size(130, 95);
             this.lstR2.TabIndex = 8;
             this.lstR2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
@@ -535,7 +535,7 @@
             this.lstR4.FormattingEnabled = true;
             this.lstR4.Location = new System.Drawing.Point(414, 19);
             this.lstR4.Name = "lstR4";
-            this.lstR4.Size = new System.Drawing.Size(130, 199);
+            this.lstR4.Size = new System.Drawing.Size(130, 95);
             this.lstR4.TabIndex = 8;
             this.lstR4.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
@@ -544,7 +544,7 @@
             this.lstR1.FormattingEnabled = true;
             this.lstR1.Location = new System.Drawing.Point(6, 19);
             this.lstR1.Name = "lstR1";
-            this.lstR1.Size = new System.Drawing.Size(130, 199);
+            this.lstR1.Size = new System.Drawing.Size(130, 95);
             this.lstR1.TabIndex = 8;
             this.lstR1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstR6_MouseDoubleClick);
             // 
@@ -558,53 +558,10 @@
             this.groupBox4.Controls.Add(this.lstDAQEtalonValues);
             this.groupBox4.Location = new System.Drawing.Point(533, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(887, 300);
+            this.groupBox4.Size = new System.Drawing.Size(578, 300);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "DAQ";
-            // 
-            // lstDAQEtalonValues
-            // 
-            this.lstDAQEtalonValues.FormattingEnabled = true;
-            this.lstDAQEtalonValues.Location = new System.Drawing.Point(218, 24);
-            this.lstDAQEtalonValues.Name = "lstDAQEtalonValues";
-            this.lstDAQEtalonValues.Size = new System.Drawing.Size(170, 264);
-            this.lstDAQEtalonValues.TabIndex = 8;
-            // 
-            // txtDAQWarning
-            // 
-            this.txtDAQWarning.Location = new System.Drawing.Point(9, 129);
-            this.txtDAQWarning.Multiline = true;
-            this.txtDAQWarning.Name = "txtDAQWarning";
-            this.txtDAQWarning.ReadOnly = true;
-            this.txtDAQWarning.Size = new System.Drawing.Size(203, 159);
-            this.txtDAQWarning.TabIndex = 11;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 106);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(47, 13);
-            this.label16.TabIndex = 9;
-            this.label16.Text = "Warning";
-            // 
-            // lstDAQMeasuredValues
-            // 
-            this.lstDAQMeasuredValues.FormattingEnabled = true;
-            this.lstDAQMeasuredValues.Location = new System.Drawing.Point(394, 24);
-            this.lstDAQMeasuredValues.Name = "lstDAQMeasuredValues";
-            this.lstDAQMeasuredValues.Size = new System.Drawing.Size(170, 264);
-            this.lstDAQMeasuredValues.TabIndex = 13;
-            // 
-            // lblMaxEtalon
-            // 
-            this.lblMaxEtalon.AutoSize = true;
-            this.lblMaxEtalon.Location = new System.Drawing.Point(26, 27);
-            this.lblMaxEtalon.Name = "lblMaxEtalon";
-            this.lblMaxEtalon.Size = new System.Drawing.Size(66, 13);
-            this.lblMaxEtalon.TabIndex = 14;
-            this.lblMaxEtalon.Text = "Etalon MAX:";
             // 
             // lblMaxMeasured
             // 
@@ -615,13 +572,57 @@
             this.lblMaxMeasured.TabIndex = 14;
             this.lblMaxMeasured.Text = "Measured MAX:";
             // 
+            // lblMaxEtalon
+            // 
+            this.lblMaxEtalon.AutoSize = true;
+            this.lblMaxEtalon.Location = new System.Drawing.Point(26, 27);
+            this.lblMaxEtalon.Name = "lblMaxEtalon";
+            this.lblMaxEtalon.Size = new System.Drawing.Size(66, 13);
+            this.lblMaxEtalon.TabIndex = 14;
+            this.lblMaxEtalon.Text = "Etalon MAX:";
+            // 
+            // lstDAQMeasuredValues
+            // 
+            this.lstDAQMeasuredValues.FormattingEnabled = true;
+            this.lstDAQMeasuredValues.Location = new System.Drawing.Point(394, 24);
+            this.lstDAQMeasuredValues.Name = "lstDAQMeasuredValues";
+            this.lstDAQMeasuredValues.Size = new System.Drawing.Size(170, 264);
+            this.lstDAQMeasuredValues.TabIndex = 13;
+            // 
+            // txtDAQWarning
+            // 
+            this.txtDAQWarning.Location = new System.Drawing.Point(9, 129);
+            this.txtDAQWarning.Multiline = true;
+            this.txtDAQWarning.Name = "txtDAQWarning";
+            this.txtDAQWarning.ReadOnly = true;
+            this.txtDAQWarning.Size = new System.Drawing.Size(203, 159);
+            this.txtDAQWarning.TabIndex = 11;
+            this.txtDAQWarning.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtDAQWarning_MouseClick);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 106);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(47, 13);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "Warning";
+            // 
+            // lstDAQEtalonValues
+            // 
+            this.lstDAQEtalonValues.FormattingEnabled = true;
+            this.lstDAQEtalonValues.Location = new System.Drawing.Point(218, 24);
+            this.lstDAQEtalonValues.Name = "lstDAQEtalonValues";
+            this.lstDAQEtalonValues.Size = new System.Drawing.Size(170, 264);
+            this.lstDAQEtalonValues.TabIndex = 8;
+            // 
             // chart1
             // 
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(766, 254);
+            this.chart1.Location = new System.Drawing.Point(18, 318);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -633,7 +634,7 @@
             series2.Name = "Series2";
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(648, 300);
+            this.chart1.Size = new System.Drawing.Size(1079, 216);
             this.chart1.TabIndex = 16;
             this.chart1.Text = "chart1";
             // 
@@ -641,7 +642,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1432, 626);
+            this.ClientSize = new System.Drawing.Size(1121, 750);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);

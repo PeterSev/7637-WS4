@@ -226,28 +226,6 @@ namespace _7637_WS4
 
             lastTest = test;
 
-            //ВКЛючение определенных каналов в реле
-            /*foreach (Contact input in test.Input)
-            {
-                string dev = input.Device;
-                string ch = input.Channel.ToString();
-                _frmMain.niControl.OpenCloseRelay(true, dev, ch);
-            }
-            foreach (Contact output in test.Output)
-            {
-                string dev = output.Device;
-                string ch = output.Channel.ToString();
-                _frmMain.niControl.OpenCloseRelay(true, dev, ch);
-            }*/
-            //-------------------------------------------------------
-
-            //Thread.Sleep((int)numTimeout.Value);
-
-            //_frmMain.bNeedRewrite = true;
-            //while (!_frmMain.bReadyToRead) { Application.DoEvents(); Thread.Sleep(50); }
-
-            //_frmMain.bReadyToRead = false;
-
 
             //Проведение измерений---------------------------------------------
             _frmMain.niControl.ReadDMM("Resistance", test.Range);   //инициирование чтения мультиметра

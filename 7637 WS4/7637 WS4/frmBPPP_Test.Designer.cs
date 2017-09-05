@@ -109,7 +109,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Location = new System.Drawing.Point(3, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(186, 17);
             this.label1.TabIndex = 3;
@@ -348,7 +348,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(335, 51);
+            this.label5.Location = new System.Drawing.Point(343, 51);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(108, 17);
             this.label5.TabIndex = 10;
@@ -357,11 +357,11 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 51);
+            this.label4.Location = new System.Drawing.Point(9, 51);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(176, 17);
+            this.label4.Size = new System.Drawing.Size(180, 17);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Запуск одиночного теста";
+            this.label4.Text = "Запуск одиночного теста:";
             // 
             // btnStopAllTest
             // 
@@ -379,7 +379,7 @@
             // lblResultOfDMM
             // 
             this.lblResultOfDMM.AutoSize = true;
-            this.lblResultOfDMM.Location = new System.Drawing.Point(440, 51);
+            this.lblResultOfDMM.Location = new System.Drawing.Point(448, 51);
             this.lblResultOfDMM.Name = "lblResultOfDMM";
             this.lblResultOfDMM.Size = new System.Drawing.Size(16, 17);
             this.lblResultOfDMM.TabIndex = 3;
@@ -389,7 +389,7 @@
             // 
             this.numTest.BackColor = System.Drawing.Color.RoyalBlue;
             this.numTest.ForeColor = System.Drawing.Color.White;
-            this.numTest.Location = new System.Drawing.Point(189, 49);
+            this.numTest.Location = new System.Drawing.Point(197, 49);
             this.numTest.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -420,7 +420,7 @@
             // 
             this.btnRunBPPPTest.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnRunBPPPTest.ForeColor = System.Drawing.Color.White;
-            this.btnRunBPPPTest.Location = new System.Drawing.Point(256, 48);
+            this.btnRunBPPPTest.Location = new System.Drawing.Point(264, 48);
             this.btnRunBPPPTest.Name = "btnRunBPPPTest";
             this.btnRunBPPPTest.Size = new System.Drawing.Size(75, 25);
             this.btnRunBPPPTest.TabIndex = 0;

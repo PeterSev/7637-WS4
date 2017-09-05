@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace _7637_WS4
@@ -14,6 +14,9 @@ namespace _7637_WS4
     {
         public frmMain _frmMain;
         bool bNeedReload = true;
+        
+
+
         public frmNI()
         {
             InitializeComponent();
@@ -23,6 +26,12 @@ namespace _7637_WS4
         void Init()
         {
             bNeedReload = false;
+            chart1.Series[1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series[0].Color = Color.Blue;
+            chart1.Series[1].Color = Color.Red;
+            chart1.Series[0].LegendText = "Эталон";
+            chart1.Series[1].LegendText = "Фактич.";
 
             _frmMain.niControl.statusDCUpdate += NiControl_statusUpdate;
             _frmMain.niControl.warningDCUpdate += NiControl_warningUpdate;
@@ -49,57 +58,12 @@ namespace _7637_WS4
             _frmMain.niControl.relayR8.statusSWITCH += Relay_statusSWITCH;
             _frmMain.niControl.relayR8.warningSWITCH += Relay_warningSWITCH;
 
-            _frmMain.niControl.warningDAQUpdate += NiControl_warningDAQUpdate;
-            _frmMain.niControl.bufReadDAQEtalonReceived += NiControl_bufReadDAQReceived;
-            _frmMain.niControl.bufReadDAQMeasuredReceived += NiControl_bufReadDAQMeasuredReceived;
+            _frmMain.niControl.daqEtalon.bufReadDAQReceived += NiControl_bufReadDAQReceived;
+            _frmMain.niControl.daqEtalon.warningDAQUpdate += NiControl_warningDAQUpdate;
+            _frmMain.niControl.daqMeasured.bufReadDAQReceived += NiControl_bufReadDAQMeasuredReceived;
+            _frmMain.niControl.daqMeasured.warningDAQUpdate += NiControl_warningDAQUpdate;
+
         }
-
-        private void NiControl_bufReadDAQMeasuredReceived(double[] buf)
-        {
-            BeginInvoke((MethodInvoker)delegate
-            {
-                lstDAQMeasuredValues.Items.Clear();
-                foreach (double d in buf)
-                    lstDAQMeasuredValues.Items.Add(d);
-                lblMaxMeasured.Text = "Measured MAX: " + buf.Max();
-
-                chart1.Series[1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                chart1.Series[1].Points.Clear();
-                for (int i = 0; i < buf.Length; i++)
-                {
-                    chart1.Series[1].Points.AddXY(i, buf[i]);
-                }
-
-            });
-        }
-
-        private void NiControl_bufReadDAQReceived(double[] buf)
-        {
-            BeginInvoke((MethodInvoker)delegate
-            {
-                lstDAQEtalonValues.Items.Clear();
-                foreach (double d in buf)
-                    lstDAQEtalonValues.Items.Add(d);
-                lblMaxEtalon.Text = "Etalon MAX: " + buf.Max();
-
-                chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                chart1.Series[0].Points.Clear();
-                for(int i = 0; i < buf.Length; i++)
-                {
-                    chart1.Series[0].Points.AddXY(i, buf[i]);
-                }
-            });
-        }
-
-        private void NiControl_warningDAQUpdate(string msg)
-        {
-            BeginInvoke((MethodInvoker)delegate
-            {
-                txtDAQWarning.Text = msg;
-            });
-        }
-
-
 
         #region EVENTS
         //DMM events
@@ -205,7 +169,70 @@ namespace _7637_WS4
             });
             
         }
-#endregion
+
+
+
+        //DAQ Events
+        private void NiControl_bufReadDAQMeasuredReceived(double[] buf)
+        {
+            _frmMain.maxOfMeasuredSignal = buf.Max();
+            _frmMain._frmBU_Prozv_Test.eventDAQMeasuredUpdate.Set();
+
+            BeginInvoke((MethodInvoker)delegate
+            {
+                lstDAQMeasuredValues.Items.Clear();
+                foreach (double d in buf)
+                    lstDAQMeasuredValues.Items.Add(d);
+                //_frmMain.maxOfMeasuredSignal = buf.Max();
+                lblMaxMeasured.Text = "Measured MAX: " + _frmMain.maxOfMeasuredSignal;
+
+                //_frmMain._frmBU_Prozv_Test.eventDAQMeasuredUpdate.Set();
+
+                chart1.Series[1].Points.Clear();
+                for (int i = 0; i < buf.Length; i++)
+                {
+                    chart1.Series[1].Points.AddXY(i, buf[i]);
+                }
+
+            });
+
+        }
+
+        private void NiControl_bufReadDAQReceived(double[] buf)
+        {
+            _frmMain.maxOfEtalonSignal = buf.Max();
+            _frmMain._frmBU_Prozv_Test.eventDAQEtalonUpdate.Set();
+
+
+            BeginInvoke((MethodInvoker)delegate
+            {
+                lstDAQEtalonValues.Items.Clear();
+                foreach (double d in buf)
+                    lstDAQEtalonValues.Items.Add(d);
+
+                _frmMain.maxOfEtalonSignal = buf.Max();
+                //_frmMain._frmBU_Prozv_Test.eventDAQEtalonUpdate.Set();
+
+                lblMaxEtalon.Text = "Etalon MAX: " + _frmMain.maxOfEtalonSignal;
+
+
+                chart1.Series[0].Points.Clear();
+                for (int i = 0; i < buf.Length; i++)
+                {
+                    chart1.Series[0].Points.AddXY(i, buf[i]);
+                }
+            });
+        }
+
+        private void NiControl_warningDAQUpdate(string msg)
+        {
+            BeginInvoke((MethodInvoker)delegate
+            {
+                txtDAQWarning.Text = msg;
+            });
+        }
+
+        #endregion
 
         private void frmNI_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -232,6 +259,11 @@ namespace _7637_WS4
         {
             ListBox lst = (ListBox)sender;
             lst.Items.Clear();
+        }
+
+        private void txtDAQWarning_MouseClick(object sender, MouseEventArgs e)
+        {
+            txtDAQWarning.Text = string.Empty;
         }
     }
 }

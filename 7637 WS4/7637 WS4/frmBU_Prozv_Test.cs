@@ -19,7 +19,12 @@ namespace _7637_WS4
         string listBUProzvTest = "BU_Prozv_test.xls";
         string catalog = string.Empty;
         Board curBoard = null;
-        DAQTest[] tests;       
+        DAQTest[] tests;
+        DAQTest lastTest = null;
+        public List<DAQTest> badTests;
+
+        public AutoResetEvent eventDAQEtalonUpdate = new AutoResetEvent(false);
+        public AutoResetEvent eventDAQMeasuredUpdate = new AutoResetEvent(false);
 
         public frmBU_Prozv_Test()
         {
@@ -50,7 +55,7 @@ namespace _7637_WS4
                 tests = Excel.ParseDAQ(catalog + listBUProzvTest);
                 if (tests != null)
                 {
-
+                    lblTestCount.Text = tests.Length.ToString();
                 }
                 else
                 {
@@ -88,14 +93,76 @@ namespace _7637_WS4
 
         private void btnRunTest_Click(object sender, EventArgs e)
         {
+            int num = (int)numTest.Value;
+            if (num >= tests.Length)
+            {
+                MessageBox.Show("Такого номера теста в файле тестов нет!", "Ошибка");
+                return;
+            }
+            //_frmMain.niControl.RunDAQ("/DAQ/ai1");   //получаем и измеряем эталонные значения сигнала
+            //Thread.Sleep(500);
+            
+            //eventDAQEtalonUpdate.Reset();
+            RunDAQTest(num);
+        }
 
+        void RunDAQTest(int num)
+        {
+            //_frmMain.niControl.RunDAQ("/DAQ/ai1");   //получаем и измеряем эталонные значения сигнала
+            //eventDAQEtalonUpdate.WaitOne();
+
+            DAQTest test = tests[num];
+
+            //Включение необходимых реле-------------
+            string dev1 = test.Input.Device;
+            string ch1 = test.Input.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(true, dev1, ch1);
+
+            string dev2 = test.Output.Device;
+            string ch2 = test.Output.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(true, dev2, ch2);
+            //--------------------------------------
+
+
+
+            //Проведение измерений и вычисление результата------------
+            //_frmMain.niControl.RunDAQ("/DAQ/ai0"); //получаем и сохраняем значения сигнала измеренного фактического
+            //eventDAQMeasuredUpdate.WaitOne();
+
+            string sRes = string.Empty;
+            if (_frmMain.maxOfMeasuredSignal >= _frmMain.maxOfEtalonSignal)
+            {
+                lblResultOfDAQ.ForeColor = Color.LightGreen;
+                sRes = "PASSED";
+            }
+            else
+            {
+                lblResultOfDAQ.ForeColor = Color.Red;
+                //badTests.Add(tests[num]);             //только в циклической проверке
+                sRes = "FAILED";
+            }
+
+            lblResultOfDAQ.Text = sRes;
+            //-------------------------------------------------------
+
+
+
+
+            //Выключение необходимых реле-------------
+            _frmMain.niControl.OpenCloseRelay(false, dev1, ch1);
+            _frmMain.niControl.OpenCloseRelay(false, dev2, ch2);
+            //--------------------------------------
         }
 
         private void btnRunDAQ_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.RunDAQ("/DAQ/ai1");
-            Thread.Sleep(500);
-            _frmMain.niControl.RunDAQ("/DAQ/ai0");
+            _frmMain.niControl.daqEtalon.RunDAQ();
+            Thread.Sleep(50);
+            _frmMain.niControl.daqMeasured.RunDAQ();
+
+            /*_frmMain.niControl.RunDAQ("/DAQ/ai1");
+            Thread.Sleep(200);
+            _frmMain.niControl.RunDAQ("/DAQ/ai0");*/
         }
     }
 }
