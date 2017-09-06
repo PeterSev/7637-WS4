@@ -104,8 +104,8 @@ namespace _7637_WS4
                 case "r8":  curRelay = relayR8; break;
                 default: return;
             }
-            //curRelay.InitRelay();
-            curRelay.ChangeRelayState(b, "k"+channel);
+            //curRelay.ChangeRelayState(b, "k"+channel);
+            curRelay.ChangeRelayState(b, "ch" + channel);
         }
 
         public void CloseRelaySession()
@@ -390,6 +390,7 @@ namespace _7637_WS4
         NISwitch relay;
         const string sTopology2530 = "2530/1-Wire 128x1 Mux";
         const string sTopology2569 = "2569/100-SPST";
+        string curTopology = string.Empty;
         public event delSwitchStatus warningSWITCH, statusSWITCH;
         PrecisionTimeSpan maxTime ;
         string _name;
@@ -405,7 +406,7 @@ namespace _7637_WS4
     /// <param name="name">Имя, указанное в NI MAX</param>
         public void InitRelay()
         {
-            string curTopology = _name.Contains("R6") || _name.Contains("R7") || _name.Contains("R8") ? sTopology2569 : sTopology2530;
+            curTopology = _name.Contains("R6") || _name.Contains("R7") || _name.Contains("R8") ? sTopology2569 : sTopology2530;
             try
             {
                 Init(curTopology);
@@ -413,7 +414,7 @@ namespace _7637_WS4
             }
             catch(Exception ex)
             {
-                warningSWITCH(_name, ex.Message);
+                warningSWITCH?.Invoke(_name, ex.Message);
             }
         }
 
@@ -448,12 +449,69 @@ namespace _7637_WS4
             {
                 try
                 {
-                    SwitchRelayAction relayAction = action ? SwitchRelayAction.CloseRelay : SwitchRelayAction.OpenRelay;
+                    /*SwitchRelayAction relayAction = action ? SwitchRelayAction.CloseRelay : SwitchRelayAction.OpenRelay;
                     relay.RelayOperations.RelayControl(curChannelToWorkWith, relayAction);
+                    relay.Path.WaitForDebounce(maxTime);*/
+
+                    //curChannelToWorkWith = "ch"+curChannelToWorkWith.Remove(0, 1);
+                    if (action)
+                    {
+                        if (curTopology == sTopology2530)
+                        {
+                            SwitchPathCapability switchCap = relay.Path.CanConnect(curChannelToWorkWith, "com0");
+                            if (switchCap == SwitchPathCapability.Available)
+                            {
+                                relay.Path.Connect(curChannelToWorkWith, "com0");
+                                statusSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + " соединено");
+                            }
+                            else
+                                warningSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + ". " + switchCap.ToString());
+
+                        }
+                        else if (curTopology == sTopology2569)
+                        {
+                            string n = "com" + curChannelToWorkWith.Remove(0, 2);
+                            SwitchPathCapability switchCap = relay.Path.CanConnect(curChannelToWorkWith, n);
+                            if (switchCap == SwitchPathCapability.Available)
+                            {
+                                relay.Path.Connect(curChannelToWorkWith, n);
+                                statusSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + " соединено");
+                            }
+                            else
+                                warningSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + "-" + n + ". " + switchCap.ToString());
+                        }
+                    }
+                    else
+                    {
+                        if (curTopology == sTopology2530)
+                        {
+                            SwitchPathCapability switchCap = relay.Path.CanConnect(curChannelToWorkWith, "com0");
+                            if (switchCap == SwitchPathCapability.Exists)
+                            {
+                                relay.Path.Disconnect(curChannelToWorkWith, "com0");
+                                statusSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + " отключено");
+                            }
+                            else
+                                warningSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + ". " + switchCap.ToString());
+                        }
+                        else if (curTopology == sTopology2569)
+                        {
+                            string n = "com" + curChannelToWorkWith.Remove(0, 2);
+                            SwitchPathCapability switchCap = relay.Path.CanConnect(curChannelToWorkWith, n);
+                            if (switchCap == SwitchPathCapability.Exists)
+                            {
+                                relay.Path.Disconnect(curChannelToWorkWith, n);
+                                statusSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + " отключено");
+                            }
+                            else
+                                warningSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + "-" + n + ". " + switchCap.ToString());
+                        }
+                    }
+
                     relay.Path.WaitForDebounce(maxTime);
 
-                    string res = action ? " закрыто" : " открыто";
-                    statusSWITCH(_name, "Реле " + curChannelToWorkWith + res);
+                    //string res = action ? " закрыто" : " открыто";
+                    //statusSWITCH?.Invoke(_name, "Реле " + curChannelToWorkWith + res);
                 }
                 catch (Exception ex)
                 {

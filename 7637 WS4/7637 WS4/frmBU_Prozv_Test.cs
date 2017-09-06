@@ -22,6 +22,7 @@ namespace _7637_WS4
         DAQTest[] tests;
         DAQTest lastTest = null;
         public List<DAQTest> badTests;
+        bool bNeedStop = false;
 
         public AutoResetEvent eventDAQEtalonUpdate = new AutoResetEvent(false);
         public AutoResetEvent eventDAQMeasuredUpdate = new AutoResetEvent(false);
@@ -49,6 +50,8 @@ namespace _7637_WS4
 
             this.Text = curBoard.Name + " БУ. Прозвонка. " + curMode +  ". Тесты";
             this.BackColor = Color.RoyalBlue;
+
+            badTests = new List<DAQTest>();
 
             if(Utils.isFileExist(catalog + listBUProzvTest))
             {
@@ -99,18 +102,17 @@ namespace _7637_WS4
                 MessageBox.Show("Такого номера теста в файле тестов нет!", "Ошибка");
                 return;
             }
-            //_frmMain.niControl.RunDAQ("/DAQ/ai1");   //получаем и измеряем эталонные значения сигнала
-            //Thread.Sleep(500);
-            
-            //eventDAQEtalonUpdate.Reset();
+
+            eventDAQEtalonUpdate.Reset();
+            _frmMain.niControl.daqEtalon.RunDAQ();
+            eventDAQEtalonUpdate.WaitOne(50);
+            Thread.Sleep(50);
+
             RunDAQTest(num);
         }
 
         void RunDAQTest(int num)
         {
-            //_frmMain.niControl.RunDAQ("/DAQ/ai1");   //получаем и измеряем эталонные значения сигнала
-            //eventDAQEtalonUpdate.WaitOne();
-
             DAQTest test = tests[num];
 
             //Включение необходимых реле-------------
@@ -122,12 +124,14 @@ namespace _7637_WS4
             string ch2 = test.Output.Channel.ToString();
             _frmMain.niControl.OpenCloseRelay(true, dev2, ch2);
             //--------------------------------------
-
+            //Thread.Sleep(500);
 
 
             //Проведение измерений и вычисление результата------------
-            //_frmMain.niControl.RunDAQ("/DAQ/ai0"); //получаем и сохраняем значения сигнала измеренного фактического
-            //eventDAQMeasuredUpdate.WaitOne();
+            eventDAQMeasuredUpdate.Reset();
+            _frmMain.niControl.daqMeasured.RunDAQ();
+            eventDAQMeasuredUpdate.WaitOne(50);
+            Thread.Sleep(50);
 
             string sRes = string.Empty;
             if (_frmMain.maxOfMeasuredSignal >= _frmMain.maxOfEtalonSignal)
@@ -138,11 +142,13 @@ namespace _7637_WS4
             else
             {
                 lblResultOfDAQ.ForeColor = Color.Red;
-                //badTests.Add(tests[num]);             //только в циклической проверке
+                badTests.Add(tests[num]);             //только в циклической проверке
                 sRes = "FAILED";
             }
 
             lblResultOfDAQ.Text = sRes;
+
+            tests[num].Result = sRes;
             //-------------------------------------------------------
 
 
@@ -163,6 +169,97 @@ namespace _7637_WS4
             /*_frmMain.niControl.RunDAQ("/DAQ/ai1");
             Thread.Sleep(200);
             _frmMain.niControl.RunDAQ("/DAQ/ai0");*/
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DAQTest test = tests[54];
+
+            //Включение необходимых реле-------------
+            string dev1 = test.Input.Device;
+            string ch1 = test.Input.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(true, dev1, ch1);
+
+            string dev2 = test.Output.Device;
+            string ch2 = test.Output.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(true, dev2, ch2);
+            //--------------------------------------
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DAQTest test = tests[54];
+
+            //Включение необходимых реле-------------
+            string dev1 = test.Input.Device;
+            string ch1 = test.Input.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(false, dev1, ch1);
+
+            string dev2 = test.Output.Device;
+            string ch2 = test.Output.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(false, dev2, ch2);
+            //--------------------------------------
+        }
+        void RunDAQAllTests(int cnt)
+        {
+            for (int i = 0; i < cnt; i++)
+            {
+                lblRunCount.Text = "Выполняется № " + (i + 1).ToString();
+                int v = ((i + 1) * 100 / cnt);
+                if (colorProgressBar.Value != v) colorProgressBar.Value = v;
+
+                if (bNeedStop) break;
+                RunDAQTest(i);
+                //Thread.Sleep(50);
+            }
+        }
+
+
+        private void btnRunAllDAQTest_Click(object sender, EventArgs e)
+        {
+            bNeedStop = false;
+            btnRunAllDAQTest.Enabled = false;
+            btnStopAllTest.Enabled = true;
+            colorProgressBar.Visible = true;
+            badTests.Clear();
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+
+            eventDAQEtalonUpdate.Reset();
+            _frmMain.niControl.daqEtalon.RunDAQ();
+            eventDAQEtalonUpdate.WaitOne(50);
+            Thread.Sleep(20);
+
+            RunDAQAllTests(tests.Length);
+
+            sw.Stop();
+            lblT.Text = sw.Elapsed.ToString();
+            btnStopAllTest.Enabled = false;
+            btnRunAllDAQTest.Enabled = true;
+            colorProgressBar.Visible = false;
+
+            try
+            {
+                //Excel.SaveBPPP(tests, catalog + "Report.xls");
+                //MessageBox.Show(Excel.SaveBPPP(tests, Application.StartupPath + @"\"+catalog + "Report_" + listBPPPTestFileName));
+                if (Excel.SaveDAQ(tests, Application.StartupPath + @"\" + catalog + "Report_" + listBUProzvTest) != "Success")
+                {
+                    MessageBox.Show("Ошибка сохранения файла репорта! Проверьте в отладчике причину", "Ошибка");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка сохранения файла отчета Excel " + ex.Message, "Сохранение");
+            }
+        }
+
+        private void btnStopAllTest_Click(object sender, EventArgs e)
+        {
+            bNeedStop = true;
+
+            btnStopAllTest.Enabled = false;
+            btnRunAllDAQTest.Enabled = true;
         }
     }
 }

@@ -79,6 +79,7 @@
             this.lstR4 = new System.Windows.Forms.ListBox();
             this.lstR1 = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lblMeasuredSum = new System.Windows.Forms.Label();
             this.lblMaxMeasured = new System.Windows.Forms.Label();
             this.lblMaxEtalon = new System.Windows.Forms.Label();
             this.lstDAQMeasuredValues = new System.Windows.Forms.ListBox();
@@ -412,6 +413,7 @@
             this.txtR8Warning.ReadOnly = true;
             this.txtR8Warning.Size = new System.Drawing.Size(130, 47);
             this.txtR8Warning.TabIndex = 9;
+            this.txtR8Warning.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtR1Warning_MouseDoubleClick);
             // 
             // txtR6Warning
             // 
@@ -421,6 +423,7 @@
             this.txtR6Warning.ReadOnly = true;
             this.txtR6Warning.Size = new System.Drawing.Size(130, 47);
             this.txtR6Warning.TabIndex = 9;
+            this.txtR6Warning.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtR1Warning_MouseDoubleClick);
             // 
             // txtR3Warning
             // 
@@ -430,6 +433,7 @@
             this.txtR3Warning.ReadOnly = true;
             this.txtR3Warning.Size = new System.Drawing.Size(130, 47);
             this.txtR3Warning.TabIndex = 9;
+            this.txtR3Warning.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtR1Warning_MouseDoubleClick);
             // 
             // txtR7Warning
             // 
@@ -439,6 +443,7 @@
             this.txtR7Warning.ReadOnly = true;
             this.txtR7Warning.Size = new System.Drawing.Size(130, 47);
             this.txtR7Warning.TabIndex = 9;
+            this.txtR7Warning.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtR1Warning_MouseDoubleClick);
             // 
             // txtR5Warning
             // 
@@ -448,6 +453,7 @@
             this.txtR5Warning.ReadOnly = true;
             this.txtR5Warning.Size = new System.Drawing.Size(130, 47);
             this.txtR5Warning.TabIndex = 9;
+            this.txtR5Warning.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtR1Warning_MouseDoubleClick);
             // 
             // txtR2Warning
             // 
@@ -457,6 +463,7 @@
             this.txtR2Warning.ReadOnly = true;
             this.txtR2Warning.Size = new System.Drawing.Size(130, 47);
             this.txtR2Warning.TabIndex = 9;
+            this.txtR2Warning.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtR1Warning_MouseDoubleClick);
             // 
             // txtR4Warning
             // 
@@ -466,6 +473,7 @@
             this.txtR4Warning.ReadOnly = true;
             this.txtR4Warning.Size = new System.Drawing.Size(130, 47);
             this.txtR4Warning.TabIndex = 9;
+            this.txtR4Warning.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtR1Warning_MouseDoubleClick);
             // 
             // txtR1Warning
             // 
@@ -475,6 +483,7 @@
             this.txtR1Warning.ReadOnly = true;
             this.txtR1Warning.Size = new System.Drawing.Size(130, 47);
             this.txtR1Warning.TabIndex = 9;
+            this.txtR1Warning.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtR1Warning_MouseDoubleClick);
             // 
             // lstR8
             // 
@@ -550,6 +559,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.lblMeasuredSum);
             this.groupBox4.Controls.Add(this.lblMaxMeasured);
             this.groupBox4.Controls.Add(this.lblMaxEtalon);
             this.groupBox4.Controls.Add(this.lstDAQMeasuredValues);
@@ -563,21 +573,33 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "DAQ";
             // 
+            // lblMeasuredSum
+            // 
+            this.lblMeasuredSum.AutoSize = true;
+            this.lblMeasuredSum.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblMeasuredSum.Location = new System.Drawing.Point(6, 64);
+            this.lblMeasuredSum.Name = "lblMeasuredSum";
+            this.lblMeasuredSum.Size = new System.Drawing.Size(120, 17);
+            this.lblMeasuredSum.TabIndex = 14;
+            this.lblMeasuredSum.Text = "Measured AMPL:";
+            // 
             // lblMaxMeasured
             // 
             this.lblMaxMeasured.AutoSize = true;
-            this.lblMaxMeasured.Location = new System.Drawing.Point(26, 58);
+            this.lblMaxMeasured.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblMaxMeasured.Location = new System.Drawing.Point(6, 44);
             this.lblMaxMeasured.Name = "lblMaxMeasured";
-            this.lblMaxMeasured.Size = new System.Drawing.Size(83, 13);
+            this.lblMaxMeasured.Size = new System.Drawing.Size(112, 17);
             this.lblMaxMeasured.TabIndex = 14;
             this.lblMaxMeasured.Text = "Measured MAX:";
             // 
             // lblMaxEtalon
             // 
             this.lblMaxEtalon.AutoSize = true;
-            this.lblMaxEtalon.Location = new System.Drawing.Point(26, 27);
+            this.lblMaxEtalon.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblMaxEtalon.Location = new System.Drawing.Point(6, 24);
             this.lblMaxEtalon.Name = "lblMaxEtalon";
-            this.lblMaxEtalon.Size = new System.Drawing.Size(66, 13);
+            this.lblMaxEtalon.Size = new System.Drawing.Size(96, 17);
             this.lblMaxEtalon.TabIndex = 14;
             this.lblMaxEtalon.Text = "Etalon MAX:";
             // 
@@ -724,5 +746,6 @@
         private System.Windows.Forms.Label lblMaxMeasured;
         private System.Windows.Forms.Label lblMaxEtalon;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Label lblMeasuredSum;
     }
 }

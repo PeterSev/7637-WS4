@@ -24,6 +24,7 @@ namespace _7637_WS4
         string sAmplitude;    //амплитуда
         double dRateGen;     //частота дискредитизации генератора синусоиды
         string _name;
+        bool bSynchronizeCallbacks;
         public event delDAQBufReadReceived bufReadDAQReceived;
         public event delStatusUpdate warningDAQUpdate;
 
@@ -40,10 +41,11 @@ namespace _7637_WS4
             //sInputName = sDAQDeviceName + "/ai1";
             sInputName = sDAQDeviceName + _name;
             sOutputName = sDAQDeviceName + "/ao0";
-            dRateIO = 400000;
+            dRateIO = 4000000;
             iInputOutputSamples = 1000;
             sAmplitude = "10";
-            dRateGen = 4000;
+            dRateGen = 40000;
+            bSynchronizeCallbacks = false;
         }
 
         public void RunDAQ()
@@ -87,9 +89,14 @@ namespace _7637_WS4
                 inputCallback = new AsyncCallback(InputReady);
                 reader = new AnalogSingleChannelReader(inputTask.Stream);
 
+                
+                
+                
+                
+                
                 // Use SynchronizeCallbacks to specify that the object 
                 // marshals callbacks across threads appropriately.
-                reader.SynchronizeCallbacks = false;
+                reader.SynchronizeCallbacks = bSynchronizeCallbacks;
 
                 reader.BeginReadMultiSample(iInputOutputSamples, inputCallback, inputTask);
 

@@ -114,7 +114,7 @@ namespace _7637_WS4
 
         private void Relay_statusSWITCH(string name, string msg)
         {
-            ListBox lst;
+            /*ListBox lst;
             switch (name)
             {
                 case "R1": lst = lstR1; break;
@@ -129,7 +129,7 @@ namespace _7637_WS4
             }
             lst.Items.Add(msg);
             lst.ClearSelected();
-            lst.SelectedIndex = lst.Items.Count - 1;
+            lst.SelectedIndex = lst.Items.Count - 1;*/
         }
 
         //DC events
@@ -180,13 +180,13 @@ namespace _7637_WS4
 
             BeginInvoke((MethodInvoker)delegate
             {
-                lstDAQMeasuredValues.Items.Clear();
+                /*lstDAQMeasuredValues.Items.Clear();
                 foreach (double d in buf)
-                    lstDAQMeasuredValues.Items.Add(d);
-                //_frmMain.maxOfMeasuredSignal = buf.Max();
-                lblMaxMeasured.Text = "Measured MAX: " + _frmMain.maxOfMeasuredSignal;
+                    lstDAQMeasuredValues.Items.Add(d);*/
 
-                //_frmMain._frmBU_Prozv_Test.eventDAQMeasuredUpdate.Set();
+                lblMaxMeasured.Text = "Measured MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfMeasuredSignal,3).ToString("F3").PadLeft(7);
+                lblMeasuredSum.Text = "Measured AMPL: ".PadRight(16) + Math.Round((Math.Abs(_frmMain.maxOfMeasuredSignal) + Math.Abs(buf.Min())),3).ToString("F3").PadLeft(7);
+
 
                 chart1.Series[1].Points.Clear();
                 for (int i = 0; i < buf.Length; i++)
@@ -206,16 +206,12 @@ namespace _7637_WS4
 
             BeginInvoke((MethodInvoker)delegate
             {
-                lstDAQEtalonValues.Items.Clear();
+                /*lstDAQEtalonValues.Items.Clear();
                 foreach (double d in buf)
-                    lstDAQEtalonValues.Items.Add(d);
+                    lstDAQEtalonValues.Items.Add(d);*/
 
-                _frmMain.maxOfEtalonSignal = buf.Max();
-                //_frmMain._frmBU_Prozv_Test.eventDAQEtalonUpdate.Set();
-
-                lblMaxEtalon.Text = "Etalon MAX: " + _frmMain.maxOfEtalonSignal;
-
-
+                lblMaxEtalon.Text = "Etalon MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfEtalonSignal,3).ToString("F3").PadLeft(7);
+                
                 chart1.Series[0].Points.Clear();
                 for (int i = 0; i < buf.Length; i++)
                 {
@@ -264,6 +260,12 @@ namespace _7637_WS4
         private void txtDAQWarning_MouseClick(object sender, MouseEventArgs e)
         {
             txtDAQWarning.Text = string.Empty;
+        }
+
+        private void txtR1Warning_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            TextBox txt = (TextBox)sender;
+            txt.Text = string.Empty;
         }
     }
 }

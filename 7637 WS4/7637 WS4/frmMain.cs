@@ -127,7 +127,7 @@ namespace _7637_WS4
             
             
             _frmNI.Show();
-            _frmNI.Hide();
+            //_frmNI.Hide();
         }
 
         
