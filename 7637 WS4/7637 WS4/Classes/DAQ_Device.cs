@@ -27,6 +27,8 @@ namespace _7637_WS4
         bool bSynchronizeCallbacks;
         public event delDAQBufReadReceived bufReadDAQReceived;
         public event delStatusUpdate warningDAQUpdate;
+        FunctionGenerator fGen;
+        string terminalNameBase;
 
         /// <summary>
         /// Управляет DAQ устройством.
@@ -41,11 +43,21 @@ namespace _7637_WS4
             //sInputName = sDAQDeviceName + "/ai1";
             sInputName = sDAQDeviceName + _name;
             sOutputName = sDAQDeviceName + "/ao0";
-            dRateIO = 4000000;
-            iInputOutputSamples = 1000;
-            sAmplitude = "10";
-            dRateGen = 40000;
+            dRateIO = 400000;                           //частота дискретизации АЦП и ЦАП
+            iInputOutputSamples = 500;                  //количество точек для отправки/считывания
+            sAmplitude = "10";                          //амплитуда генерируемого сигнала
+            dRateGen = 4000;                            //частота формирования сигнала
             bSynchronizeCallbacks = false;
+
+            //формирование эталонного сигнала
+            fGen = new FunctionGenerator(
+                    dRateGen.ToString(),
+                    iInputOutputSamples.ToString(),
+                    (dRateGen / (dRateIO / iInputOutputSamples)).ToString(),
+                    "Sine",
+                    sAmplitude);
+
+            terminalNameBase = "/" + GetDAQDeviceName(sDAQDeviceName) + "/";
         }
 
         public void RunDAQ()
@@ -56,7 +68,7 @@ namespace _7637_WS4
                 string s = string.Empty;
                 s = _name == "/ai1" ? "etalon" : "measured";
                 inputTask = new NationalInstruments.DAQmx.Task(s);
-                outputTask = new NationalInstruments.DAQmx.Task(s+"output");
+                outputTask = new NationalInstruments.DAQmx.Task(s+"_output");
 
                 inputTask.AIChannels.CreateVoltageChannel(sInputName, "", AITerminalConfiguration.Pseudodifferential, inputDAQMinValue, inputDAQMaxValue, AIVoltageUnits.Volts);
                 outputTask.AOChannels.CreateVoltageChannel(sOutputName, "", outputDAQMinValue, outputDAQMaxValue, AOVoltageUnits.Volts);
@@ -64,18 +76,10 @@ namespace _7637_WS4
                 inputTask.Timing.ConfigureSampleClock("", dRateIO, SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples, iInputOutputSamples);
                 outputTask.Timing.ConfigureSampleClock("", dRateIO, SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples, iInputOutputSamples);
 
-                string terminalNameBase = "/" + GetDAQDeviceName(sDAQDeviceName) + "/";
                 outputTask.Triggers.StartTrigger.ConfigureDigitalEdgeTrigger(terminalNameBase + "ai/StartTrigger", triggerEdge);
 
                 inputTask.Control(TaskAction.Verify);
                 outputTask.Control(TaskAction.Verify);
-
-                FunctionGenerator fGen = new FunctionGenerator(
-                    dRateGen.ToString(),
-                    iInputOutputSamples.ToString(),
-                    (dRateGen / (dRateIO / iInputOutputSamples)).ToString(),
-                    "Sine",
-                    sAmplitude);
 
                 output = fGen.Data;
 
@@ -86,19 +90,24 @@ namespace _7637_WS4
                 outputTask.Start();
                 inputTask.Start();
 
-                inputCallback = new AsyncCallback(InputReady);
+                //inputCallback = new AsyncCallback(InputReady);
                 reader = new AnalogSingleChannelReader(inputTask.Stream);
 
+
+                //------------ТЕСТОВЫЙ КУСОК------------ ЧТЕНИЕ В ЭТОМ ЖЕ ПОТОКЕ--
+                double[] data = reader.ReadMultiSample(iInputOutputSamples);
                 
-                
-                
-                
-                
-                // Use SynchronizeCallbacks to specify that the object 
+                bufReadDAQReceived?.Invoke(data);
+                StopTask();
+                //----------------------------------------------------------------
+
+
+
+                /*// Use SynchronizeCallbacks to specify that the object 
                 // marshals callbacks across threads appropriately.
                 reader.SynchronizeCallbacks = bSynchronizeCallbacks;
 
-                reader.BeginReadMultiSample(iInputOutputSamples, inputCallback, inputTask);
+                reader.BeginReadMultiSample(iInputOutputSamples, inputCallback, inputTask);*/
 
             }
             catch (Exception ex)

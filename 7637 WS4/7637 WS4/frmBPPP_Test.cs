@@ -319,7 +319,9 @@ namespace _7637_WS4
             //_frmMain.niControl.OpenCloseRelay(true, "R7", "66");
             //Thread.Sleep(200);
 
-                //RunTest((int)numTest.Value);
+            txtDAQInfo.Text = "Идет тестирование..";
+            txtDAQInfo.BackColor = Color.RoyalBlue;
+
             RunBPPPAllTests(tests.Length);
 
             //_frmMain.niControl.OpenCloseRelay(false, "R6", "64");
@@ -336,8 +338,8 @@ namespace _7637_WS4
 
             try
             {
-                //Excel.SaveBPPP(tests, catalog + "Report.xls");
-                //MessageBox.Show(Excel.SaveBPPP(tests, Application.StartupPath + @"\"+catalog + "Report_" + listBPPPTestFileName));
+                txtDAQInfo.Text = "Сохраняем отчет..";
+                txtDAQInfo.BackColor = Color.DarkOrange;
                 if(Excel.SaveBPPP(tests, Application.StartupPath + @"\" + catalog + "Report_" + listBPPPTestFileName) != "Success")
                 {
                     MessageBox.Show("Ошибка сохранения файла репорта! Проверьте в отладчике причину", "Ошибка");
@@ -347,6 +349,17 @@ namespace _7637_WS4
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка сохранения файла отчета Excel " + ex.Message, "Сохранение");
+            }
+
+            if (badTests.Count > 0)
+            {
+                txtDAQInfo.BackColor = Color.Red;
+                txtDAQInfo.Text = "ТЕСТ НЕ ПРОЙДЕН";
+            }
+            else
+            {
+                txtDAQInfo.BackColor = Color.Green;
+                txtDAQInfo.Text = "ТЕСТ ПРОЙДЕН";
             }
         }
 

@@ -87,6 +87,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.lstDAQEtalonValues = new System.Windows.Forms.ListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chkShowSwitch = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -302,6 +303,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.chkShowSwitch);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.label10);
@@ -328,7 +330,7 @@
             this.groupBox3.Controls.Add(this.lstR1);
             this.groupBox3.Location = new System.Drawing.Point(12, 540);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1099, 200);
+            this.groupBox3.Size = new System.Drawing.Size(1130, 200);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Блоки реле";
@@ -660,11 +662,20 @@
             this.chart1.TabIndex = 16;
             this.chart1.Text = "chart1";
             // 
+            // chkShowSwitch
+            // 
+            this.chkShowSwitch.AutoSize = true;
+            this.chkShowSwitch.Location = new System.Drawing.Point(1094, 19);
+            this.chkShowSwitch.Name = "chkShowSwitch";
+            this.chkShowSwitch.Size = new System.Drawing.Size(15, 14);
+            this.chkShowSwitch.TabIndex = 11;
+            this.chkShowSwitch.UseVisualStyleBackColor = true;
+            // 
             // frmNI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1121, 750);
+            this.ClientSize = new System.Drawing.Size(1154, 750);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -747,5 +758,6 @@
         private System.Windows.Forms.Label lblMaxEtalon;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Label lblMeasuredSum;
+        private System.Windows.Forms.CheckBox chkShowSwitch;
     }
 }

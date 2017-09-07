@@ -19,7 +19,7 @@ namespace _7637_WS4
         public Board curBoard = null;
 
         public double resultOfMeasurementDMM = 0;
-        public double maxOfEtalonSignal = 0, maxOfMeasuredSignal = 0;
+        public double maxOfEtalonSignal = 0, maxOfMeasuredSignal = 0, amplOfEtalonSignal = 0, amplOfMeasuredSignal = 0;
 
         //public int cntOfResMeasurementDMM = 0;
         public bool bNeedRewrite = false;

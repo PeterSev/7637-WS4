@@ -57,6 +57,7 @@
             this.numTest = new System.Windows.Forms.NumericUpDown();
             this.btnRunAllBPPPTest = new System.Windows.Forms.Button();
             this.btnRunBPPPTest = new System.Windows.Forms.Button();
+            this.txtDAQInfo = new System.Windows.Forms.TextBox();
             this.grpDC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV1)).BeginInit();
@@ -168,7 +169,7 @@
             this.grpDC.Controls.Add(this.button3);
             this.grpDC.Controls.Add(this.button4);
             this.grpDC.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.grpDC.Location = new System.Drawing.Point(12, 234);
+            this.grpDC.Location = new System.Drawing.Point(12, 256);
             this.grpDC.Name = "grpDC";
             this.grpDC.Size = new System.Drawing.Size(254, 105);
             this.grpDC.TabIndex = 5;
@@ -220,7 +221,7 @@
             this.grpSwitch.Controls.Add(this.numSwitchChannel);
             this.grpSwitch.Controls.Add(this.cmbSwitchName);
             this.grpSwitch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.grpSwitch.Location = new System.Drawing.Point(272, 234);
+            this.grpSwitch.Location = new System.Drawing.Point(272, 256);
             this.grpSwitch.Name = "grpSwitch";
             this.grpSwitch.Size = new System.Drawing.Size(296, 105);
             this.grpSwitch.TabIndex = 6;
@@ -296,6 +297,7 @@
             // 
             // grpBPPPTest
             // 
+            this.grpBPPPTest.Controls.Add(this.txtDAQInfo);
             this.grpBPPPTest.Controls.Add(this.colorProgressBar);
             this.grpBPPPTest.Controls.Add(this.lblT);
             this.grpBPPPTest.Controls.Add(this.lblRunCount);
@@ -313,7 +315,7 @@
             this.grpBPPPTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.grpBPPPTest.Location = new System.Drawing.Point(12, 12);
             this.grpBPPPTest.Name = "grpBPPPTest";
-            this.grpBPPPTest.Size = new System.Drawing.Size(556, 154);
+            this.grpBPPPTest.Size = new System.Drawing.Size(556, 222);
             this.grpBPPPTest.TabIndex = 7;
             this.grpBPPPTest.TabStop = false;
             this.grpBPPPTest.Text = "Тесты";
@@ -428,11 +430,24 @@
             this.btnRunBPPPTest.UseVisualStyleBackColor = false;
             this.btnRunBPPPTest.Click += new System.EventHandler(this.button5_Click);
             // 
+            // txtDAQInfo
+            // 
+            this.txtDAQInfo.BackColor = System.Drawing.Color.RoyalBlue;
+            this.txtDAQInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtDAQInfo.ForeColor = System.Drawing.Color.White;
+            this.txtDAQInfo.Location = new System.Drawing.Point(9, 151);
+            this.txtDAQInfo.Multiline = true;
+            this.txtDAQInfo.Name = "txtDAQInfo";
+            this.txtDAQInfo.ReadOnly = true;
+            this.txtDAQInfo.Size = new System.Drawing.Size(541, 64);
+            this.txtDAQInfo.TabIndex = 9;
+            this.txtDAQInfo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // frmBPPP_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 175);
+            this.ClientSize = new System.Drawing.Size(580, 241);
             this.Controls.Add(this.grpBPPPTest);
             this.Controls.Add(this.grpSwitch);
             this.Controls.Add(this.grpDC);
@@ -488,5 +503,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private ColorProgressBar colorProgressBar;
+        private System.Windows.Forms.TextBox txtDAQInfo;
     }
 }

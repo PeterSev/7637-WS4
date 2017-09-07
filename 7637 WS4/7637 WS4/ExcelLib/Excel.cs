@@ -325,6 +325,8 @@ namespace ExcelLib
                         if (int.TryParse(list[0, j], out value))
                         {
                             DAQTest[k].Index = value;
+                            DAQTest[k].Result = list[12, j];
+                            DAQTest[k].Value = list[13, j];
 
                             for (int i = 1; i < table.Columns.Count; i++)
                             {
@@ -850,6 +852,23 @@ namespace ExcelLib
                 GC.WaitForPendingFinalizers();
             }
         }
+        public static string SaveDAQErrors(DAQTest[] data, string path)
+        {
+            try
+            {
+                string status = Wrapper.SaveDAQErrorsWrapper(data, path);
+                return status;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
     }
 
     /// <summary>
@@ -994,11 +1013,28 @@ namespace ExcelLib
             xlWorkSheet = (MSExcel.Worksheet)xlWorkBook.Worksheets.Item[1];
 
             //При добавлении столбцов, изменить размер массива(ниже при  MSExcel.Range r  тоже!)
-            string[,] arr = new string[data.Length + 3 + 16, 13];
+            string[,] arr = new string[data.Length + 3 + 16, 14];
+            
+            // Без этих элементов некорректно отрабатывает метод ParseTable
             arr[0, 0] = "ТЕСТЫ ЦЕПЕЙ";
+            arr[0, 1] = " ";
+            arr[0, 2] = " ";
+            arr[0, 3] = " ";
+            arr[0, 4] = " ";
+            arr[0, 5] = " ";
+            arr[0, 6] = " ";
+            arr[0, 7] = " ";
+            arr[0, 8] = " ";
+            arr[0, 9] = " ";
+            arr[0, 10] = " ";
+            arr[0, 11] = " ";
+            arr[0, 12] = " ";
+            arr[0, 13] = " ";
+
             arr[1, 0] = " ";
             arr[2, 1] = "входы";
             arr[2, 12] = "Результат";
+            arr[2, 13] = "Значение";
             //Шапка 1
             arr[3, 0] = "№";
             arr[3, 1] = "XP1";
@@ -1149,94 +1185,156 @@ namespace ExcelLib
             arr[337, 1] = "XS1";
             arr[337, 2] = "XS3";
 
-            try
+            bool[] successColor = new bool[data.Length + 3 + 16];
+            for (int i = 0; i < successColor.Length; i++)
             {
-                int k = 0;
-                int headRow = 0;
-                int posColunm = 0;
-                for (int i = 3; i < data.Length + 3 + 16; i++)
+                successColor[i] = false;
+            }
+            int k = 0;
+            int headRow = 0;
+            int posColunm = 0;
+            for (int i = 3; i < data.Length + 3 + 16; i++)
+            {
+                if (arr[i, 0] != "№")
                 {
-                    if (arr[i, 0] != "№")
-                    {
-                        arr[i, 0] = data[k].Index.ToString();
-                        var com = data[k].Comment.Split(',');
-                        var com1 = com[0].Split(' ');
-                        var com2 = com[1].Split(' ');
-                        arr[i, 1] = com1[1].ToUpper() + "/K" + data[k].Input.Channel + " " + data[k].Input.Device.ToUpper();
+                    arr[i, 0] = data[k].Index.ToString();
+                    var com = data[k].Comment.Split(',');
+                    var com1 = com[0].Split(' ');
+                    var com2 = com[1].Split(' ');
+                    arr[i, 1] = com1[1].ToUpper() + "/K" + data[k].Input.Channel + " " + data[k].Input.Device.ToUpper();
 
-                        for (int j = 2; j < 12; j++)
+                    for (int j = 2; j < 12; j++)
+                    {
+                        if (com2[1] == arr[headRow, j])
                         {
-                            if (com2[1] == arr[headRow, j])
-                            {
-                                posColunm = j;
-                                break;
-                            }
+                            posColunm = j;
+                            break;
                         }
+                    }
 
-                        arr[i, posColunm] = com2[2].ToUpper() + "/K" + data[k].Output.Channel + data[k].Output.Device.ToUpper();
-                        arr[i, 12] = data[k].Result;
-                        k++;
-                    }
-                    else
+                    arr[i, posColunm] = com2[2].ToUpper() + "/K" + data[k].Output.Channel + data[k].Output.Device.ToUpper();
+                    arr[i, 12] = data[k].Result;
+                    arr[i, 13] = data[k].Value;
+                    if (data[k].Result == "PASSED")
                     {
-                        headRow = i;
+                        successColor[i] = true;
                     }
+                    k++;
+                }
+                else
+                {
+                    headRow = i;
                 }
             }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
 
-
-
-            //bool[] successColor = new bool[data.Length + 3];
-            //for (int i = 0; i < successColor.Length; i++)
-            //{
-            //    successColor[i] = false;
-            //}
-            //int k = 0;
-            //for (int i = 2; i < data.Length + 2; i++)
-            //{
-            //    arr[i, 0] = data[k].Index.ToString();
-
-            //    for (int j = 0; j < data[k].Input.Length; j++)
-            //    {
-            //        if (j > 0) arr[i, 1] += "/";
-            //        arr[i, 1] += "k" + data[k].Input[j].Channel + data[k].Input[j].Device;
-            //    }
-
-            //    for (int j = 0; j < data[k].Output.Length; j++)
-            //    {
-            //        if (j > 0) arr[i, 2] += "/";
-            //        arr[i, 2] += "k" + data[k].Output[j].Channel + data[k].Output[j].Device;
-            //    }
-
-            //    // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-            //    arr[i, 3] = data[k].Min.ToString();
-            //    // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-            //    arr[i, 4] = data[k].Max.ToString();
-            //    // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-            //    arr[i, 5] = data[k].Value.ToString();
-            //    var tcom = data[k].Comment.Split(' ');
-            //    arr[i, 6] = tcom[0];
-            //    arr[i, 7] = tcom[1];
-            //    arr[i, 8] = data[k].Range.ToString();
-            //    arr[i, 9] = data[k].Result;
-            //    if (data[k].Result == "PASSED")
-            //        successColor[k] = true;
-            //    k++;
             try
             {
-                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 3 + 16, 13]];
+                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 3 + 16, 14]];
                 r.Value = arr;
                 xlWorkSheet.Columns.EntireColumn.AutoFit();
 
-                //for (int i = 0; i < successColor.Length - 3; i++)
+                for (int i = 4; i < successColor.Length; i++)
+                {
+                    if (successColor[i])
+                    {
+                        xlWorkSheet.Cells[i + 1, 13].Font.Color = MSExcel.XlRgbColor.rgbGreen;
+                        xlWorkSheet.Cells[i + 1, 14].Font.Color = MSExcel.XlRgbColor.rgbGreen;
+                    }
+
+                    else
+                    {
+                        xlWorkSheet.Cells[i + 1, 13].Font.Color = MSExcel.XlRgbColor.rgbRed;
+                        xlWorkSheet.Cells[i + 1, 14].Font.Color = MSExcel.XlRgbColor.rgbRed;
+                    }
+                }
+
+                xlWorkBook.SaveAs(path, MSExcel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
+                MSExcel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                switch (ex.Message)
+                {
+                    default:
+                        return "Unknown error: " + ex.Message;
+                }
+            }
+            finally
+            {
+                xlWorkBook.Close(true, misValue, misValue);
+                exApp.Quit();
+
+                Marshal.ReleaseComObject(xlWorkSheet);
+                Marshal.ReleaseComObject(xlWorkBook);
+                Marshal.ReleaseComObject(exApp);
+            }
+        }
+
+        public static string SaveDAQErrorsWrapper(DAQTest[] data, string path)
+        {
+            MSExcel.Application exApp = new MSExcel.Application();
+
+            exApp.Visible = false;
+            exApp.ScreenUpdating = false;
+            // Отключае запрос на перезапись файла (разрешает перезапись)
+            exApp.DisplayAlerts = false;
+
+            MSExcel.Workbook xlWorkBook;
+            MSExcel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+
+            xlWorkBook = exApp.Workbooks.Add(misValue);
+            xlWorkSheet = (MSExcel.Worksheet)xlWorkBook.Worksheets.Item[1];
+
+            //При добавлении столбцов, изменить размер массива(ниже при  MSExcel.Range r  тоже!)
+            string[,] arr = new string[data.Length +2, 8];
+            for (int i = 0; i < 7; i++)
+                arr[0, i] = " ";
+            arr[0, 1] = "Входы";
+            arr[0, 3] = "Выходы";
+            arr[1, 0] = "№";
+            arr[1, 1] = "Устройство";
+            arr[1, 2] = "Канал";
+            arr[1, 3] = "Устройство";
+            arr[1, 4] = "Канал";
+            arr[1, 5] = "Комментарий";
+            arr[1, 6] = "Значение";
+            arr[1, 7] = "Результат";
+
+            int k = 0;
+            for (int i = 2; i < data.Length; i++)
+            {
+                arr[i, 0] = data[k].Index.ToString();
+                arr[i, 1] = data[k].Input.Device;
+                arr[i, 2] = data[k].Input.Channel.ToString();
+                arr[i, 3] = data[k].Output.Device;
+                arr[i, 4] = data[k].Output.Channel.ToString();
+                arr[i, 5] = data[k].Comment;
+                arr[i, 6] = data[k].Value;
+                arr[i, 7] = data[k].Result;
+                k++;
+            }
+            try
+            {
+                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 2, 8]];
+                r.Value = arr;
+                xlWorkSheet.Columns.EntireColumn.AutoFit();
+
+                //for (int i = 4; i < successColor.Length; i++)
                 //{
                 //    if (successColor[i])
-                //        xlWorkSheet.Cells[i + 3, 10].Font.Color = MSExcel.XlRgbColor.rgbGreen;
-                //    else xlWorkSheet.Cells[i + 3, 10].Font.Color = MSExcel.XlRgbColor.rgbRed;
+                //    {
+                //        xlWorkSheet.Cells[i + 1, 13].Font.Color = MSExcel.XlRgbColor.rgbGreen;
+                //        xlWorkSheet.Cells[i + 1, 14].Font.Color = MSExcel.XlRgbColor.rgbGreen;
+                //    }
+
+                //    else
+                //    {
+                //        xlWorkSheet.Cells[i + 1, 13].Font.Color = MSExcel.XlRgbColor.rgbRed;
+                //        xlWorkSheet.Cells[i + 1, 14].Font.Color = MSExcel.XlRgbColor.rgbRed;
+                //    }
                 //}
 
                 xlWorkBook.SaveAs(path, MSExcel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,

@@ -114,7 +114,8 @@ namespace _7637_WS4
 
         private void Relay_statusSWITCH(string name, string msg)
         {
-            /*ListBox lst;
+            if (!chkShowSwitch.Checked) return;
+            ListBox lst;
             switch (name)
             {
                 case "R1": lst = lstR1; break;
@@ -129,7 +130,7 @@ namespace _7637_WS4
             }
             lst.Items.Add(msg);
             lst.ClearSelected();
-            lst.SelectedIndex = lst.Items.Count - 1;*/
+            lst.SelectedIndex = lst.Items.Count - 1;
         }
 
         //DC events
@@ -171,21 +172,25 @@ namespace _7637_WS4
         }
 
 
+        //int cntToPaint = 0, cntToPaint2 = 0;
 
         //DAQ Events
         private void NiControl_bufReadDAQMeasuredReceived(double[] buf)
         {
             _frmMain.maxOfMeasuredSignal = buf.Max();
+            _frmMain.amplOfMeasuredSignal = Math.Round((Math.Abs(_frmMain.maxOfMeasuredSignal) + Math.Abs(buf.Min())), 3);
             _frmMain._frmBU_Prozv_Test.eventDAQMeasuredUpdate.Set();
 
-            BeginInvoke((MethodInvoker)delegate
-            {
-                /*lstDAQMeasuredValues.Items.Clear();
-                foreach (double d in buf)
-                    lstDAQMeasuredValues.Items.Add(d);*/
-
-                lblMaxMeasured.Text = "Measured MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfMeasuredSignal,3).ToString("F3").PadLeft(7);
-                lblMeasuredSum.Text = "Measured AMPL: ".PadRight(16) + Math.Round((Math.Abs(_frmMain.maxOfMeasuredSignal) + Math.Abs(buf.Min())),3).ToString("F3").PadLeft(7);
+            //BeginInvoke((MethodInvoker)delegate
+            //{
+            /*lstDAQMeasuredValues.Items.Clear();
+            foreach (double d in buf)
+                lstDAQMeasuredValues.Items.Add(d);*/
+            //cntToPaint2++;
+            //if (cntToPaint2 >= 10)
+            //{
+                lblMaxMeasured.Text = "Measured MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfMeasuredSignal, 3).ToString("F3").PadLeft(7);
+                lblMeasuredSum.Text = "Measured AMPL: ".PadRight(16) + _frmMain.amplOfMeasuredSignal.ToString("F3").PadLeft(7);
 
 
                 chart1.Series[1].Points.Clear();
@@ -193,31 +198,39 @@ namespace _7637_WS4
                 {
                     chart1.Series[1].Points.AddXY(i, buf[i]);
                 }
-
-            });
+                //cntToPaint2 = 0;
+            //}
+            //});
 
         }
 
+        
         private void NiControl_bufReadDAQReceived(double[] buf)
         {
             _frmMain.maxOfEtalonSignal = buf.Max();
+            _frmMain.amplOfEtalonSignal = Math.Round((Math.Abs(_frmMain.maxOfEtalonSignal) + Math.Abs(buf.Min())), 3);
             _frmMain._frmBU_Prozv_Test.eventDAQEtalonUpdate.Set();
 
 
-            BeginInvoke((MethodInvoker)delegate
-            {
-                /*lstDAQEtalonValues.Items.Clear();
-                foreach (double d in buf)
-                    lstDAQEtalonValues.Items.Add(d);*/
+            //BeginInvoke((MethodInvoker)delegate
+            //{
+            /*lstDAQEtalonValues.Items.Clear();
+            foreach (double d in buf)
+                lstDAQEtalonValues.Items.Add(d);*/
+            //cntToPaint++;
+            //if (cntToPaint >= 10)
+            //{
+                lblMaxEtalon.Text = "Etalon MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfEtalonSignal, 3).ToString("F3").PadLeft(7);
 
-                lblMaxEtalon.Text = "Etalon MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfEtalonSignal,3).ToString("F3").PadLeft(7);
-                
                 chart1.Series[0].Points.Clear();
                 for (int i = 0; i < buf.Length; i++)
                 {
                     chart1.Series[0].Points.AddXY(i, buf[i]);
                 }
-            });
+
+                //cntToPaint = 0;
+            //}
+            //});
         }
 
         private void NiControl_warningDAQUpdate(string msg)

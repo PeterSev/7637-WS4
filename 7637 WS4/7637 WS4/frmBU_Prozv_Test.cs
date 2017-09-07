@@ -130,11 +130,13 @@ namespace _7637_WS4
             //Проведение измерений и вычисление результата------------
             eventDAQMeasuredUpdate.Reset();
             _frmMain.niControl.daqMeasured.RunDAQ();
-            eventDAQMeasuredUpdate.WaitOne(50);
-            Thread.Sleep(50);
+            eventDAQMeasuredUpdate.WaitOne();
+            //Thread.Sleep(50);
 
             string sRes = string.Empty;
-            if (_frmMain.maxOfMeasuredSignal >= _frmMain.maxOfEtalonSignal)
+            //АмплитудаИзмерен >= АмплитудаЭталон - 2
+            //if (_frmMain.maxOfMeasuredSignal >= _frmMain.maxOfEtalonSignal)
+            if(_frmMain.amplOfMeasuredSignal >= _frmMain.amplOfEtalonSignal - 2)    
             {
                 lblResultOfDAQ.ForeColor = Color.LightGreen;
                 sRes = "PASSED";
@@ -142,13 +144,14 @@ namespace _7637_WS4
             else
             {
                 lblResultOfDAQ.ForeColor = Color.Red;
-                badTests.Add(tests[num]);             //только в циклической проверке
+                badTests.Add(tests[num]);            
                 sRes = "FAILED";
             }
 
             lblResultOfDAQ.Text = sRes;
 
             tests[num].Result = sRes;
+            tests[num].Value = string.Format("{0} --> {1}", _frmMain.amplOfEtalonSignal, _frmMain.amplOfMeasuredSignal);
             //-------------------------------------------------------
 
 
@@ -210,7 +213,7 @@ namespace _7637_WS4
 
                 if (bNeedStop) break;
                 RunDAQTest(i);
-                //Thread.Sleep(50);
+                Application.DoEvents();
             }
         }
 
@@ -219,16 +222,23 @@ namespace _7637_WS4
         {
             bNeedStop = false;
             btnRunAllDAQTest.Enabled = false;
+            btnShowReport.Visible = false;
             btnStopAllTest.Enabled = true;
             colorProgressBar.Visible = true;
             badTests.Clear();
+            _frmMain._frmBU_Prozv_Report.Hide();
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
+            //------Получаем и измеряем эталонный сигнал------------
             eventDAQEtalonUpdate.Reset();
             _frmMain.niControl.daqEtalon.RunDAQ();
             eventDAQEtalonUpdate.WaitOne(50);
-            Thread.Sleep(20);
+            //------------------------------------------------
+
+            
+            txtDAQInfo.Text = "Идет тестирование..";
+            txtDAQInfo.BackColor = Color.RoyalBlue;
 
             RunDAQAllTests(tests.Length);
 
@@ -237,20 +247,44 @@ namespace _7637_WS4
             btnStopAllTest.Enabled = false;
             btnRunAllDAQTest.Enabled = true;
             colorProgressBar.Visible = false;
+            btnShowReport.Visible = true;
+            //_frmMain._frmBU_Prozv_Report.Show();
 
             try
             {
-                //Excel.SaveBPPP(tests, catalog + "Report.xls");
-                //MessageBox.Show(Excel.SaveBPPP(tests, Application.StartupPath + @"\"+catalog + "Report_" + listBPPPTestFileName));
-                if (Excel.SaveDAQ(tests, Application.StartupPath + @"\" + catalog + "Report_" + listBUProzvTest) != "Success")
+                txtDAQInfo.Text = "Сохраняем отчет..";
+                txtDAQInfo.BackColor = Color.DarkOrange;
+                string res = Excel.SaveDAQ(tests, Application.StartupPath + @"\" + catalog + "Report_" + listBUProzvTest);
+                if (res != "Success")
                 {
-                    MessageBox.Show("Ошибка сохранения файла репорта! Проверьте в отладчике причину", "Ошибка");
+                    MessageBox.Show(res, "Ошибка");
                 }
 
+                if (badTests.Count > 0) //сохраняем отчет об ошибках лишь при их наличии
+                {
+                    txtDAQInfo.Text = "Сохраняем ошибки..";
+                    res = Excel.SaveDAQErrors(badTests.ToArray(), Application.StartupPath + @"\" + catalog + "BAD_" + listBUProzvTest);
+
+                    if (res != "Success")
+                    {
+                        MessageBox.Show(res, "Ошибка");
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка сохранения файла отчета Excel " + ex.Message, "Сохранение");
+            }
+
+            if (badTests.Count > 0)
+            {
+                txtDAQInfo.BackColor = Color.Red;
+                txtDAQInfo.Text = "ТЕСТ НЕ ПРОЙДЕН";
+            }
+            else
+            {
+                txtDAQInfo.BackColor = Color.Green;
+                txtDAQInfo.Text = "ТЕСТ ПРОЙДЕН";
             }
         }
 
