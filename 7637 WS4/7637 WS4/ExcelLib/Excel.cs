@@ -271,11 +271,11 @@ namespace ExcelLib
         }
 
         /// <summary>
-        /// Парсит таблицу типа 1 и 2, возвращает список тестов в указанном формате
+        /// Парсит таблицу типа 1 и 2, возвращает список тестов в указанном формате. Устаревший метод - работает лишь для кривонаписанных Виталиком файлов Excel
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">Путь файла</param>
         /// <returns></returns>
-        public static DAQTest[] ParseDAQ(string path)
+        public static DAQTest[] ParseDAQ_Old(string path)
         {
             try
             {
@@ -371,6 +371,61 @@ namespace ExcelLib
                         }
                     }
                 }
+                return DAQTest;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Парсит таблицу типа 1 и 2, возвращает список тестов в указанном формате
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>Возвращает массив объектов</returns>
+        public static DAQTest[] ParseDAQ(string path)
+        {
+            try
+            {
+                var table = ParseTable(path);
+
+                if (table == null) return null;
+
+                string[,] list = new string[table.Columns.Count, table.Rows.Count];
+
+                if (table.Columns.Count == 0 || table.Rows.Count == 0)
+                {
+                    return null;
+                }
+
+                for (int i = 0; i < table.Columns.Count; i++)
+                {
+                    for (int j = 0; j < table.Rows.Count; j++)
+                    {
+                        list[i, j] = table.Rows[j][i].ToString();
+                    }
+                }
+                DAQTest = new DAQTest[table.Rows.Count - 1];
+                for (int i = 0; i < DAQTest.Length; i++)
+                {
+                    DAQTest[i] = new DAQTest();
+                }
+
+                int k = 0;
+                for (int i = 1; i < table.Rows.Count; i++)
+                {
+                    DAQTest[k].Index = Convert.ToInt32(list[0, i]);
+                    DAQTest[k].Input.Device = list[1, i].ToUpper();
+                    DAQTest[k].Input.Channel = Convert.ToInt32(list[2, i]);
+                    DAQTest[k].Output.Device = list[3, i].ToUpper();
+                    DAQTest[k].Output.Channel = Convert.ToInt32(list[4, i]);
+                    DAQTest[k].Comment = list[5, i];
+                    DAQTest[k].Value = list[6, i];
+                    DAQTest[k].Result = list[7, i];
+                    k++;
+                }
+             
                 return DAQTest;
             }
             catch (Exception ex)
@@ -815,7 +870,7 @@ namespace ExcelLib
         {
             try
             {
-                string status = Wrapper.SaveBPPPWrapper(data, path);
+                string status = Wrapper.SaveBpppWrapper(data, path);
                 return status;
             }
             catch (Exception ex)
@@ -835,11 +890,11 @@ namespace ExcelLib
         /// <param name="data"></param>
         /// <param name="path"></param>
         /// <returns>Возращает статус сохранения</returns>
-        public static string SaveDAQ(DAQTest[] data, string path)
+        public static string SaveDAQ_Old(DAQTest[] data, string path)
         {
             try
             {
-                string status = Wrapper.SaveDAQWrapper(data, path);
+                string status = Wrapper.SaveDaq_Old_Wrapper(data, path);
                 return status;
             }
             catch (Exception ex)
@@ -852,11 +907,17 @@ namespace ExcelLib
                 GC.WaitForPendingFinalizers();
             }
         }
-        public static string SaveDAQErrors(DAQTest[] data, string path)
+        /// <summary>
+        /// Используется для сохранения файла ошибок, сохраняет ошибочные тесты в виде таблицы xls(DAQ)
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="path"></param>
+        /// <returns>Возвращает статус сохранения</returns>
+        public static string SaveDAQ(DAQTest[] data, string path)
         {
             try
             {
-                string status = Wrapper.SaveDAQErrorsWrapper(data, path);
+                string status = Wrapper.SaveDaqWrapper(data, path);
                 return status;
             }
             catch (Exception ex)
@@ -877,7 +938,7 @@ namespace ExcelLib
     // Необходим для очистки COM объектов
     public static class Wrapper
     {
-        public static string SaveBPPPWrapper(BPPPTest[] data, string path)
+        public static string SaveBpppWrapper(BPPPTest[] data, string path)
         {
             MSExcel.Application exApp = new MSExcel.Application();
 
@@ -996,7 +1057,7 @@ namespace ExcelLib
             }
         }
 
-        public static string SaveDAQWrapper(DAQTest[] data, string path)
+        public static string SaveDaq_Old_Wrapper(DAQTest[] data, string path)
         {
             MSExcel.Application exApp = new MSExcel.Application();
 
@@ -1272,7 +1333,7 @@ namespace ExcelLib
             }
         }
 
-        public static string SaveDAQErrorsWrapper(DAQTest[] data, string path)
+        public static string SaveDaqWrapper(DAQTest[] data, string path)
         {
             MSExcel.Application exApp = new MSExcel.Application();
 
@@ -1289,7 +1350,7 @@ namespace ExcelLib
             xlWorkSheet = (MSExcel.Worksheet)xlWorkBook.Worksheets.Item[1];
 
             //При добавлении столбцов, изменить размер массива(ниже при  MSExcel.Range r  тоже!)
-            string[,] arr = new string[data.Length +2, 8];
+            string[,] arr = new string[data.Length + 2, 8];
             for (int i = 0; i < 7; i++)
                 arr[0, i] = " ";
             arr[0, 1] = "Входы";
@@ -1301,10 +1362,12 @@ namespace ExcelLib
             arr[1, 4] = "Канал";
             arr[1, 5] = "Комментарий";
             arr[1, 6] = "Значение";
+            arr[0, 7] = " ";
             arr[1, 7] = "Результат";
 
             int k = 0;
-            for (int i = 2; i < data.Length; i++)
+            bool[] color = new bool[data.Length];
+            for (int i = 2; i < data.Length + 2; i++)
             {
                 arr[i, 0] = data[k].Index.ToString();
                 arr[i, 1] = data[k].Input.Device;
@@ -1314,6 +1377,8 @@ namespace ExcelLib
                 arr[i, 5] = data[k].Comment;
                 arr[i, 6] = data[k].Value;
                 arr[i, 7] = data[k].Result;
+                if (data[k].Result == "PASSED")
+                    color[k] = true;
                 k++;
             }
             try
@@ -1322,20 +1387,19 @@ namespace ExcelLib
                 r.Value = arr;
                 xlWorkSheet.Columns.EntireColumn.AutoFit();
 
-                //for (int i = 4; i < successColor.Length; i++)
-                //{
-                //    if (successColor[i])
-                //    {
-                //        xlWorkSheet.Cells[i + 1, 13].Font.Color = MSExcel.XlRgbColor.rgbGreen;
-                //        xlWorkSheet.Cells[i + 1, 14].Font.Color = MSExcel.XlRgbColor.rgbGreen;
-                //    }
-
-                //    else
-                //    {
-                //        xlWorkSheet.Cells[i + 1, 13].Font.Color = MSExcel.XlRgbColor.rgbRed;
-                //        xlWorkSheet.Cells[i + 1, 14].Font.Color = MSExcel.XlRgbColor.rgbRed;
-                //    }
-                //}
+                for (int i = 0; i < color.Length; i++)
+                {
+                    if (color[i])
+                    {
+                        xlWorkSheet.Cells[i + 3, 7].Font.Color = MSExcel.XlRgbColor.rgbGreen;
+                        xlWorkSheet.Cells[i + 3, 8].Font.Color = MSExcel.XlRgbColor.rgbGreen;
+                    }
+                    else
+                    {
+                        xlWorkSheet.Cells[i + 3, 7].Font.Color = MSExcel.XlRgbColor.rgbRed;
+                        xlWorkSheet.Cells[i + 3, 8].Font.Color = MSExcel.XlRgbColor.rgbRed;
+                    }
+                }
 
                 xlWorkBook.SaveAs(path, MSExcel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
                     MSExcel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);

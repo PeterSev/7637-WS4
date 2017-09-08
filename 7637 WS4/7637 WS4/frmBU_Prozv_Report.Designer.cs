@@ -41,14 +41,14 @@
             this.lstTest.Location = new System.Drawing.Point(0, 0);
             this.lstTest.Name = "lstTest";
             this.lstTest.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstTest.Size = new System.Drawing.Size(1455, 420);
+            this.lstTest.Size = new System.Drawing.Size(1422, 420);
             this.lstTest.TabIndex = 1;
             // 
             // frmBU_Prozv_Report
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1455, 420);
+            this.ClientSize = new System.Drawing.Size(1422, 420);
             this.Controls.Add(this.lstTest);
             this.Name = "frmBU_Prozv_Report";
             this.Text = "frmBU_Prozv_Report";

@@ -55,14 +55,18 @@ namespace _7637_WS4
 
             if(Utils.isFileExist(catalog + listBUProzvTest))
             {
-                tests = Excel.ParseDAQ(catalog + listBUProzvTest);
+                tests = Excel.ParseDAQ_Old(catalog + listBUProzvTest);
                 if (tests != null)
                 {
                     lblTestCount.Text = tests.Length.ToString();
                 }
                 else
                 {
-                    MessageBox.Show("Файл поврежден или имеет неверный формат");
+                    tests = Excel.ParseDAQ(catalog + listBUProzvTest);
+                    if(tests!=null)
+                        lblTestCount.Text = tests.Length.ToString();
+                    else
+                        MessageBox.Show("Файл поврежден или имеет неверный формат");
                 }
             }
             else
@@ -263,7 +267,7 @@ namespace _7637_WS4
                 if (badTests.Count > 0) //сохраняем отчет об ошибках лишь при их наличии
                 {
                     txtDAQInfo.Text = "Сохраняем ошибки..";
-                    res = Excel.SaveDAQErrors(badTests.ToArray(), Application.StartupPath + @"\" + catalog + "BAD_" + listBUProzvTest);
+                    res = Excel.SaveDAQ(badTests.ToArray(), Application.StartupPath + @"\" + catalog + "BAD_" + listBUProzvTest);
 
                     if (res != "Success")
                     {

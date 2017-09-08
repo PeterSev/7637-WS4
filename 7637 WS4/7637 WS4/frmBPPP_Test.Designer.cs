@@ -48,6 +48,7 @@
             this.numSwitchChannel = new System.Windows.Forms.NumericUpDown();
             this.cmbSwitchName = new System.Windows.Forms.ComboBox();
             this.grpBPPPTest = new System.Windows.Forms.GroupBox();
+            this.txtDAQInfo = new System.Windows.Forms.TextBox();
             this.colorProgressBar = new _7637_WS4.ColorProgressBar();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -57,7 +58,6 @@
             this.numTest = new System.Windows.Forms.NumericUpDown();
             this.btnRunAllBPPPTest = new System.Windows.Forms.Button();
             this.btnRunBPPPTest = new System.Windows.Forms.Button();
-            this.txtDAQInfo = new System.Windows.Forms.TextBox();
             this.grpDC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDCV1)).BeginInit();
@@ -320,6 +320,19 @@
             this.grpBPPPTest.TabStop = false;
             this.grpBPPPTest.Text = "Тесты";
             // 
+            // txtDAQInfo
+            // 
+            this.txtDAQInfo.BackColor = System.Drawing.Color.RoyalBlue;
+            this.txtDAQInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtDAQInfo.ForeColor = System.Drawing.Color.White;
+            this.txtDAQInfo.Location = new System.Drawing.Point(9, 151);
+            this.txtDAQInfo.Multiline = true;
+            this.txtDAQInfo.Name = "txtDAQInfo";
+            this.txtDAQInfo.ReadOnly = true;
+            this.txtDAQInfo.Size = new System.Drawing.Size(541, 64);
+            this.txtDAQInfo.TabIndex = 9;
+            this.txtDAQInfo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // colorProgressBar
             // 
             this.colorProgressBar.BackColor = System.Drawing.Color.White;
@@ -430,24 +443,11 @@
             this.btnRunBPPPTest.UseVisualStyleBackColor = false;
             this.btnRunBPPPTest.Click += new System.EventHandler(this.button5_Click);
             // 
-            // txtDAQInfo
-            // 
-            this.txtDAQInfo.BackColor = System.Drawing.Color.RoyalBlue;
-            this.txtDAQInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtDAQInfo.ForeColor = System.Drawing.Color.White;
-            this.txtDAQInfo.Location = new System.Drawing.Point(9, 151);
-            this.txtDAQInfo.Multiline = true;
-            this.txtDAQInfo.Name = "txtDAQInfo";
-            this.txtDAQInfo.ReadOnly = true;
-            this.txtDAQInfo.Size = new System.Drawing.Size(541, 64);
-            this.txtDAQInfo.TabIndex = 9;
-            this.txtDAQInfo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // frmBPPP_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 241);
+            this.ClientSize = new System.Drawing.Size(580, 368);
             this.Controls.Add(this.grpBPPPTest);
             this.Controls.Add(this.grpSwitch);
             this.Controls.Add(this.grpDC);
