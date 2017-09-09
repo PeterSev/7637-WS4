@@ -334,7 +334,6 @@ namespace _7637_WS4
             colorProgressBar.Visible = false;
             btnShowReport.Visible = true;
             //var obj = tests.Where(p => p.Value > 0);
-            _frmMain._frmBPPP_Report.Show();
 
             try
             {
@@ -355,6 +354,7 @@ namespace _7637_WS4
             {
                 txtDAQInfo.BackColor = Color.Red;
                 txtDAQInfo.Text = "ТЕСТ НЕ ПРОЙДЕН";
+                _frmMain._frmBPPP_Report.Show();
             }
             else
             {

@@ -20,7 +20,7 @@ namespace _7637_WS4
         string catalog = string.Empty;
         Board curBoard = null;
         DAQTest[] tests;
-        DAQTest lastTest = null;
+        //DAQTest lastTest = null;
         public List<DAQTest> badTests;
         bool bNeedStop = false;
 
@@ -88,6 +88,7 @@ namespace _7637_WS4
             {
                 e.Cancel = true;
                 bNeedReload = true;
+                bNeedStop = true;
                 this.Hide();
                 _frmMain._frmBU_Prozv_Mode.Show();
             }
@@ -284,6 +285,7 @@ namespace _7637_WS4
             {
                 txtDAQInfo.BackColor = Color.Red;
                 txtDAQInfo.Text = "ТЕСТ НЕ ПРОЙДЕН";
+                _frmMain._frmBU_Prozv_Report.Show();
             }
             else
             {

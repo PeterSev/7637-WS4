@@ -12,7 +12,7 @@ namespace _7637_WS4
         NationalInstruments.DAQmx.Task inputTask, outputTask, runningTask;
         AnalogSingleChannelReader reader/*, readerDAQMeasured*/;
         AnalogSingleChannelWriter writer;
-        AsyncCallback inputCallback/*, inputCallbackDAQMeasured*/;
+        //AsyncCallback inputCallback/*, inputCallbackDAQMeasured*/;
         double[] output;
         double inputDAQMinValue, inputDAQMaxValue, outputDAQMinValue, outputDAQMaxValue;
         string sDAQDeviceName;
@@ -24,7 +24,7 @@ namespace _7637_WS4
         string sAmplitude;    //амплитуда
         double dRateGen;     //частота дискредитизации генератора синусоиды
         string _name;
-        bool bSynchronizeCallbacks;
+        //bool bSynchronizeCallbacks;
         public event delDAQBufReadReceived bufReadDAQReceived;
         public event delStatusUpdate warningDAQUpdate;
         FunctionGenerator fGen;
@@ -47,7 +47,7 @@ namespace _7637_WS4
             iInputOutputSamples = 500;                  //количество точек для отправки/считывания
             sAmplitude = "10";                          //амплитуда генерируемого сигнала
             dRateGen = 4000;                            //частота формирования сигнала
-            bSynchronizeCallbacks = false;
+            //bSynchronizeCallbacks = false;
 
             //формирование эталонного сигнала
             fGen = new FunctionGenerator(

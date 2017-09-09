@@ -84,13 +84,9 @@ namespace _7637_WS4
                 lstDMMValues.Items.Add(d);
             txtDMMMeasurementMode.Text = dmmResult.measurementMode;
 
-            //if (_frmMain.bNeedRewrite)
-            //{
-                _frmMain.resultOfMeasurementDMM = dmmResult.buf[0];
-                //_frmMain.cntOfResMeasurementDMM++;
-                //_frmMain.bNeedRewrite = false;
-                //_frmMain.bReadyToRead = true;
-            //}
+            //_frmMain.resultOfMeasurementDMM = dmmResult.buf[0];
+            _frmMain.resultOfMeasurementDMM = dmmResult.buf.Average();
+
         }
 
         //SWITCH events

@@ -90,5 +90,18 @@ namespace _7637_WS4
                 this.Hide();
             }
         }
+
+        private void очиститьЛогToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lstTest.Items.Clear();
+            listCount = 0;
+        }
+
+        private void скопироватьВБуферToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string s = "";
+            foreach (object o in lstTest.SelectedItems) s += o.ToString() + "\r\n";
+            Clipboard.SetText(s);
+        }
     }
 }
