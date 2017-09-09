@@ -14,7 +14,8 @@ namespace _7637_WS4
     {
         public frmMain _frmMain;
         bool bNeedReload = true;
-        
+        int cntToPaint2 = 0;
+        double[] bufToPaintGraph = new double[1000];
 
 
         public frmNI()
@@ -171,6 +172,7 @@ namespace _7637_WS4
         //int cntToPaint = 0, cntToPaint2 = 0;
 
         //DAQ Events
+        
         private void NiControl_bufReadDAQMeasuredReceived(double[] buf)
         {
             _frmMain.maxOfMeasuredSignal = buf.Max();
@@ -182,20 +184,25 @@ namespace _7637_WS4
             /*lstDAQMeasuredValues.Items.Clear();
             foreach (double d in buf)
                 lstDAQMeasuredValues.Items.Add(d);*/
-            //cntToPaint2++;
-            //if (cntToPaint2 >= 10)
-            //{
+            if (_frmMain._frmBU_Prozv_Test.curMode == ProzvMode.Выборочная)
+                cntToPaint2++;
+            else
+                cntToPaint2 = 50;
+            if (cntToPaint2 >= 50)
+            {
                 lblMaxMeasured.Text = "Measured MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfMeasuredSignal, 3).ToString("F3").PadLeft(7);
                 lblMeasuredSum.Text = "Measured AMPL: ".PadRight(16) + _frmMain.amplOfMeasuredSignal.ToString("F3").PadLeft(7);
 
 
                 chart1.Series[1].Points.Clear();
-                for (int i = 0; i < buf.Length; i++)
+                Array.Copy(buf, bufToPaintGraph, bufToPaintGraph.Length);   //чтобы не нагружать график, рисуем лишь первых 100 точек входящего буфера
+                for (int i = 0; i < bufToPaintGraph.Length; i++)
                 {
-                    chart1.Series[1].Points.AddXY(i, buf[i]);
+                    chart1.Series[1].Points.AddXY(i, bufToPaintGraph[i]);
                 }
-                //cntToPaint2 = 0;
-            //}
+
+                cntToPaint2 = 0;
+            }
             //});
 
         }
@@ -219,9 +226,11 @@ namespace _7637_WS4
                 lblMaxEtalon.Text = "Etalon MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfEtalonSignal, 3).ToString("F3").PadLeft(7);
 
                 chart1.Series[0].Points.Clear();
-                for (int i = 0; i < buf.Length; i++)
+                Array.Copy(buf, bufToPaintGraph, bufToPaintGraph.Length);   //чтобы не нагружать график, рисуем лишь первых 100 точек входящего буфера
+
+                for (int i = 0; i < bufToPaintGraph.Length; i++)
                 {
-                    chart1.Series[0].Points.AddXY(i, buf[i]);
+                    chart1.Series[0].Points.AddXY(i, bufToPaintGraph[i]);
                 }
 
                 //cntToPaint = 0;
@@ -234,6 +243,7 @@ namespace _7637_WS4
             BeginInvoke((MethodInvoker)delegate
             {
                 txtDAQWarning.Text = msg;
+                _frmMain._frmBU_Prozv_Test.ResetControls(true);
             });
         }
 

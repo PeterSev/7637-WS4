@@ -23,7 +23,7 @@ namespace _7637_WS4
         //DAQTest lastTest = null;
         public List<DAQTest> badTests;
         bool bNeedStop = false;
-
+        public ProzvMode curMode;
         public AutoResetEvent eventDAQEtalonUpdate = new AutoResetEvent(false);
         public AutoResetEvent eventDAQMeasuredUpdate = new AutoResetEvent(false);
 
@@ -34,21 +34,21 @@ namespace _7637_WS4
 
         void Init()
         {
-            string curMode = string.Empty;
-            switch (_frmMain._frmBU_Prozv_Mode.curMode)
+            curMode = _frmMain._frmBU_Prozv_Mode.curMode;
+            /*switch (_frmMain._frmBU_Prozv_Mode.curMode)
             {
                 default:
                 case ProzvMode.КонтрольОбрыв: curMode = "Контроль на отсутствие цепей"; break;
                 case ProzvMode.КонтрольКЗ: curMode = "Контроль на отсутствие КЗ"; break;
                 case ProzvMode.Выборочная: curMode = "Выборочная проверка"; break;
-            }
+            }*/
 
             tests = null;
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BU/";
 
-            this.Text = curBoard.Name + " БУ. Прозвонка. " + curMode +  ". Тесты";
+            this.Text = curBoard.Name + " БУ. Прозвонка. " + curMode.ToString() +  ". Тесты";
             this.BackColor = Color.RoyalBlue;
 
             badTests = new List<DAQTest>();
@@ -74,7 +74,22 @@ namespace _7637_WS4
                 MessageBox.Show("File " + catalog + listBUProzvTest + " isn't found!", "Load error");
             }
 
+            EnableFormControl(curMode != ProzvMode.Выборочная);
 
+        }
+
+        /// <summary>
+        /// Прячем некоторые контролы на форме, не нужные для проверки "Выборочная"
+        /// </summary>
+        /// <param name="b">Вкл/Выкл</param>
+        void EnableFormControl(bool b)
+        {
+            btnRunAllDAQTest.Visible = b;
+            btnStopAllTest.Visible = b;
+            btnShowReport.Visible = b;
+            colorProgressBar.Visible = b;
+            txtDAQInfo.Visible = b;
+            label6.Visible = lblT.Visible = b;
         }
 
         private void frmBZ_Test_Activated(object sender, EventArgs e)
@@ -108,15 +123,47 @@ namespace _7637_WS4
                 return;
             }
 
+
             eventDAQEtalonUpdate.Reset();
             _frmMain.niControl.daqEtalon.RunDAQ();
             eventDAQEtalonUpdate.WaitOne(50);
-            Thread.Sleep(50);
+            Thread.Sleep(100);
 
-            RunDAQTest(num);
+            if(curMode == ProzvMode.Выборочная)
+            {
+                ResetControls(false);
+
+                RunGenerationDAQTest(num);
+            }
+            else if(curMode == ProzvMode.КонтрольОбрыв)
+                RunStandartDAQTest(num);
         }
 
-        void RunDAQTest(int num)
+        /// <summary>
+        /// Функция включения генерации для указанного номера теста. Выключение генерации вызывай используя метод StopGenerationDAQTest(int num)
+        /// </summary>
+        /// <param name="num">Номер выполняемого теста</param>
+        void RunGenerationDAQTest(int num)
+        {
+            DAQTest test = tests[num];
+            //Включение необходимых реле-------------
+            string dev1 = test.Input.Device;
+            string ch1 = test.Input.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(true, dev1, ch1);
+
+            string dev2 = test.Output.Device;
+            string ch2 = test.Output.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(true, dev2, ch2);
+            //--------------------------------------
+
+            _frmMain.niControl.daqMeasured.RunDAQGeneration();
+        }
+
+        /// <summary>
+        /// Однократное выполнение DAQ теста.
+        /// </summary>
+        /// <param name="num">Номер выполняемого теста</param>
+        void RunStandartDAQTest(int num)
         {
             DAQTest test = tests[num];
 
@@ -135,12 +182,11 @@ namespace _7637_WS4
             //Проведение измерений и вычисление результата------------
             eventDAQMeasuredUpdate.Reset();
             _frmMain.niControl.daqMeasured.RunDAQ();
-            eventDAQMeasuredUpdate.WaitOne();
+            eventDAQMeasuredUpdate.WaitOne(500);
             //Thread.Sleep(50);
 
             string sRes = string.Empty;
-            //АмплитудаИзмерен >= АмплитудаЭталон - 2
-            //if (_frmMain.maxOfMeasuredSignal >= _frmMain.maxOfEtalonSignal)
+
             if(_frmMain.amplOfMeasuredSignal >= _frmMain.amplOfEtalonSignal - 2)    
             {
                 lblResultOfDAQ.ForeColor = Color.LightGreen;
@@ -217,7 +263,7 @@ namespace _7637_WS4
                 if (colorProgressBar.Value != v) colorProgressBar.Value = v;
 
                 if (bNeedStop) break;
-                RunDAQTest(i);
+                RunStandartDAQTest(i);
                 Application.DoEvents();
             }
         }
@@ -300,6 +346,32 @@ namespace _7637_WS4
 
             btnStopAllTest.Enabled = false;
             btnRunAllDAQTest.Enabled = true;
+        }
+
+        private void btnStopDAQTest_Click(object sender, EventArgs e)
+        {
+            int num = (int)numTest.Value;
+            DAQTest test = tests[num];
+            //Выключение необходимых реле-------------
+            string dev1 = test.Input.Device;
+            string ch1 = test.Input.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(false, dev1, ch1);
+
+            string dev2 = test.Output.Device;
+            string ch2 = test.Output.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(false, dev2, ch2);
+            //--------------------------------------
+
+            _frmMain.niControl.daqMeasured.StopDAQGeneration();
+
+            ResetControls(true);
+        }
+
+        public void ResetControls(bool b)
+        {
+            btnRunDAQTest.Enabled = b;
+            btnStopDAQTest.Visible = !b;
+            numTest.Enabled = b;
         }
     }
 }

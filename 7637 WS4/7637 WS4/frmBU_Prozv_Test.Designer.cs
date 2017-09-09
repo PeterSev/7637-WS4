@@ -33,6 +33,7 @@
             this.numTest = new System.Windows.Forms.NumericUpDown();
             this.btnRunDAQ = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtDAQInfo = new System.Windows.Forms.TextBox();
             this.colorProgressBar = new _7637_WS4.ColorProgressBar();
             this.btnStopAllTest = new System.Windows.Forms.Button();
             this.lblT = new System.Windows.Forms.Label();
@@ -46,7 +47,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.txtDAQInfo = new System.Windows.Forms.TextBox();
+            this.btnStopDAQTest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numTest)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -67,9 +68,9 @@
             // 
             this.btnRunDAQTest.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnRunDAQTest.ForeColor = System.Drawing.Color.White;
-            this.btnRunDAQTest.Location = new System.Drawing.Point(292, 52);
+            this.btnRunDAQTest.Location = new System.Drawing.Point(280, 50);
             this.btnRunDAQTest.Name = "btnRunDAQTest";
-            this.btnRunDAQTest.Size = new System.Drawing.Size(75, 25);
+            this.btnRunDAQTest.Size = new System.Drawing.Size(63, 25);
             this.btnRunDAQTest.TabIndex = 3;
             this.btnRunDAQTest.Text = "Запуск";
             this.btnRunDAQTest.UseVisualStyleBackColor = false;
@@ -77,7 +78,7 @@
             // 
             // numTest
             // 
-            this.numTest.Location = new System.Drawing.Point(213, 55);
+            this.numTest.Location = new System.Drawing.Point(201, 53);
             this.numTest.Maximum = new decimal(new int[] {
             4000,
             0,
@@ -89,7 +90,7 @@
             // 
             // btnRunDAQ
             // 
-            this.btnRunDAQ.Location = new System.Drawing.Point(434, 381);
+            this.btnRunDAQ.Location = new System.Drawing.Point(230, 246);
             this.btnRunDAQ.Name = "btnRunDAQ";
             this.btnRunDAQ.Size = new System.Drawing.Size(75, 23);
             this.btnRunDAQ.TabIndex = 5;
@@ -112,6 +113,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.lblTestCount);
             this.groupBox1.Controls.Add(this.numTest);
+            this.groupBox1.Controls.Add(this.btnStopDAQTest);
             this.groupBox1.Controls.Add(this.btnRunDAQTest);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -122,6 +124,19 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Тесты";
+            // 
+            // txtDAQInfo
+            // 
+            this.txtDAQInfo.BackColor = System.Drawing.Color.RoyalBlue;
+            this.txtDAQInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtDAQInfo.ForeColor = System.Drawing.Color.White;
+            this.txtDAQInfo.Location = new System.Drawing.Point(6, 147);
+            this.txtDAQInfo.Multiline = true;
+            this.txtDAQInfo.Name = "txtDAQInfo";
+            this.txtDAQInfo.ReadOnly = true;
+            this.txtDAQInfo.Size = new System.Drawing.Size(541, 64);
+            this.txtDAQInfo.TabIndex = 8;
+            this.txtDAQInfo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // colorProgressBar
             // 
@@ -175,7 +190,7 @@
             // lblRunCount
             // 
             this.lblRunCount.AutoSize = true;
-            this.lblRunCount.Location = new System.Drawing.Point(289, 25);
+            this.lblRunCount.Location = new System.Drawing.Point(277, 23);
             this.lblRunCount.Name = "lblRunCount";
             this.lblRunCount.Size = new System.Drawing.Size(16, 17);
             this.lblRunCount.TabIndex = 15;
@@ -196,7 +211,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(373, 57);
+            this.label5.Location = new System.Drawing.Point(415, 57);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(80, 17);
             this.label5.TabIndex = 13;
@@ -205,7 +220,7 @@
             // lblResultOfDAQ
             // 
             this.lblResultOfDAQ.AutoSize = true;
-            this.lblResultOfDAQ.Location = new System.Drawing.Point(478, 57);
+            this.lblResultOfDAQ.Location = new System.Drawing.Point(491, 57);
             this.lblResultOfDAQ.Name = "lblResultOfDAQ";
             this.lblResultOfDAQ.Size = new System.Drawing.Size(16, 17);
             this.lblResultOfDAQ.TabIndex = 12;
@@ -214,7 +229,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 55);
+            this.label4.Location = new System.Drawing.Point(12, 53);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(180, 17);
             this.label4.TabIndex = 11;
@@ -223,7 +238,7 @@
             // lblTestCount
             // 
             this.lblTestCount.AutoSize = true;
-            this.lblTestCount.Location = new System.Drawing.Point(210, 25);
+            this.lblTestCount.Location = new System.Drawing.Point(198, 23);
             this.lblTestCount.Name = "lblTestCount";
             this.lblTestCount.Size = new System.Drawing.Size(16, 17);
             this.lblTestCount.TabIndex = 6;
@@ -232,7 +247,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 25);
+            this.label1.Location = new System.Drawing.Point(6, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(186, 17);
             this.label1.TabIndex = 5;
@@ -240,7 +255,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(256, 381);
+            this.button1.Location = new System.Drawing.Point(52, 246);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 23);
             this.button1.TabIndex = 7;
@@ -250,7 +265,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(576, 381);
+            this.button2.Location = new System.Drawing.Point(372, 246);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(116, 23);
             this.button2.TabIndex = 7;
@@ -258,24 +273,24 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // txtDAQInfo
+            // btnStopDAQTest
             // 
-            this.txtDAQInfo.BackColor = System.Drawing.Color.RoyalBlue;
-            this.txtDAQInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtDAQInfo.ForeColor = System.Drawing.Color.White;
-            this.txtDAQInfo.Location = new System.Drawing.Point(6, 147);
-            this.txtDAQInfo.Multiline = true;
-            this.txtDAQInfo.Name = "txtDAQInfo";
-            this.txtDAQInfo.ReadOnly = true;
-            this.txtDAQInfo.Size = new System.Drawing.Size(541, 64);
-            this.txtDAQInfo.TabIndex = 8;
-            this.txtDAQInfo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.btnStopDAQTest.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnStopDAQTest.ForeColor = System.Drawing.Color.White;
+            this.btnStopDAQTest.Location = new System.Drawing.Point(346, 50);
+            this.btnStopDAQTest.Name = "btnStopDAQTest";
+            this.btnStopDAQTest.Size = new System.Drawing.Size(63, 25);
+            this.btnStopDAQTest.TabIndex = 3;
+            this.btnStopDAQTest.Text = "Стоп";
+            this.btnStopDAQTest.UseVisualStyleBackColor = false;
+            this.btnStopDAQTest.Visible = false;
+            this.btnStopDAQTest.Click += new System.EventHandler(this.btnStopDAQTest_Click);
             // 
             // frmBU_Prozv_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 240);
+            this.ClientSize = new System.Drawing.Size(582, 237);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
@@ -314,5 +329,6 @@
         private System.Windows.Forms.Button btnStopAllTest;
         private ColorProgressBar colorProgressBar;
         private System.Windows.Forms.TextBox txtDAQInfo;
+        private System.Windows.Forms.Button btnStopDAQTest;
     }
 }
