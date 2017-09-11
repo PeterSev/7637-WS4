@@ -46,7 +46,7 @@ namespace _7637_WS4
             tests = null;
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/BU/";
+            catalog = curBoard.Catalog + "/BU/" + _frmMain._frmBU_Board.curBUBoard.Name + "/";
 
             this.Text = curBoard.Name + " БУ. Прозвонка. " + curMode.ToString() +  ". Тесты";
             this.BackColor = Color.RoyalBlue;
@@ -277,7 +277,10 @@ namespace _7637_WS4
             btnStopAllTest.Enabled = true;
             colorProgressBar.Visible = true;
             badTests.Clear();
-            _frmMain._frmBU_Prozv_Report.Hide();
+            if(_frmMain._frmBU_Prozv_Report.IsHandleCreated)
+                _frmMain._frmBU_Prozv_Report.Close();
+            else
+                _frmMain._frmBU_Prozv_Report.Hide();
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 

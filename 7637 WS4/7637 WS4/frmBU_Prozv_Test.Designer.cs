@@ -44,10 +44,10 @@
             this.lblResultOfDAQ = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblTestCount = new System.Windows.Forms.Label();
+            this.btnStopDAQTest = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.btnStopDAQTest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numTest)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -244,6 +244,19 @@
             this.lblTestCount.TabIndex = 6;
             this.lblTestCount.Text = "0";
             // 
+            // btnStopDAQTest
+            // 
+            this.btnStopDAQTest.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnStopDAQTest.ForeColor = System.Drawing.Color.White;
+            this.btnStopDAQTest.Location = new System.Drawing.Point(346, 50);
+            this.btnStopDAQTest.Name = "btnStopDAQTest";
+            this.btnStopDAQTest.Size = new System.Drawing.Size(63, 25);
+            this.btnStopDAQTest.TabIndex = 3;
+            this.btnStopDAQTest.Text = "Стоп";
+            this.btnStopDAQTest.UseVisualStyleBackColor = false;
+            this.btnStopDAQTest.Visible = false;
+            this.btnStopDAQTest.Click += new System.EventHandler(this.btnStopDAQTest_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -272,19 +285,6 @@
             this.button2.Text = "CloseRelay54Test";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // btnStopDAQTest
-            // 
-            this.btnStopDAQTest.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnStopDAQTest.ForeColor = System.Drawing.Color.White;
-            this.btnStopDAQTest.Location = new System.Drawing.Point(346, 50);
-            this.btnStopDAQTest.Name = "btnStopDAQTest";
-            this.btnStopDAQTest.Size = new System.Drawing.Size(63, 25);
-            this.btnStopDAQTest.TabIndex = 3;
-            this.btnStopDAQTest.Text = "Стоп";
-            this.btnStopDAQTest.UseVisualStyleBackColor = false;
-            this.btnStopDAQTest.Visible = false;
-            this.btnStopDAQTest.Click += new System.EventHandler(this.btnStopDAQTest_Click);
             // 
             // frmBU_Prozv_Test
             // 
@@ -319,7 +319,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label lblResultOfDAQ;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnRunAllDAQTest;
@@ -330,5 +329,6 @@
         private ColorProgressBar colorProgressBar;
         private System.Windows.Forms.TextBox txtDAQInfo;
         private System.Windows.Forms.Button btnStopDAQTest;
+        public System.Windows.Forms.Label lblResultOfDAQ;
     }
 }

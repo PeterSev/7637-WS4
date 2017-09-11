@@ -100,7 +100,7 @@ namespace _7637_WS4
         private void btnBZ_Click(object sender, EventArgs e)
         {
             this.Hide();
-            _frmMain._frmBZ_Help.Show();
+            _frmMain._frmBZ.Show();
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)
@@ -167,7 +167,8 @@ namespace _7637_WS4
         private void btnBU_Click(object sender, EventArgs e)
         {
             this.Hide();
-            _frmMain._frmBU.Show();
+            //_frmMain._frmBU.Show();
+            _frmMain._frmBU_Board.Show();
         }
     }
 }

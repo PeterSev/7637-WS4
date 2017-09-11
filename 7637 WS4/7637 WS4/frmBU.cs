@@ -24,9 +24,9 @@ namespace _7637_WS4
             bNeedReload = false;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/BU/";
+            catalog = curBoard.Catalog + "/BU/bin/";
 
-            this.Text = curBoard.Name + " Блок управления";
+            this.Text = curBoard.Name + " Блок управления. Плата " + _frmMain._frmBU_Board.curBUBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -116,7 +116,7 @@ namespace _7637_WS4
                 e.Cancel = true;
                 bNeedReload = true;
                 this.Hide();
-                _frmMain._frmTests.Show();
+                _frmMain._frmBU_Board.Show();
             }
         }
 

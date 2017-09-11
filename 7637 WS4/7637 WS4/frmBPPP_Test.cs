@@ -47,7 +47,7 @@ namespace _7637_WS4
             catalog = curBoard.Catalog + "/BPPP/" +_frmMain._frmBPPP.curBpppBoard.Name + "/";
             listBPPPTestFileName = _frmMain._frmBPPP.curBpppBoard.Name + ".xls";
 
-            this.Text = curBoard.Name + " БППП. " + "Плата " + _frmMain._frmBPPP.curBpppBoard.Name + ". Прохождение тестов";
+            this.Text = curBoard.Name + " БППП. Плата " + _frmMain._frmBPPP.curBpppBoard.Name + ". Прохождение тестов";
             this.BackColor = Color.RoyalBlue;
             grpBPPPTest.ForeColor = Color.White;
             grpDC.ForeColor = Color.White;
@@ -233,7 +233,12 @@ namespace _7637_WS4
             if (double.IsNaN(_frmMain.resultOfMeasurementDMM))
                 _frmMain.resultOfMeasurementDMM = double.PositiveInfinity - 1;
 
-            if (_frmMain.resultOfMeasurementDMM < 10)   //искусственно зануляем значения ниже 10 Ом
+            _frmMain.resultOfMeasurementDMM -= 4;
+
+            if (_frmMain.resultOfMeasurementDMM < 0)     //искусственно зануляем значения ниже 0 Ом
+                _frmMain.resultOfMeasurementDMM = 0;
+
+            if (_frmMain.resultOfMeasurementDMM < 6)   //искусственно зануляем значения ниже 6 Ом
                 _frmMain.resultOfMeasurementDMM = 0;
 
             string sRes = string.Empty;
@@ -311,7 +316,11 @@ namespace _7637_WS4
             btnRunAllBPPPTest.Enabled = false;
             colorProgressBar.Visible = true;
             badTests.Clear();
-            _frmMain._frmBPPP_Report.Hide();
+            //_frmMain._frmBPPP_Report.Close();
+            if (_frmMain._frmBPPP_Report.IsHandleCreated)
+                _frmMain._frmBPPP_Report.Close();
+            else
+                _frmMain._frmBPPP_Report.Hide();
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             //_frmMain.niControl.DCSetOnOff("0", 24, true);
@@ -354,6 +363,7 @@ namespace _7637_WS4
             {
                 txtDAQInfo.BackColor = Color.Red;
                 txtDAQInfo.Text = "ТЕСТ НЕ ПРОЙДЕН";
+                //_frmMain._frmBPPP_Report.Activate();
                 _frmMain._frmBPPP_Report.Show();
             }
             else

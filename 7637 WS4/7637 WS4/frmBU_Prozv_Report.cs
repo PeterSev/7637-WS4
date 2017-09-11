@@ -57,17 +57,16 @@ namespace _7637_WS4
                 lstTest.Items.Clear();
                 listCount = 1;
             }
-            string sInput = String.Format("k{0}{1}",
-                test.Input.Channel.ToString(),
-                test.Input.Device);
+            /*string sInput = String.Format("{0}",
+                test.Comment);
             string sOutput = String.Format("k{0}{1}",
                 test.Output.Channel.ToString(),
-                test.Output.Device);
-            string outstr = string.Format("{0:0000}:    Index - {1}{2}{3}{4}{5}{6}",
+                test.Output.Device);*/
+            string outstr = string.Format("{0:0000}:    Index - {1}{2}{3}{4}",
                 listCount,
                 test.Index.ToString().PadRight(10),
-                sInput.PadRight(20),
-                sOutput.PadRight(20),
+                //sInput.PadRight(20),
+                //sOutput.PadRight(20),
                 test.Comment.PadRight(20),
                 test.Value.PadRight(20),
                 test.Result);

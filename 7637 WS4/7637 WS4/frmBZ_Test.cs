@@ -15,7 +15,7 @@ namespace _7637_WS4
     {
         public frmMain _frmMain;
         bool bNeedReload = true;
-        string listBZTestFileName= "BZ_test.xls";
+        string listBZTestFileName = string.Empty; //"BZ_test.xls";
         string catalog = string.Empty;
         Board curBoard = null;
         bool bNeedStop = false;
@@ -32,9 +32,10 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/BZ/";
+            catalog = curBoard.Catalog + "/BZ/" + _frmMain._frmBZ.curBZBoard.Name + "/";
+            listBZTestFileName = _frmMain._frmBZ.curBZBoard.Name + ".xls";
 
-            this.Text = curBoard.Name + " Блок зеркала. Прохождение тестов";
+            this.Text = curBoard.Name + " Блок зеркала. Плата " + _frmMain._frmBZ.curBZBoard.Name + ". Прохождение тестов";
             this.BackColor = Color.RoyalBlue;
             grpBPPPTest.ForeColor = Color.White;
 
@@ -131,7 +132,12 @@ namespace _7637_WS4
             if (double.IsNaN(_frmMain.resultOfMeasurementDMM))
                 _frmMain.resultOfMeasurementDMM = double.PositiveInfinity - 1;
 
-            if (_frmMain.resultOfMeasurementDMM < 10)   //искусственно зануляем значения ниже 10 Ом
+            _frmMain.resultOfMeasurementDMM -= 4;
+
+            if (_frmMain.resultOfMeasurementDMM < 0)     //искусственно зануляем значения ниже 0 Ом
+                _frmMain.resultOfMeasurementDMM = 0;
+
+            if (_frmMain.resultOfMeasurementDMM < 6)   //искусственно зануляем значения ниже 6 Ом
                 _frmMain.resultOfMeasurementDMM = 0;
 
             string sRes = string.Empty;
@@ -251,7 +257,10 @@ namespace _7637_WS4
             btnRunAllBPPPTest.Enabled = false;
             colorProgressBar.Visible = true;
             badTests.Clear();
-            _frmMain._frmBPPP_Report.Hide();
+            if (_frmMain._frmBZ_Report.IsHandleCreated)
+                _frmMain._frmBZ_Report.Close();
+            else
+                _frmMain._frmBZ_Report.Hide();
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 

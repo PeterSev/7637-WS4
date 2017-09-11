@@ -17,7 +17,7 @@ namespace _7637_WS4
         List<Help> listHelp = null;
         private bool bNeedReload = true;
         private int indexPic = 0;
-        string listHelpFilename = "BU_Prozv_help.xml";
+        string listHelpFilename = "help.xml";
         string catalog = string.Empty;
 
         public frmBU_Prozv_Help()
@@ -31,11 +31,11 @@ namespace _7637_WS4
             indexPic = 0;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/BU/Help/";
+            catalog = curBoard.Catalog + "/BU/" + _frmMain._frmBU_Board.curBUBoard.Name +  "/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " БУ. Прозвонка";
+            this.Text = curBoard.Name + " БУ. Прозвонка. Плата " + _frmMain._frmBU_Board.curBUBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 

@@ -17,7 +17,7 @@ namespace _7637_WS4
         List<Help> listHelp = null;
         private bool bNeedReload = true;
         private int indexPic = 0;
-        string listHelpFilename = "BZ_help.xml";
+        string listHelpFilename = "help.xml";
         string catalog = string.Empty;
 
         public frmBZ_Help()
@@ -31,11 +31,11 @@ namespace _7637_WS4
             indexPic = 0;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/BZ/";
+            catalog = curBoard.Catalog + "/BZ/" + _frmMain._frmBZ.curBZBoard.Name + "/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " Блок зеркала";
+            this.Text = curBoard.Name + " Блок зеркала. Плата " + _frmMain._frmBZ.curBZBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -82,7 +82,7 @@ namespace _7637_WS4
                 e.Cancel = true;
                 bNeedReload = true;
                 this.Hide();
-                _frmMain._frmTests.Show();
+                _frmMain._frmBZ.Show();
             }
         }
 

@@ -26,7 +26,7 @@ namespace _7637_WS4
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
-            catalog = curBoard.Catalog + "/BU/";
+            catalog = curBoard.Catalog + "/BU/bin/";
 
             this.Text = curBoard.Name + " БУ. Прозвонка. Выбор режима проверки";
             this.BackColor = Color.RoyalBlue;

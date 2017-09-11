@@ -55,21 +55,18 @@ namespace _7637_WS4
                 listCount = 1;
             }
             
-            string sInput = String.Format("k{0}{1}/k{2}{3}",
-                test.Input[0].Channel.ToString(),
-                test.Input[0].Device,
-                test.Input[1].Channel.ToString(),
-                test.Input[1].Device);
-            string sOutput = String.Format("k{0}{1}/k{2}{3}",
+            string sInput = String.Format("{0}",
+                test.Comment);
+            /*string sOutput = String.Format("k{0}{1}/k{2}{3}",
                 test.Output[0].Channel.ToString(),
                 test.Output[0].Device,
                 test.Output[1].Channel.ToString(),
-                test.Output[1].Device);
-            string outstr = String.Format("{0:0000}:    Index - {1}{2}{3}Min - {4} Max - {5}Value - {6}",
+                test.Output[1].Device);*/
+            string outstr = String.Format("{0:0000}:    Index - {1}{2}Min - {3} Max - {4}Value - {5}",
                 listCount,
                 test.Index.ToString().PadRight(10),
                 sInput.PadRight(20),
-                sOutput.PadRight(20),
+                //sOutput.PadRight(20),
                 test.Min.ToString().PadRight(15),
                 test.Max.ToString().PadRight(15),
                 test.Value

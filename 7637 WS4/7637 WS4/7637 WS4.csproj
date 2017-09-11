@@ -141,6 +141,12 @@
     <Compile Include="frmBU.Designer.cs">
       <DependentUpon>frmBU.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBU_Board.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Board.Designer.cs">
+      <DependentUpon>frmBU_Board.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmBU_Ind_Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +194,12 @@
     </Compile>
     <Compile Include="frmBU_Prozv_Test.Designer.cs">
       <DependentUpon>frmBU_Prozv_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBZ.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBZ.Designer.cs">
+      <DependentUpon>frmBZ.cs</DependentUpon>
     </Compile>
     <Compile Include="frmBZ_Help.cs">
       <SubType>Form</SubType>
@@ -281,6 +293,9 @@
     <EmbeddedResource Include="frmBU.resx">
       <DependentUpon>frmBU.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Board.resx">
+      <DependentUpon>frmBU_Board.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmBU_Ind_Help.resx">
       <DependentUpon>frmBU_Ind_Help.cs</DependentUpon>
     </EmbeddedResource>
@@ -304,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBU_Prozv_Test.resx">
       <DependentUpon>frmBU_Prozv_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBZ.resx">
+      <DependentUpon>frmBZ.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBZ_Help.resx">
       <DependentUpon>frmBZ_Help.cs</DependentUpon>
@@ -341,7 +359,6 @@
     <EmbeddedResource Include="frmTests.resx">
       <DependentUpon>frmTests.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

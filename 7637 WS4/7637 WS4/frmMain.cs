@@ -50,6 +50,8 @@ namespace _7637_WS4
         public frmBU_Osc_Help _frmBU_Osc_Help;
         public frmBU_Osc_Test _frmBU_Osc_Test;
         public frmNI _frmNI;
+        public frmBZ _frmBZ;
+        public frmBU_Board _frmBU_Board;
 
 
         string listBoardsFileName = "bin\\ListBoards.xml";
@@ -112,13 +114,16 @@ namespace _7637_WS4
             _frmBU_Osc_Help = new frmBU_Osc_Help();
             _frmBU_Osc_Test = new frmBU_Osc_Test();
             _frmNI = new frmNI();
+            _frmBZ = new frmBZ();
+            _frmBU_Board = new frmBU_Board();
 
             _frmTests._frmMain = _frmBZ_Help._frmMain = _frmBZ_Test._frmMain = _frmBZ_Report._frmMain = 
                 _frmBPPP._frmMain = _frmBPPP_Help._frmMain = _frmBPPP_Test._frmMain = _frmBPPP_Report._frmMain =
                 _frmPP_Help._frmMain = _frmPP._frmMain = _frmPP_InnerHelp._frmMain = _frmPP_Test._frmMain = 
                 _frmPP_Report._frmMain = _frmBU._frmMain = _frmBU_Prozv_Help._frmMain = _frmBU_Prozv_Mode._frmMain = 
                 _frmBU_Prozv_Report._frmMain = _frmBU_Prozv_Test._frmMain = _frmBU_Ind_Help._frmMain = _frmBU_Ind_Test._frmMain = 
-                _frmBU_Osc_Help._frmMain = _frmBU_Osc_Test._frmMain = _frmNI._frmMain = this;
+                _frmBU_Osc_Help._frmMain = _frmBU_Osc_Test._frmMain = _frmNI._frmMain = _frmBZ._frmMain = _frmBU_Board._frmMain = 
+                this;
 
             niControl = new NIControl();
             /*niControl.statusUpdate += _frmNI.NiControl_statusUpdate;

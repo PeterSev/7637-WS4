@@ -185,17 +185,30 @@ namespace _7637_WS4
             foreach (double d in buf)
                 lstDAQMeasuredValues.Items.Add(d);*/
             if (_frmMain._frmBU_Prozv_Test.curMode == ProzvMode.Выборочная)
+            {
                 cntToPaint2++;
+
+                if (_frmMain.amplOfMeasuredSignal >= _frmMain.amplOfEtalonSignal - 2)
+                {
+                    _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.ForeColor = Color.LightGreen;
+                    _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.Text = "PASSED";
+                }
+                else
+                {
+                    _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.ForeColor = Color.Red;
+                    _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.Text = "FAILED";
+                }
+            }
             else
                 cntToPaint2 = 50;
-            if (cntToPaint2 >= 50)
+            if (cntToPaint2 >= 50)          //прореживаем отрисовку графика
             {
                 lblMaxMeasured.Text = "Measured MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfMeasuredSignal, 3).ToString("F3").PadLeft(7);
                 lblMeasuredSum.Text = "Measured AMPL: ".PadRight(16) + _frmMain.amplOfMeasuredSignal.ToString("F3").PadLeft(7);
 
 
                 chart1.Series[1].Points.Clear();
-                Array.Copy(buf, bufToPaintGraph, bufToPaintGraph.Length);   //чтобы не нагружать график, рисуем лишь первых 100 точек входящего буфера
+                Array.Copy(buf, bufToPaintGraph, bufToPaintGraph.Length);   //чтобы не нагружать график, рисуем лишь первых 1000 точек входящего буфера
                 for (int i = 0; i < bufToPaintGraph.Length; i++)
                 {
                     chart1.Series[1].Points.AddXY(i, bufToPaintGraph[i]);
@@ -203,8 +216,6 @@ namespace _7637_WS4
 
                 cntToPaint2 = 0;
             }
-            //});
-
         }
 
         
