@@ -348,7 +348,9 @@ namespace _7637_WS4
             {
                 txtDAQInfo.Text = "Сохраняем отчет..";
                 txtDAQInfo.BackColor = Color.DarkOrange;
-                if(Excel.SaveBPPP(tests, Application.StartupPath + @"\" + catalog + "Report_" + listBPPPTestFileName) != "Success")
+                
+                string filename = "Report_" + curBoard.Name + "_" + _frmMain._frmBPPP.curBpppBoard.Name + "_" + listBPPPTestFileName;
+                if (Excel.SaveBPPP(tests, Application.StartupPath + @"\" + catalog + "Report_" + filename) != "Success")
                 {
                     MessageBox.Show("Ошибка сохранения файла репорта! Проверьте в отладчике причину", "Ошибка");
                 }

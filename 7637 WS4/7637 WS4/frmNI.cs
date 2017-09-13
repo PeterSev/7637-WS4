@@ -199,8 +199,11 @@ namespace _7637_WS4
                     _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.Text = "FAILED";
                 }
             }
-            else
+            else if (_frmMain._frmBU_Prozv_Test.curMode == ProzvMode.КонтрольОбрыв)
                 cntToPaint2 = 50;
+            //else if (_frmMain._frmBU_Prozv_Test.curMode == ProzvMode.КонтрольКЗ)
+                //cntToPaint2 = 0;
+
             if (cntToPaint2 >= 50)          //прореживаем отрисовку графика
             {
                 lblMaxMeasured.Text = "Measured MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfMeasuredSignal, 3).ToString("F3").PadLeft(7);

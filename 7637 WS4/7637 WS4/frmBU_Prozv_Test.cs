@@ -129,14 +129,76 @@ namespace _7637_WS4
             eventDAQEtalonUpdate.WaitOne(50);
             Thread.Sleep(100);
 
-            if(curMode == ProzvMode.Выборочная)
+            if (curMode == ProzvMode.Выборочная)
             {
                 ResetControls(false);
 
                 RunGenerationDAQTest(num);
             }
-            else if(curMode == ProzvMode.КонтрольОбрыв)
+            else if (curMode == ProzvMode.КонтрольОбрыв)
                 RunStandartDAQTest(num);
+            else if (curMode == ProzvMode.КонтрольКЗ)
+                RunGenerationKZTest(num);
+        }
+
+        /// <summary>
+        /// Прозваниваем точку А (input) каждого теста со всеми подряд точками Б (output)
+        /// </summary>
+        /// <param name="num">номер выполняемого теста</param>
+        void RunGenerationKZTest(int num)
+        {
+            DAQTest test = tests[num];
+
+            //Включение реле точки А--------
+            string dev = test.Input.Device;
+            string ch = test.Input.Channel.ToString();
+            _frmMain.niControl.OpenCloseRelay(true, dev, ch);
+
+            //Включение генерации----------
+            //_frmMain.niControl.daqMeasured.RunDAQGeneration();
+
+            string sResult = string.Empty;
+            for(int i = 0; i < tests.Length; i++)   //цикл перебора точек Б
+            //for (int i = 0; i < 10; i++)
+            {
+                int v = ((i + 1) * 100 / tests.Length);
+                if (colorProgressBarSmall.Value != v) colorProgressBarSmall.Value = v;
+                //lblResultOfDAQ.ForeColor = Color.LightGreen;
+
+                //Включение реле точки Б--------
+                string devOut = tests[i].Output.Device;
+                string chOut = tests[i].Output.Channel.ToString();
+                _frmMain.niControl.OpenCloseRelay(true, devOut, chOut);
+
+                //Делаем измерения и сравнение----------
+                eventDAQMeasuredUpdate.Reset();
+                _frmMain.niControl.daqMeasured.RunDAQ();
+                eventDAQMeasuredUpdate.WaitOne(500);
+
+
+                if (_frmMain.amplOfMeasuredSignal >= _frmMain.amplOfEtalonSignal - 1)
+                {
+                    if (num != i)
+                    {
+                        sResult += tests[i].Index.ToString() + " ";
+                        badTests.Add(test);
+                        //lblResultOfDAQ.ForeColor = Color.Red;
+                    }
+                }
+                //-------------------------------------
+
+                //Выключаем реле точки Б
+                _frmMain.niControl.OpenCloseRelay(false, devOut, chOut);
+
+                Application.DoEvents();
+            }
+            test.Result = sResult == string.Empty ? "PASSED" : sResult;
+            lblResultOfDAQ.ForeColor = sResult == string.Empty ? Color.LightGreen : Color.Red;
+            lblResultOfDAQ.Text = test.Result;
+
+
+            //Выключение реле точки А--------
+            _frmMain.niControl.OpenCloseRelay(false, dev, ch);
         }
 
         /// <summary>
@@ -254,6 +316,7 @@ namespace _7637_WS4
             _frmMain.niControl.OpenCloseRelay(false, dev2, ch2);
             //--------------------------------------
         }
+
         void RunDAQAllTests(int cnt)
         {
             for (int i = 0; i < cnt; i++)
@@ -263,12 +326,18 @@ namespace _7637_WS4
                 if (colorProgressBar.Value != v) colorProgressBar.Value = v;
 
                 if (bNeedStop) break;
-                RunStandartDAQTest(i);
+                if (curMode == ProzvMode.КонтрольОбрыв)
+                    RunStandartDAQTest(i);
+                else if (curMode == ProzvMode.КонтрольКЗ)
+                {
+                    colorProgressBarSmall.Visible = true;
+                    RunGenerationKZTest(i);
+                    colorProgressBarSmall.Visible = false;
+                }
                 Application.DoEvents();
             }
         }
-
-
+        
         private void btnRunAllDAQTest_Click(object sender, EventArgs e)
         {
             bNeedStop = false;
@@ -308,7 +377,8 @@ namespace _7637_WS4
             {
                 txtDAQInfo.Text = "Сохраняем отчет..";
                 txtDAQInfo.BackColor = Color.DarkOrange;
-                string res = Excel.SaveDAQ(tests, Application.StartupPath + @"\" + catalog + "Report_" + listBUProzvTest);
+                string filename = "Report_"+curBoard.Name + "_" + _frmMain._frmBU_Board.curBUBoard.Name + "_"+listBUProzvTest;
+                string res = Excel.SaveDAQ(tests, Application.StartupPath + @"\" + catalog + filename);
                 if (res != "Success")
                 {
                     MessageBox.Show(res, "Ошибка");
@@ -317,7 +387,8 @@ namespace _7637_WS4
                 if (badTests.Count > 0) //сохраняем отчет об ошибках лишь при их наличии
                 {
                     txtDAQInfo.Text = "Сохраняем ошибки..";
-                    res = Excel.SaveDAQ(badTests.ToArray(), Application.StartupPath + @"\" + catalog + "BAD_" + listBUProzvTest);
+                    filename = "BAD_" + curBoard.Name + "_" + _frmMain._frmBU_Board.curBUBoard.Name +"_"+ listBUProzvTest;
+                    res = Excel.SaveDAQ(badTests.ToArray(), Application.StartupPath + @"\" + catalog + filename);
 
                     if (res != "Success")
                     {
@@ -346,9 +417,9 @@ namespace _7637_WS4
         private void btnStopAllTest_Click(object sender, EventArgs e)
         {
             bNeedStop = true;
-
+            
             btnStopAllTest.Enabled = false;
-            btnRunAllDAQTest.Enabled = true;
+            //btnRunAllDAQTest.Enabled = true;
         }
 
         private void btnStopDAQTest_Click(object sender, EventArgs e)

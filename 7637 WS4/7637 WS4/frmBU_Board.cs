@@ -84,6 +84,7 @@ namespace _7637_WS4
                 btn.Top = i * 50 + 0;
                 btn.Height = 42;
                 btn.Width = 260;
+                
 
                 panel.Controls.Add(btn);
             }

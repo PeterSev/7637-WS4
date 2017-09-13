@@ -48,6 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.colorProgressBarSmall = new _7637_WS4.ColorProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.numTest)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -100,6 +101,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.colorProgressBarSmall);
             this.groupBox1.Controls.Add(this.txtDAQInfo);
             this.groupBox1.Controls.Add(this.colorProgressBar);
             this.groupBox1.Controls.Add(this.btnStopAllTest);
@@ -286,6 +288,25 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // colorProgressBarSmall
+            // 
+            this.colorProgressBarSmall.BackColor = System.Drawing.Color.White;
+            this.colorProgressBarSmall.BorderColor = System.Drawing.Color.Black;
+            this.colorProgressBarSmall.BorderWidth = 0;
+            this.colorProgressBarSmall.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.colorProgressBarSmall.Location = new System.Drawing.Point(289, 85);
+            this.colorProgressBarSmall.MaxValue = 100;
+            this.colorProgressBarSmall.MinValue = 0;
+            this.colorProgressBarSmall.Name = "colorProgressBarSmall";
+            this.colorProgressBarSmall.ProgressColor = System.Drawing.Color.Yellow;
+            this.colorProgressBarSmall.ProgressTextType = _7637_WS4.ColorProgressBar.FsProgressTextType.AsIs;
+            this.colorProgressBarSmall.ShowProgressText = true;
+            this.colorProgressBarSmall.Size = new System.Drawing.Size(258, 25);
+            this.colorProgressBarSmall.TabIndex = 20;
+            this.colorProgressBarSmall.Text = "colorProgressBar1";
+            this.colorProgressBarSmall.Value = 0;
+            this.colorProgressBarSmall.Visible = false;
+            // 
             // frmBU_Prozv_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -330,5 +351,6 @@
         private System.Windows.Forms.TextBox txtDAQInfo;
         private System.Windows.Forms.Button btnStopDAQTest;
         public System.Windows.Forms.Label lblResultOfDAQ;
+        private ColorProgressBar colorProgressBarSmall;
     }
 }

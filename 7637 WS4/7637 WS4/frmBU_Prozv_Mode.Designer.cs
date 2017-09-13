@@ -40,6 +40,7 @@
             // 
             // btn2
             // 
+            this.btn2.AutoEllipsis = true;
             this.btn2.BackColor = System.Drawing.Color.RoyalBlue;
             this.btn2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btn2.ForeColor = System.Drawing.Color.White;
@@ -53,6 +54,7 @@
             // 
             // btn1
             // 
+            this.btn1.AutoEllipsis = true;
             this.btn1.BackColor = System.Drawing.Color.RoyalBlue;
             this.btn1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btn1.ForeColor = System.Drawing.Color.White;
@@ -66,6 +68,7 @@
             // 
             // btn0
             // 
+            this.btn0.AutoEllipsis = true;
             this.btn0.BackColor = System.Drawing.Color.RoyalBlue;
             this.btn0.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btn0.ForeColor = System.Drawing.Color.White;
