@@ -32,8 +32,8 @@ namespace ExcelLib
                     IWorkbook workbook; //IWorkbook determina si es xls o xlsx              
                     ISheet worksheet;
                     string first_sheet_name;
-
-                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    
+                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
                         workbook = WorkbookFactory.Create(fs); //Abre tanto XLS como XLSX
                         worksheet = workbook.GetSheetAt(0); //Obtener Hoja por indice

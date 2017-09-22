@@ -8,7 +8,7 @@
 	<BOARD NAME="TestBOARD002">
 		<CATALOG>TestBOARD002</CATALOG>
 		<IMAGELINK>TestBOARD002.jpg</IMAGELINK>
-		<COMMENT>Тест №2 Касета R</COMMENT>
+		<COMMENT>Тест №2 Кассета R</COMMENT>
 	</BOARD>
 	<BOARD NAME="7025.32.02.400">
 		<CATALOG>7025.32.02.400</CATALOG>
@@ -20,7 +20,7 @@
 		<IMAGELINK>7025.32.04.400.jpg</IMAGELINK>
 		<COMMENT>Усилитель импульсный (УИ)</COMMENT>
 	</BOARD>
-	<BOARD NAME="7025.32.06.400 ">
+	<BOARD NAME="7025.32.06.400">
 		<CATALOG>7025.32.06.400 </CATALOG>
 		<IMAGELINK>7025.32.06.400.jpg</IMAGELINK>
 		<COMMENT>Устройство питания малогабаритного гироскопа (УПМГ)</COMMENT>
@@ -85,9 +85,9 @@
 		<IMAGELINK>7194.03.09.000.jpg</IMAGELINK>
 		<COMMENT>Источник питания (ИП)</COMMENT>
 	</BOARD>
-
-
-
+	
+	
+	
 	<BOARD NAME="7064.32.01.600">
 		<CATALOG>7064.32.01.600</CATALOG>
 		<IMAGELINK>7064.32.01.600.jpg</IMAGELINK>
@@ -108,12 +108,5 @@
 		<IMAGELINK>7194.03.01.000-01.jpg</IMAGELINK>
 		<COMMENT>Модуль управления малогабаритного гироскопа (МУМГ)</COMMENT>
 	</BOARD>
-
-
-
-
-
-
-
 
 </BOARDS>
