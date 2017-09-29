@@ -143,12 +143,21 @@ namespace _7637_WS4
         {
             BeginInvoke((MethodInvoker)delegate
             {
-                lblV1.Text = "V: " + Math.Round(obj.Volt1, 6).ToString();
-                lblV2.Text = "V: " + Math.Round(obj.Volt2, 6).ToString();
+                lblV1.Text = "V: " + Math.Round(obj.Volt1, 2).ToString();
+                lblV2.Text = "V: " + Math.Round(obj.Volt2, 2).ToString();
+                lblILim1.Text = "ILim: " + Math.Round(obj.Curlim1, 2).ToString();
+                lblILim2.Text = "ILim: " + Math.Round(obj.Curlim2, 2).ToString();
+                lblI1.Text = "ICur: " + Math.Round(obj.Cur1, 3).ToString();
+                lblI2.Text = "ICur: " + Math.Round(obj.Cur2, 3).ToString();
                 ind1.BackColor = obj.B1 ? Color.LightGreen : Color.Red;
                 ind2.BackColor = obj.B2 ? Color.LightGreen : Color.Red;
                 ind1OVP.BackColor = obj.BOVP1 ? SystemColors.Control : Color.Red;
                 ind2OVP.BackColor = obj.BOVP2 ? SystemColors.Control : Color.Red;
+
+                if (obj.B2)
+                {
+                    //Ловушка
+                }
 
                 //if(obj.B1 || obj.B2)
                 //Инициируем запуск чтения мультиметра после прихода данных

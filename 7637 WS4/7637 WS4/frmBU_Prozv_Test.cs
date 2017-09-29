@@ -48,7 +48,7 @@ namespace _7637_WS4
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BU/" + _frmMain._frmBU_Board.curBUBoard.Name + "/";
 
-            this.Text = curBoard.Name + " БУ. Прозвонка. " + curMode.ToString() +  ". Тесты";
+            this.Text = curBoard.Name + " " + _frmMain._frmBU_Board.curBUBoard.Name + " БУ. Прозвонка. " + curMode.ToString() +  ". Тесты";
             this.BackColor = Color.RoyalBlue;
 
             badTests = new List<DAQTest>();
@@ -213,6 +213,9 @@ namespace _7637_WS4
             string ch1 = test.Input.Channel.ToString();
             _frmMain.niControl.OpenCloseRelay(true, dev1, ch1);
 
+            if(dev1 == "R8")
+                _frmMain.niControl.OpenCloseRelay(true, dev1, "3");
+
             string dev2 = test.Output.Device;
             string ch2 = test.Output.Channel.ToString();
             _frmMain.niControl.OpenCloseRelay(true, dev2, ch2);
@@ -233,6 +236,8 @@ namespace _7637_WS4
             string dev1 = test.Input.Device;
             string ch1 = test.Input.Channel.ToString();
             _frmMain.niControl.OpenCloseRelay(true, dev1, ch1);
+            if (dev1 == "R8")
+                _frmMain.niControl.OpenCloseRelay(true, dev1, "3");
 
             string dev2 = test.Output.Device;
             string ch2 = test.Output.Channel.ToString();
@@ -249,7 +254,7 @@ namespace _7637_WS4
 
             string sRes = string.Empty;
 
-            if(_frmMain.amplOfMeasuredSignal >= _frmMain.amplOfEtalonSignal - 2)    
+            if(_frmMain.amplOfMeasuredSignal >= _frmMain.amplOfEtalonSignal - 3)    
             {
                 lblResultOfDAQ.ForeColor = Color.LightGreen;
                 sRes = "PASSED";
@@ -272,6 +277,8 @@ namespace _7637_WS4
 
             //Выключение необходимых реле-------------
             _frmMain.niControl.OpenCloseRelay(false, dev1, ch1);
+            if (dev1 == "R8")
+                _frmMain.niControl.OpenCloseRelay(false, dev1, "3");
             _frmMain.niControl.OpenCloseRelay(false, dev2, ch2);
             //--------------------------------------
         }
@@ -430,6 +437,8 @@ namespace _7637_WS4
             string dev1 = test.Input.Device;
             string ch1 = test.Input.Channel.ToString();
             _frmMain.niControl.OpenCloseRelay(false, dev1, ch1);
+            if(dev1 == "R8")
+                _frmMain.niControl.OpenCloseRelay(false, dev1, "3");
 
             string dev2 = test.Output.Device;
             string ch2 = test.Output.Channel.ToString();

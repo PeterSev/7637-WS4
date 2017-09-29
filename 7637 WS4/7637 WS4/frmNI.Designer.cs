@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtDCWarning = new System.Windows.Forms.TextBox();
@@ -54,6 +54,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chkShowSwitch = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -87,7 +88,10 @@
             this.label16 = new System.Windows.Forms.Label();
             this.lstDAQEtalonValues = new System.Windows.Forms.ListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chkShowSwitch = new System.Windows.Forms.CheckBox();
+            this.lblILim1 = new System.Windows.Forms.Label();
+            this.lblILim2 = new System.Windows.Forms.Label();
+            this.lblI1 = new System.Windows.Forms.Label();
+            this.lblI2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -107,7 +111,11 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.lblI2);
+            this.groupBox1.Controls.Add(this.lblILim2);
             this.groupBox1.Controls.Add(this.lblV2);
+            this.groupBox1.Controls.Add(this.lblI1);
+            this.groupBox1.Controls.Add(this.lblILim1);
             this.groupBox1.Controls.Add(this.lblV1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -120,11 +128,11 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(187, 11);
+            this.label7.Location = new System.Drawing.Point(221, 11);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(61, 13);
+            this.label7.Size = new System.Drawing.Size(30, 13);
             this.label7.TabIndex = 3;
-            this.label7.Text = "overcurrent";
+            this.label7.Text = "ERR";
             // 
             // txtDCWarning
             // 
@@ -147,7 +155,7 @@
             // ind1OVP
             // 
             this.ind1OVP.Enabled = false;
-            this.ind1OVP.Location = new System.Drawing.Point(207, 27);
+            this.ind1OVP.Location = new System.Drawing.Point(223, 27);
             this.ind1OVP.Name = "ind1OVP";
             this.ind1OVP.Size = new System.Drawing.Size(25, 25);
             this.ind1OVP.TabIndex = 1;
@@ -156,7 +164,7 @@
             // ind2OVP
             // 
             this.ind2OVP.Enabled = false;
-            this.ind2OVP.Location = new System.Drawing.Point(207, 58);
+            this.ind2OVP.Location = new System.Drawing.Point(223, 58);
             this.ind2OVP.Name = "ind2OVP";
             this.ind2OVP.Size = new System.Drawing.Size(25, 25);
             this.ind2OVP.TabIndex = 1;
@@ -165,7 +173,7 @@
             // ind1
             // 
             this.ind1.Enabled = false;
-            this.ind1.Location = new System.Drawing.Point(151, 27);
+            this.ind1.Location = new System.Drawing.Point(192, 27);
             this.ind1.Name = "ind1";
             this.ind1.Size = new System.Drawing.Size(25, 25);
             this.ind1.TabIndex = 1;
@@ -174,7 +182,7 @@
             // ind2
             // 
             this.ind2.Enabled = false;
-            this.ind2.Location = new System.Drawing.Point(151, 58);
+            this.ind2.Location = new System.Drawing.Point(192, 58);
             this.ind2.Name = "ind2";
             this.ind2.Size = new System.Drawing.Size(25, 25);
             this.ind2.TabIndex = 1;
@@ -203,14 +211,14 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 64);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.Size = new System.Drawing.Size(16, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Канал 2";
+            this.label2.Text = "2:";
             // 
             // lblV2
             // 
             this.lblV2.AutoSize = true;
-            this.lblV2.Location = new System.Drawing.Point(83, 64);
+            this.lblV2.Location = new System.Drawing.Point(19, 64);
             this.lblV2.Name = "lblV2";
             this.lblV2.Size = new System.Drawing.Size(20, 13);
             this.lblV2.TabIndex = 0;
@@ -219,7 +227,7 @@
             // lblV1
             // 
             this.lblV1.AutoSize = true;
-            this.lblV1.Location = new System.Drawing.Point(83, 33);
+            this.lblV1.Location = new System.Drawing.Point(19, 33);
             this.lblV1.Name = "lblV1";
             this.lblV1.Size = new System.Drawing.Size(20, 13);
             this.lblV1.TabIndex = 0;
@@ -230,9 +238,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 13);
+            this.label1.Size = new System.Drawing.Size(16, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Канал 1";
+            this.label1.Text = "1:";
             // 
             // groupBox2
             // 
@@ -334,6 +342,15 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Блоки реле";
+            // 
+            // chkShowSwitch
+            // 
+            this.chkShowSwitch.AutoSize = true;
+            this.chkShowSwitch.Location = new System.Drawing.Point(1094, 19);
+            this.chkShowSwitch.Name = "chkShowSwitch";
+            this.chkShowSwitch.Size = new System.Drawing.Size(15, 14);
+            this.chkShowSwitch.TabIndex = 11;
+            this.chkShowSwitch.UseVisualStyleBackColor = true;
             // 
             // label15
             // 
@@ -642,34 +659,61 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(18, 318);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Legend = "Legend1";
+            series6.Name = "Series2";
+            this.chart1.Series.Add(series5);
+            this.chart1.Series.Add(series6);
             this.chart1.Size = new System.Drawing.Size(1079, 216);
             this.chart1.TabIndex = 16;
             this.chart1.Text = "chart1";
             // 
-            // chkShowSwitch
+            // lblILim1
             // 
-            this.chkShowSwitch.AutoSize = true;
-            this.chkShowSwitch.Location = new System.Drawing.Point(1094, 19);
-            this.chkShowSwitch.Name = "chkShowSwitch";
-            this.chkShowSwitch.Size = new System.Drawing.Size(15, 14);
-            this.chkShowSwitch.TabIndex = 11;
-            this.chkShowSwitch.UseVisualStyleBackColor = true;
+            this.lblILim1.AutoSize = true;
+            this.lblILim1.Location = new System.Drawing.Point(71, 33);
+            this.lblILim1.Name = "lblILim1";
+            this.lblILim1.Size = new System.Drawing.Size(32, 13);
+            this.lblILim1.TabIndex = 0;
+            this.lblILim1.Text = "ILim: ";
+            // 
+            // lblILim2
+            // 
+            this.lblILim2.AutoSize = true;
+            this.lblILim2.Location = new System.Drawing.Point(71, 64);
+            this.lblILim2.Name = "lblILim2";
+            this.lblILim2.Size = new System.Drawing.Size(29, 13);
+            this.lblILim2.TabIndex = 0;
+            this.lblILim2.Text = "ILim:";
+            // 
+            // lblI1
+            // 
+            this.lblI1.AutoSize = true;
+            this.lblI1.Location = new System.Drawing.Point(130, 33);
+            this.lblI1.Name = "lblI1";
+            this.lblI1.Size = new System.Drawing.Size(32, 13);
+            this.lblI1.TabIndex = 0;
+            this.lblI1.Text = "ICur: ";
+            // 
+            // lblI2
+            // 
+            this.lblI2.AutoSize = true;
+            this.lblI2.Location = new System.Drawing.Point(130, 64);
+            this.lblI2.Name = "lblI2";
+            this.lblI2.Size = new System.Drawing.Size(29, 13);
+            this.lblI2.TabIndex = 0;
+            this.lblI2.Text = "ICur:";
             // 
             // frmNI
             // 
@@ -759,5 +803,9 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Label lblMeasuredSum;
         private System.Windows.Forms.CheckBox chkShowSwitch;
+        private System.Windows.Forms.Label lblILim2;
+        private System.Windows.Forms.Label lblILim1;
+        private System.Windows.Forms.Label lblI2;
+        private System.Windows.Forms.Label lblI1;
     }
 }

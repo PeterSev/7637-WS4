@@ -12,7 +12,7 @@ namespace ExcelLib
     {
 
         public static DAQTest[] DAQTest { get; set; }
-        public static EData3[] EData3 { get; set; }
+        public static IndTest[] EData3 { get; set; }
         public static EData4[] EData4 { get; set; }
         public static BPPPTest[] BPPPTest { get; set; }
 
@@ -439,7 +439,7 @@ namespace ExcelLib
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static EData3[] ParseEx3(string path)
+        public static IndTest[] ParseInd(string path)
         {
             try
             {
@@ -499,10 +499,10 @@ namespace ExcelLib
 
                 }
 
-                EData3 = new EData3[lenght];
+                EData3 = new IndTest[lenght];
                 for (int i = 0; i < EData3.Length; i++)
                 {
-                    EData3[i] = new EData3(intSize[i] + 1, intSize2[i] + 1);
+                    EData3[i] = new IndTest(intSize[i] + 1, intSize2[i] + 1);
                 }
                 int k = 0;
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -582,6 +582,7 @@ namespace ExcelLib
                         switch (list[6, i])
                         {
                             case "напряжение":
+                            default:
                                 EData3[k].Control = Control.Напряжение;
                                 break;
                             case "сопротивление":
@@ -590,19 +591,19 @@ namespace ExcelLib
                             case "индикация":
                                 EData3[k].Control = Control.Индикация;
                                 break;
-                            case "падение напряжение БК":
+                            case "падение напряжения БК":
                                 EData3[k].Control = Control.ПадениеНапряженияБк;
                                 break;
-                            case "падение напряжение БЭ":
+                            case "падение напряжения БЭ":
                                 EData3[k].Control = Control.ПадениеНапряженияБэ;
                                 break;
-                            case "падение напряжение КБ":
+                            case "падение напряжения КБ":
                                 EData3[k].Control = Control.ПадениеНапряженияКб;
                                 break;
-                            case "падение напряжение ЭБ":
+                            case "падение напряжения ЭБ":
                                 EData3[k].Control = Control.ПадениеНапряженияЭб;
                                 break;
-                            case "падение напряжение ЭК":
+                            case "падение напряжения ЭК":
                                 EData3[k].Control = Control.ПадениеНапряженияЭк;
                                 break;
                         }

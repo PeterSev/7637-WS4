@@ -12,6 +12,7 @@ using Ivi.DCPwr;
 
 namespace _7637_WS4
 {
+    public enum MultimeterMode { DCVolts, TwoWireResistance, Diode };
     public partial class frmBPPP_Test : Form
     {
         public frmMain _frmMain;
@@ -62,8 +63,7 @@ namespace _7637_WS4
                 if (tests != null)
                 {
                     lblTEstCount.Text = tests.Length.ToString();
-                    _frmMain.niControl.DCSetOnOff("1", 0.1, false);
-                    _frmMain.niControl.DCSetOnOff("1", 0.1, false);
+                    _frmMain.niControl.DCSetOnOff(0.1, 0.02, false, 0.1, 0.02, false);
                 }
                 else
                 {
@@ -133,22 +133,22 @@ namespace _7637_WS4
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.DCSetOnOff("0", (double)numDCV1.Value, true);
+            //_frmMain.niControl.DCSetOnOff("0", (double)numDCV1.Value, 0.02, true);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.DCSetOnOff("1", (double)numDCV2.Value, true);
+            //_frmMain.niControl.DCSetOnOff("1", (double)numDCV2.Value, 0.02, true);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.DCSetOnOff("0", (double)numDCV1.Value, false);
+            //_frmMain.niControl.DCSetOnOff("0", (double)numDCV1.Value, 0.02, false);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            _frmMain.niControl.DCSetOnOff("1", (double)numDCV2.Value, false);
+            //_frmMain.niControl.DCSetOnOff("1", (double)numDCV2.Value, 0.02, false);
         }
 
         private void btnOpenRelay_Click(object sender, EventArgs e)
@@ -228,7 +228,8 @@ namespace _7637_WS4
 
 
             //Проведение измерений---------------------------------------------
-            _frmMain.niControl.ReadDMM("Resistance", test.Range);   //инициирование чтения мультиметра
+            _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range);   //инициирование чтения мультиметра
+            
 
             if (double.IsNaN(_frmMain.resultOfMeasurementDMM))
                 _frmMain.resultOfMeasurementDMM = double.PositiveInfinity - 1;

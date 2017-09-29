@@ -24,16 +24,17 @@ namespace _7637_WS4
         //Переменные для источника питания-----
         IIviDCPwr iviDCPower;
         Thread thrDC;
-        bool bNeedUpdate = false, bNeedExit = false, bOnOff = false, bInitialized = false;
+        volatile bool bNeedUpdate = false, bOnOff1 = false, bOnOff2 = false, bUpdateDone = true;
+        bool bNeedExit = false, bInitialized = false;
         static string DC_DeviceName = "DC";
         CurrentLimitBehavior curLimitBehavior = CurrentLimitBehavior.Regulate;
-        double curLimit = 0.02, voltageLevel = 1.0;
+        double curLimit1 = 0.02, voltageLevel1 = 1.0, curLimit2 = 0.02, voltageLevel2 = 1.0;
         List<string> listDCChannels = new List<string>();
         string curDCChannel = string.Empty;
         List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();
         public event delStatusUpdate statusDCUpdate, warningDCUpdate, warningDMMUpdate, statusDMMUpdate;
         public event delStateDC updateStateDC;
-        
+
         //-------------------------------------
 
         //Переменные для мультиметра------------------
@@ -94,14 +95,14 @@ namespace _7637_WS4
             SwitchRelay curRelay = null;
             switch (name)
             {
-                case "r1":  curRelay = relayR1; break;
-                case "r2":  curRelay = relayR2; break;
-                case "r3":  curRelay = relayR3; break;
-                case "r4":  curRelay = relayR4; break;
-                case "r5":  curRelay = relayR5; break;
-                case "r6":  curRelay = relayR6; break;
-                case "r7":  curRelay = relayR7; break;
-                case "r8":  curRelay = relayR8; break;
+                case "r1": curRelay = relayR1; break;
+                case "r2": curRelay = relayR2; break;
+                case "r3": curRelay = relayR3; break;
+                case "r4": curRelay = relayR4; break;
+                case "r5": curRelay = relayR5; break;
+                case "r6": curRelay = relayR6; break;
+                case "r7": curRelay = relayR7; break;
+                case "r8": curRelay = relayR8; break;
                 default: return;
             }
             //curRelay.ChangeRelayState(b, "k"+channel);
@@ -137,9 +138,9 @@ namespace _7637_WS4
                 ConfigureChannelName();
                 ConfigureCurrentlimitBehavior();
                 statusDCUpdate("SUCCESS");
-                bOnOff = true;
+                //bOnOff1 = true;
                 bInitialized = true;
-                
+
 
                 thrDC = new Thread(updateDCProcessing);
                 thrDC.Start();
@@ -161,57 +162,80 @@ namespace _7637_WS4
             {
                 if (bNeedUpdate)
                 {
+                    bUpdateDone = false;
                     UpdateIVIDCPwrOutput();
                     bNeedUpdate = false;
                 }
                 Thread.Sleep(10);
-                updateStateDC?.Invoke(new StateDC(
-                    "0",
-                    iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage),
-                    iviDCPower.Outputs["0"].Enabled,
-                    iviDCPower.Outputs["0"].QueryState(OutputState.ConstantVoltage),
-                    "1",
-                    iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage),
-                    iviDCPower.Outputs["1"].Enabled,
-                    iviDCPower.Outputs["1"].QueryState(OutputState.ConstantVoltage)));
-                //updateStateDC?.Invoke(new StateDC("1", iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage), iviDCPower.Outputs["1"].Enabled, iviDCPower.Outputs["1"].QueryState(OutputState.ConstantVoltage)));
+
+                try
+                {
+                    updateStateDC?.Invoke(new StateDC(
+                        "0",
+                        iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage),
+                        iviDCPower.Outputs["0"].CurrentLimit,
+                        iviDCPower.Outputs["0"].Measure(MeasurementType.Current),
+                        iviDCPower.Outputs["0"].Enabled,
+                        iviDCPower.Outputs["0"].QueryState(OutputState.ConstantVoltage),
+                        "1",
+                        iviDCPower.Outputs["1"].Measure(MeasurementType.Voltage),
+                        iviDCPower.Outputs["1"].CurrentLimit,
+                        iviDCPower.Outputs["1"].Measure(MeasurementType.Current),
+                        iviDCPower.Outputs["1"].Enabled,
+                        iviDCPower.Outputs["1"].QueryState(OutputState.ConstantVoltage)));
+                }
+                catch(Exception ex)
+                {
+                    warningDCUpdate?.Invoke(ex.Message);
+                }
             }
         }
 
         void UpdateIVIDCPwrOutput()
         {
             if (iviDCPower == null) return;
-
             try
             {
                 //конфигурация и запуск источника питания
-                //curDCChannel = listDCChannels[0];
-                iviDCPower.Outputs[curDCChannel].ConfigureCurrentLimit(curLimitBehavior, curLimit);
-                iviDCPower.Outputs[curDCChannel].VoltageLevel = voltageLevel;
+                iviDCPower.Outputs["0"].ConfigureCurrentLimit(curLimitBehavior, curLimit1);
+                iviDCPower.Outputs["0"].VoltageLevel = voltageLevel1;
+                iviDCPower.Outputs["0"].Enabled = bOnOff1; //непосредственный запуск
 
-                iviDCPower.Outputs[curDCChannel].Enabled = bOnOff; //непосредственный запуск
+                iviDCPower.Outputs["1"].ConfigureCurrentLimit(curLimitBehavior, curLimit2);
+                iviDCPower.Outputs["1"].VoltageLevel = voltageLevel2;
+                iviDCPower.Outputs["1"].Enabled = bOnOff2; //непосредственный запуск
 
-                //updateStateDC(new StateDC(curDCChannel, iviDCPower.Outputs[curDCChannel].Measure(MeasurementType.Voltage), bOnOff));
+                if (iviDCPower.Outputs["1"].Enabled != bOnOff2 || iviDCPower.Outputs["0"].Enabled != bOnOff1)
+                {
+                    int k = 9;
+                    k++;
+                }
+                bUpdateDone = true;
             }
-            catch (Exception ex)
-            {
-                statusDCUpdate?.Invoke(ex.Message);
-            }
+            catch (Exception ex) { statusDCUpdate?.Invoke(ex.Message); }
         }
 
         /// <summary>
-        /// Функция включения/выключения ИП с задачей канала и вольтажа
+        /// Функция включения/выключения ИП с параметрами вольтажа и ограничения по току для каждого из двух каналов
         /// </summary>
-        /// <param name="channel">Номер канала ИП</param>
-        /// <param name="voltage">Значение напряжения</param>
-        /// <param name="on_off">Включить/Выключить ИП</param>
-        public void DCSetOnOff(string channel, double voltage, bool on_off)
+        /// <param name="voltage1">Напряжение канала 1</param>
+        /// <param name="currentLimit1">Ограничение по току канала 1</param>
+        /// <param name="on_off1">Включить/выключить канал 1</param>
+        /// <param name="voltage2">Напряжение канала 2</param>
+        /// <param name="currentLimit2">Ограничение по току канала 2</param>
+        /// <param name="on_off2">Включить/выключить канал 2</param>
+        public void DCSetOnOff(double voltage1, double currentLimit1, bool on_off1, double voltage2, double currentLimit2, bool on_off2)
         {
             if (!bInitialized) InitDC();
-            curDCChannel = channel;
-            voltageLevel = voltage;
-            bOnOff = on_off;
+            //curDCChannel = channel;
+            voltageLevel1 = voltage1;
+            curLimit1 = currentLimit1;
+            bOnOff1 = on_off1;
+            voltageLevel2 = voltage2;
+            curLimit2 = currentLimit2;
+            bOnOff2 = on_off2;
 
+            while (!bUpdateDone) Application.DoEvents();
             bNeedUpdate = true;
         }
 
@@ -280,16 +304,18 @@ namespace _7637_WS4
             listMeasureModeDMM.Remove(DmmMeasurementFunction.WaveformCurrent.ToString());
             listMeasureModeDMM.Remove(DmmMeasurementFunction.WaveformVoltage.ToString());
 
-            
+
         }
 
-        void ConfigureDMM(string measurementFunction, double range)
+        void ConfigureDMM(MultimeterMode measurementFunction, double range)
         {
             DmmMeasurementFunction measurementMode = DmmMeasurementFunction.DCVolts;
-            if(measurementFunction == "DCVolts")
+            /*if(measurementFunction == "DCVolts")
                 measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
             else if(measurementFunction == "Resistance")
-                measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[4]);
+                measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[4]);*/
+
+            measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), measurementFunction.ToString());
             //DmmMeasurementFunction measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
             DmmTriggerSource triggerSource = "Immediate";              //"Immediate", "External", "Software Trigger", "Ttl0", "Ttl1"
             //double range = 100000;
@@ -303,7 +329,7 @@ namespace _7637_WS4
             dmmSession.Trigger.MultiPoint.SampleCount = samplesPerReading;
         }
 
-        public void ReadDMM(string measurementFunction, double range)
+        public void ReadDMM(MultimeterMode measurementFunction, double range)
         {
             //Application.DoEvents();
             double[] readBuf;
@@ -322,10 +348,10 @@ namespace _7637_WS4
                 //dmmResult.temp = dmmSession.Temperature.ToString();
                 dmmResult.measurementMode = dmmSession.MeasurementFunction.ToString();
 
-                bufReadDMMReceived?.Invoke(dmmResult); 
-                
+                bufReadDMMReceived?.Invoke(dmmResult);
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 warningDMMUpdate?.Invoke(ex.Message);
             }
@@ -355,21 +381,29 @@ namespace _7637_WS4
     {
         string _ch1;
         double _volt1;
+        double _curlim1;
+        double _cur1;
         bool _b1;
         bool _bOVP1;
         string _ch2;
         double _volt2;
+        double _curlim2;
+        double _cur2;
         bool _b2;
         bool _bOVP2;
 
-        public StateDC(string ch1, double volt1, bool b1, bool bOVP1, string ch2, double volt2, bool b2, bool bOVP2)
+        public StateDC(string ch1, double volt1, double curlim1, double cur1, bool b1, bool bOVP1, string ch2, double volt2, double curlim2, double cur2, bool b2, bool bOVP2)
         {
             _ch1 = ch1;
             _volt1 = volt1;
+            _curlim1 = curlim1;
+            _cur1 = cur1;
             _b1 = b1;
             _bOVP1 = bOVP1;
             _ch2 = ch2;
             _volt2 = volt2;
+            _curlim2 = curlim2;
+            _cur2 = cur2;
             _b2 = b2;
             _bOVP2 = bOVP2;
         }
@@ -383,6 +417,10 @@ namespace _7637_WS4
         public double Volt2 { get => _volt2; }
         public bool B2 { get => _b2; }
         public bool BOVP2 { get => _bOVP2; }
+        public double Curlim1 { get => _curlim1; }
+        public double Curlim2 { get => _curlim2; }
+        public double Cur1 { get => _cur1; }
+        public double Cur2 { get => _cur2;  }
     }
 
     public class SwitchRelay
@@ -392,7 +430,7 @@ namespace _7637_WS4
         const string sTopology2569 = "2569/100-SPST";
         string curTopology = string.Empty;
         public event delSwitchStatus warningSWITCH, statusSWITCH;
-        PrecisionTimeSpan maxTime ;
+        PrecisionTimeSpan maxTime;
         string _name;
         public SwitchRelay(string name)
         {
@@ -400,10 +438,10 @@ namespace _7637_WS4
             _name = name;
             InitRelay();
         }
-    /// <summary>
-    /// Инициализация блока реле. Топология будет выбрана автоматически в соответствии с указанным именем.
-    /// </summary>
-    /// <param name="name">Имя, указанное в NI MAX</param>
+        /// <summary>
+        /// Инициализация блока реле. Топология будет выбрана автоматически в соответствии с указанным именем.
+        /// </summary>
+        /// <param name="name">Имя, указанное в NI MAX</param>
         public void InitRelay()
         {
             curTopology = _name.Contains("R6") || _name.Contains("R7") || _name.Contains("R8") ? sTopology2569 : sTopology2530;
@@ -412,7 +450,7 @@ namespace _7637_WS4
                 Init(curTopology);
                 //_name = name;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 warningSWITCH?.Invoke(_name, ex.Message);
             }
