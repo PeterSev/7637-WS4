@@ -30,6 +30,7 @@ namespace ExcelLib
         private string _comment;
         private string _result;
         private int _range;
+        private ushort _delay;
         public Contact[] Input;
         public Contact[] Output;
 
@@ -73,6 +74,12 @@ namespace ExcelLib
         {
             get { return _result; }
             set { _result = value; }
+        }
+
+        public ushort Delay
+        {
+            get { return _delay; }
+            set { _delay = value; }
         }
     }
 }

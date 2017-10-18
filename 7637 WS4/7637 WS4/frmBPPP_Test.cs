@@ -226,6 +226,8 @@ namespace _7637_WS4
 
             lastTest = test;
 
+            //После включения реле выжидаем паузу
+            Thread.Sleep(test.Delay);
 
             //Проведение измерений---------------------------------------------
             _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range);   //инициирование чтения мультиметра

@@ -108,9 +108,9 @@
     </Compile>
     <Compile Include="ExcelLib\BPPPTest.cs" />
     <Compile Include="ExcelLib\DAQTest.cs" />
-    <Compile Include="ExcelLib\EData3.cs" />
     <Compile Include="ExcelLib\EData4.cs" />
     <Compile Include="ExcelLib\Excel.cs" />
+    <Compile Include="ExcelLib\IndTest.cs" />
     <Compile Include="frmBPPP.cs">
       <SubType>Form</SubType>
     </Compile>
