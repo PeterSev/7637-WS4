@@ -285,11 +285,18 @@ namespace _7637_WS4
 
         static string GetDAQDeviceName(string deviceName)
         {
-            Device device = DaqSystem.Local.LoadDevice(deviceName);
-            if (device.BusType != DeviceBusType.CompactDaq)
-                return deviceName;
-            else
-                return device.CompactDaqChassisDeviceName;
+            try
+            {
+                Device device = DaqSystem.Local.LoadDevice(deviceName);
+                if (device.BusType != DeviceBusType.CompactDaq)
+                    return deviceName;
+                else
+                    return device.CompactDaqChassisDeviceName;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
