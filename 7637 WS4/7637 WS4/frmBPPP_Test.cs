@@ -38,8 +38,6 @@ namespace _7637_WS4
         List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();*/
         //--------------------------------
 
-
-
         void Init()
         {
             bNeedReload = false;

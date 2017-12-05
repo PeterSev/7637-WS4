@@ -26,7 +26,7 @@ namespace _7637_WS4
             indexPic = 0;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/PP/";
+            catalog = curBoard.Catalog + "/PP/Help/";
             btnOK.Visible = false;
             listHelp = null;
 

@@ -43,6 +43,10 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Multimedia, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Multimedia.dll</HintPath>
+    </Reference>
     <Reference Include="NationalInstruments.Common, Version=15.1.40.49152, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\NationalInstruments.Common.dll</HintPath>
@@ -106,6 +110,7 @@
     <Compile Include="ColorProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Command.cs" />
     <Compile Include="ExcelLib\BPPPTest.cs" />
     <Compile Include="ExcelLib\DAQTest.cs" />
     <Compile Include="ExcelLib\EData4.cs" />
@@ -274,10 +279,12 @@
       <DependentUpon>frmTests.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\NIControl.cs" />
+    <Compile Include="iConnect.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Utils.cs" />
     <Compile Include="Classes\XMLParser.cs" />
+    <Compile Include="Udp.cs" />
     <EmbeddedResource Include="frmBPPP.resx">
       <DependentUpon>frmBPPP.cs</DependentUpon>
     </EmbeddedResource>
