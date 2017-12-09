@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace _7637_WS4
 {
@@ -26,6 +27,11 @@ namespace _7637_WS4
         public event Received received;                                 //событие прихода пакета
         public event WarningException warningException;                 //событие возникшего исключения
 
+        Task listenTaskPort, listenTaskServicePort;
+
+        CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+        CancellationToken token;
+
         /// <summary>
         /// Конструктор класса UDP
         /// </summary>
@@ -44,11 +50,13 @@ namespace _7637_WS4
             command_in_debugPort = new Command();
             remotePoint = new IPEndPoint(_addr, _portSendTo);
 
-            Task listenTaskPort = new Task(ListenPort);     //Запускаем прослушивание портов в отдельных потоках
+            listenTaskPort = new Task(ListenPort);     //Запускаем прослушивание портов в отдельных потоках
             listenTaskPort.Start();
 
-            Task listenTaskServicePort = new Task(ListenServicePort);
+            listenTaskServicePort = new Task(ListenServicePort);
             listenTaskServicePort.Start();
+
+            token = cancelTokenSource.Token;
         }
 
         void ListenServicePort()
@@ -58,7 +66,7 @@ namespace _7637_WS4
 
         void ListenPort()
         {
-            Listen(_servicePort, command_in_servicePort);
+            Listen(_servicePort, command_in_servicePort);  //!!!!сделать другой обработчик для этого потока!
         }
 
         /// <summary>
@@ -68,21 +76,26 @@ namespace _7637_WS4
         /// <param name="com">В какую команду формируем входящие данные</param>
         void Listen(int port, Command com)
         {
-            try
+            //Привязываем сокет к нужному адресу и порту, который будем прослушивать
+            pointPort = new IPEndPoint(_addr, port);
+            socket.Bind(pointPort);
+
+            //Адрес, с которого пришли данные.
+            EndPoint remoteIP = new IPEndPoint(IPAddress.Any, 0);
+            //socket.ReceiveTimeout = 5000;
+
+            while (true)
             {
-                //Привязываем сокет к нужному адресу и порту, который будем прослушивать
-                pointPort = new IPEndPoint(_addr, port);
-                socket.Bind(pointPort);
-
-                //Адрес, с которого пришли данные.
-                EndPoint remoteIP = new IPEndPoint(IPAddress.Any, 0);
-
-                while (true)
+                try
                 {
                     int bytes = 0;
-                    //byte[] data = new byte[256];
 
-                    if (socket.Available > 1)
+                    if (token.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    if (socket.Available > 0)
                     {
                         byte[] tmp = new byte[socket.Available];
                         bytes = socket.ReceiveFrom(tmp, ref remoteIP);
@@ -90,30 +103,36 @@ namespace _7637_WS4
                     }
                     if (state_rx == STATE_RX.DESCR)
                     {
-                        com.descriptor = rx_queue.Dequeue();
-                        state_rx = STATE_RX.DATA;
+                        if (rx_queue.Count >= 1)
+                        {
+                            com.descriptor = rx_queue.Dequeue();
+                            state_rx = STATE_RX.DATA;
+                        }
                     }
                     if (state_rx == STATE_RX.DATA)
                     {
-                        com.data = new byte[rx_queue.Count];
-                        for (int i = 0; i < com.data.Length; i++)
-                            com.data[i] = rx_queue.Dequeue();
+                        if (rx_queue.Count >= 1)
+                        {
+                            com.data = new byte[rx_queue.Count];
+                            for (int i = 0; i < com.data.Length; i++)
+                                com.data[i] = rx_queue.Dequeue();
 
-                        state_rx = STATE_RX.DESCR;
-                        rx_queue.Clear();
+                            state_rx = STATE_RX.DESCR;
+                            rx_queue.Clear();
 
-                        IPEndPoint remoteFullIp = remoteIP as IPEndPoint;   //получаем данные о подключении
-                        received?.Invoke(com, remoteFullIp);                //генерируем событие
+                            IPEndPoint remoteFullIp = remoteIP as IPEndPoint;   //получаем данные о подключении
+                            received?.Invoke(com, remoteFullIp);                //генерируем событие
+                        }
                     }
                 }
-            }
-            catch(Exception ex)
-            {
-                warningException?.Invoke(ex.Message);       //генерируем событие о возникшей ошибке
-            }
-            finally
-            {
-                Close();
+                catch (Exception ex)
+                {
+                    warningException?.Invoke(ex.Message);       //генерируем событие о возникшей ошибке
+                }
+                finally
+                {
+                    //Close();
+                }
             }
         }
 
@@ -129,6 +148,8 @@ namespace _7637_WS4
                 socket.Shutdown(SocketShutdown.Both);   //блокируем передачу и отправку по всем портам нашего сокета
                 socket.Close();                         //закрываем подключение
                 socket = null;
+
+                cancelTokenSource.Cancel();             //завершаем выполнение потока
             }
         }
     }

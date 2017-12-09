@@ -114,6 +114,7 @@ namespace _7637_WS4
             this.Hide();
             bNeedReload = true;
             _frmMain._frmPP.Show();
+            _frmMain._frmUDPDebug.Show();
         }
     }
 }

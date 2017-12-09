@@ -122,6 +122,9 @@ namespace _7637_WS4
 
         private void Btn_Click(object sender, EventArgs e)
         {
+            selectedBoard = ((Button)sender).Text;
+            this.Hide();
+            _frmMain._frmPP_InnerHelp.Show();
             //throw new NotImplementedException();
         }
 
