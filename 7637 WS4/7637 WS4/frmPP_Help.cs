@@ -26,7 +26,7 @@ namespace _7637_WS4
             indexPic = 0;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/PP/";
+            catalog = curBoard.Catalog + "/PP/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
@@ -76,10 +76,13 @@ namespace _7637_WS4
 
         private void frmPP_Help_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            this.Hide();
-            _frmMain._frmTests.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                this.Hide();
+                _frmMain._frmTests.Show();
+            }
         }
 
         private void lblLeft_Click(object sender, EventArgs e)
@@ -111,6 +114,7 @@ namespace _7637_WS4
             this.Hide();
             bNeedReload = true;
             _frmMain._frmPP.Show();
+            _frmMain._frmUDPDebug.Show();
         }
     }
 }

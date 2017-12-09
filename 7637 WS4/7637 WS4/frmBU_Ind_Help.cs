@@ -31,11 +31,11 @@ namespace _7637_WS4
             indexPic = 0;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/BU/";
+            catalog = curBoard.Catalog + "/BU/" + _frmMain._frmBU_Board.curBUBoard.Name + "/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " БУ. Индикация";
+            this.Text = curBoard.Name + " БУ. Индикация. Плата " +_frmMain._frmBU_Board.curBUBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -80,7 +80,7 @@ namespace _7637_WS4
             e.Cancel = true;
             bNeedReload = true;
             this.Hide();
-            _frmMain._frmTests.Show();
+            _frmMain._frmBU.Show();
         }
 
         private void lblLeft_Click(object sender, EventArgs e)

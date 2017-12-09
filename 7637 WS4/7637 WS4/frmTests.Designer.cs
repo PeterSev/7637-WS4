@@ -34,11 +34,15 @@
             this.lblBU = new System.Windows.Forms.Label();
             this.lblBPPP = new System.Windows.Forms.Label();
             this.lblBZ = new System.Windows.Forms.Label();
-            this.btnPP = new System.Windows.Forms.Button();
-            this.btnBU = new System.Windows.Forms.Button();
-            this.btnBPPP = new System.Windows.Forms.Button();
-            this.btnBZ = new System.Windows.Forms.Button();
+            this.btnBPPP = new System.Windows.Forms.PictureBox();
+            this.btnPP = new System.Windows.Forms.PictureBox();
+            this.btnBU = new System.Windows.Forms.PictureBox();
+            this.btnBZ = new System.Windows.Forms.PictureBox();
             this.panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBPPP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBU)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBZ)).BeginInit();
             this.SuspendLayout();
             // 
             // txtComment
@@ -55,14 +59,14 @@
             // 
             // panel
             // 
+            this.panel.Controls.Add(this.btnBZ);
+            this.panel.Controls.Add(this.btnBU);
+            this.panel.Controls.Add(this.btnPP);
+            this.panel.Controls.Add(this.btnBPPP);
             this.panel.Controls.Add(this.lblPP);
             this.panel.Controls.Add(this.lblBU);
             this.panel.Controls.Add(this.lblBPPP);
             this.panel.Controls.Add(this.lblBZ);
-            this.panel.Controls.Add(this.btnPP);
-            this.panel.Controls.Add(this.btnBU);
-            this.panel.Controls.Add(this.btnBPPP);
-            this.panel.Controls.Add(this.btnBZ);
             this.panel.Location = new System.Drawing.Point(12, 12);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(800, 600);
@@ -112,15 +116,26 @@
             this.lblBZ.Text = "Блок зеркала";
             this.lblBZ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnBPPP
+            // 
+            this.btnBPPP.Location = new System.Drawing.Point(0, 300);
+            this.btnBPPP.Name = "btnBPPP";
+            this.btnBPPP.Size = new System.Drawing.Size(400, 260);
+            this.btnBPPP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnBPPP.TabIndex = 4;
+            this.btnBPPP.TabStop = false;
+            this.btnBPPP.Click += new System.EventHandler(this.btnBPPP_Click);
+            this.btnBPPP.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
+            // 
             // btnPP
             // 
             this.btnPP.Location = new System.Drawing.Point(400, 300);
             this.btnPP.Name = "btnPP";
             this.btnPP.Size = new System.Drawing.Size(400, 260);
-            this.btnPP.TabIndex = 3;
-            this.btnPP.UseVisualStyleBackColor = true;
+            this.btnPP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnPP.TabIndex = 5;
+            this.btnPP.TabStop = false;
             this.btnPP.Click += new System.EventHandler(this.btnPP_Click);
-            this.btnPP.Enter += new System.EventHandler(this.btn_MouseEnter);
             this.btnPP.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
             // 
             // btnBU
@@ -128,32 +143,21 @@
             this.btnBU.Location = new System.Drawing.Point(400, 0);
             this.btnBU.Name = "btnBU";
             this.btnBU.Size = new System.Drawing.Size(400, 260);
-            this.btnBU.TabIndex = 1;
-            this.btnBU.UseVisualStyleBackColor = true;
+            this.btnBU.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnBU.TabIndex = 5;
+            this.btnBU.TabStop = false;
             this.btnBU.Click += new System.EventHandler(this.btnBU_Click);
-            this.btnBU.Enter += new System.EventHandler(this.btn_MouseEnter);
             this.btnBU.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
-            // 
-            // btnBPPP
-            // 
-            this.btnBPPP.Location = new System.Drawing.Point(0, 300);
-            this.btnBPPP.Name = "btnBPPP";
-            this.btnBPPP.Size = new System.Drawing.Size(400, 260);
-            this.btnBPPP.TabIndex = 2;
-            this.btnBPPP.UseVisualStyleBackColor = true;
-            this.btnBPPP.Click += new System.EventHandler(this.btnBPPP_Click);
-            this.btnBPPP.Enter += new System.EventHandler(this.btn_MouseEnter);
-            this.btnBPPP.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
             // 
             // btnBZ
             // 
             this.btnBZ.Location = new System.Drawing.Point(0, 0);
             this.btnBZ.Name = "btnBZ";
             this.btnBZ.Size = new System.Drawing.Size(400, 260);
-            this.btnBZ.TabIndex = 0;
-            this.btnBZ.UseVisualStyleBackColor = true;
+            this.btnBZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnBZ.TabIndex = 5;
+            this.btnBZ.TabStop = false;
             this.btnBZ.Click += new System.EventHandler(this.btnBZ_Click);
-            this.btnBZ.Enter += new System.EventHandler(this.btn_MouseEnter);
             this.btnBZ.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
             // 
             // frmTests
@@ -166,11 +170,16 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmTests";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tests";
             this.Activated += new System.EventHandler(this.frmTests_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmTests_FormClosing);
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBPPP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBU)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBZ)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,13 +189,13 @@
 
         private System.Windows.Forms.TextBox txtComment;
         private System.Windows.Forms.Panel panel;
-        private System.Windows.Forms.Button btnPP;
-        private System.Windows.Forms.Button btnBU;
-        private System.Windows.Forms.Button btnBPPP;
-        private System.Windows.Forms.Button btnBZ;
         private System.Windows.Forms.Label lblPP;
         private System.Windows.Forms.Label lblBU;
         private System.Windows.Forms.Label lblBPPP;
         private System.Windows.Forms.Label lblBZ;
+        private System.Windows.Forms.PictureBox btnBPPP;
+        private System.Windows.Forms.PictureBox btnBZ;
+        private System.Windows.Forms.PictureBox btnBU;
+        private System.Windows.Forms.PictureBox btnPP;
     }
 }

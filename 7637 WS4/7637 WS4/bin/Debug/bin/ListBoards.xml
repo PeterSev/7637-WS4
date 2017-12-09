@@ -3,11 +3,11 @@
 	<BOARD NAME="7064">
 		<CATALOG>7064</CATALOG>
 		<IMAGELINK>Pict7064.jpg</IMAGELINK>
-		<COMMENT>Первый комментарий</COMMENT>
+		<COMMENT>Выберите проверяемый прибор</COMMENT>
 	</BOARD>
 	<BOARD NAME="7194">
 		<CATALOG>7194</CATALOG>
 		<IMAGELINK>Pict7194.jpg</IMAGELINK>
-		<COMMENT>Второй комментарий</COMMENT>
+		<COMMENT>Выберите проверяемый прибор</COMMENT>
 	</BOARD>
 </BOARDS>

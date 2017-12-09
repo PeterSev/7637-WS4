@@ -106,6 +106,15 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Выберите нужный вам тип проверки.
+        /// </summary>
+        internal static string comment_ListBU_Initial {
+            get {
+                return ResourceManager.GetString("comment_ListBU_Initial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Описание прозвонки плат.
         /// </summary>
         internal static string comment_PP {

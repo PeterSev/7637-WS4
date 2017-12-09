@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BOARDS>
+	<BOARD NAME="192.168.400.400">
+		<CATALOG>192.168.400.400</CATALOG>
+		<IMAGELINK>192.168.400.400.jpg</IMAGELINK>
+		<COMMENT>Первый вариант платы</COMMENT>
+	</BOARD>
+	<BOARD NAME="192.168.5.6">
+		<CATALOG>192.168.5.6</CATALOG>
+		<IMAGELINK>192.168.5.6.jpg</IMAGELINK>
+		<COMMENT>Второй вариант платы</COMMENT>
+	</BOARD>
+</BOARDS>

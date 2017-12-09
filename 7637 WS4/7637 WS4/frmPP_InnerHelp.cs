@@ -23,13 +23,14 @@ namespace _7637_WS4
 
         void Init()
         {
-            listHelpFilename = _frmMain._frmPP.selectedBoard + ".xml";
+            //listHelpFilename = _frmMain._frmPP.selectedBoard + ".xml";
+            listHelpFilename = "help.xml";
 
             bNeedReload = false;
             indexPic = 0;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/PP/" + _frmMain._frmPP.selectedBoard + "/";
+            catalog = curBoard.Catalog + "/PP/" + _frmMain._frmPP.selectedBoard + "/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
@@ -79,10 +80,13 @@ namespace _7637_WS4
 
         private void frmPP_InnerHelp_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            this.Hide();
-            _frmMain._frmPP.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                this.Hide();
+                _frmMain._frmPP.Show();
+            }
         }
 
         private void lblLeft_Click(object sender, EventArgs e)

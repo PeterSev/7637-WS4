@@ -18,6 +18,8 @@ namespace _7637_WS4
         string catalog = string.Empty;
         Board curBoard = null;
 
+        public Udp udp;
+
         void Init()
         {
             listPPTest = _frmMain._frmPP.selectedBoard + "_test.xml";
@@ -43,15 +45,23 @@ namespace _7637_WS4
 
         private void frmPP_Test_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            this.Hide();
-            _frmMain._frmPP.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                this.Hide();
+                _frmMain._frmPP.Show();
+            }
         }
 
         private void btnShowReport_Click(object sender, EventArgs e)
         {
             _frmMain._frmPP_Report.Show();
+        }
+
+        private void btnShowUDPDebug_Click(object sender, EventArgs e)
+        {
+            _frmMain._frmUDPDebug.Show();
         }
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HELPS>
+	<HELP>
+		<IMAGELINK>help1.jpg</IMAGELINK>
+		<COMMENT>Comment 001</COMMENT>
+	</HELP>
+	<HELP>
+		<IMAGELINK>help2.jpg</IMAGELINK>
+		<COMMENT>Comment 002</COMMENT>
+	</HELP>
+	<HELP>
+		<IMAGELINK>help3.jpg</IMAGELINK>
+		<COMMENT>Comment 003</COMMENT>
+	</HELP>
+</HELPS>

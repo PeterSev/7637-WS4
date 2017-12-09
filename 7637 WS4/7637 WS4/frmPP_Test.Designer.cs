@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.btnShowReport = new System.Windows.Forms.Button();
+            this.btnShowUDPDebug = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnShowReport
@@ -41,11 +42,22 @@
             this.btnShowReport.UseVisualStyleBackColor = true;
             this.btnShowReport.Click += new System.EventHandler(this.btnShowReport_Click);
             // 
+            // btnShowUDPDebug
+            // 
+            this.btnShowUDPDebug.Location = new System.Drawing.Point(636, 24);
+            this.btnShowUDPDebug.Name = "btnShowUDPDebug";
+            this.btnShowUDPDebug.Size = new System.Drawing.Size(75, 23);
+            this.btnShowUDPDebug.TabIndex = 2;
+            this.btnShowUDPDebug.Text = "UDP Debug";
+            this.btnShowUDPDebug.UseVisualStyleBackColor = true;
+            this.btnShowUDPDebug.Click += new System.EventHandler(this.btnShowUDPDebug_Click);
+            // 
             // frmPP_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1049, 382);
+            this.Controls.Add(this.btnShowUDPDebug);
             this.Controls.Add(this.btnShowReport);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -61,5 +73,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnShowReport;
+        private System.Windows.Forms.Button btnShowUDPDebug;
     }
 }

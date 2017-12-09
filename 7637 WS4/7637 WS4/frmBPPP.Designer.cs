@@ -93,6 +93,7 @@
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.pict);
             this.Name = "frmBPPP";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmBPPP";
             this.Activated += new System.EventHandler(this.frmBPPP_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBPPP_FormClosing);

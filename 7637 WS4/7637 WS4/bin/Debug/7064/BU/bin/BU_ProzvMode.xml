@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TESTS>
+	<TEST NAME = "ОБРЫВ">
+		<IMAGELINK>Pict1_.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описание Обрыва</COMMENT> 
+	</TEST>
+	<TEST NAME = "КЗ">
+		<IMAGELINK>Pict2_.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описанию короткого замыкания</COMMENT> 
+	</TEST>
+	<TEST NAME = "Выборочная">
+		<IMAGELINK>Pict3_.jpg</IMAGELINK>
+		<COMMENT>Комментарий к описанию выборочной проверки</COMMENT> 
+	</TEST>
+	
+</TESTS>

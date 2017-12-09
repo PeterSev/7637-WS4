@@ -8,13 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelLib;
+using System.Threading;
 
 namespace _7637_WS4
 {
     public partial class frmMain : Form
     {
+        //TEst
         List<Board> listBoards = new List<Board>();
         public Board curBoard = null;
+
+        public double resultOfMeasurementDMM = 0;
+        public double maxOfEtalonSignal = 0, maxOfMeasuredSignal = 0, amplOfEtalonSignal = 0, amplOfMeasuredSignal = 0;
+
+        //public int cntOfResMeasurementDMM = 0;
+        public bool bNeedRewrite = false;
+        public bool bReadyToRead = false;
+
         //new comment Попробовал открыть репозиторий с домашнего компьютера
 
         public frmTests _frmTests;
@@ -39,9 +49,15 @@ namespace _7637_WS4
         public frmBU_Ind_Test _frmBU_Ind_Test;
         public frmBU_Osc_Help _frmBU_Osc_Help;
         public frmBU_Osc_Test _frmBU_Osc_Test;
+        public frmNI _frmNI;
+        public frmBZ _frmBZ;
+        public frmBU_Board _frmBU_Board;
+        public frmUDPDebug _frmUDPDebug;
 
 
         string listBoardsFileName = "bin\\ListBoards.xml";
+
+        public NIControl niControl;
 
         public string ListBoardsFileName
         {
@@ -98,14 +114,31 @@ namespace _7637_WS4
             _frmBU_Ind_Test = new frmBU_Ind_Test();
             _frmBU_Osc_Help = new frmBU_Osc_Help();
             _frmBU_Osc_Test = new frmBU_Osc_Test();
+            _frmNI = new frmNI();
+            _frmBZ = new frmBZ();
+            _frmBU_Board = new frmBU_Board();
+            _frmUDPDebug = new frmUDPDebug();
 
             _frmTests._frmMain = _frmBZ_Help._frmMain = _frmBZ_Test._frmMain = _frmBZ_Report._frmMain = 
                 _frmBPPP._frmMain = _frmBPPP_Help._frmMain = _frmBPPP_Test._frmMain = _frmBPPP_Report._frmMain =
                 _frmPP_Help._frmMain = _frmPP._frmMain = _frmPP_InnerHelp._frmMain = _frmPP_Test._frmMain = 
                 _frmPP_Report._frmMain = _frmBU._frmMain = _frmBU_Prozv_Help._frmMain = _frmBU_Prozv_Mode._frmMain = 
                 _frmBU_Prozv_Report._frmMain = _frmBU_Prozv_Test._frmMain = _frmBU_Ind_Help._frmMain = _frmBU_Ind_Test._frmMain = 
-                _frmBU_Osc_Help._frmMain = _frmBU_Osc_Test._frmMain = this;
+                _frmBU_Osc_Help._frmMain = _frmBU_Osc_Test._frmMain = _frmNI._frmMain = _frmBZ._frmMain = _frmBU_Board._frmMain = 
+                _frmUDPDebug._frmMain =
+                this;
+
+            niControl = new NIControl();
+            /*niControl.statusUpdate += _frmNI.NiControl_statusUpdate;
+            niControl.warningUpdate += _frmNI.NiControl_warningUpdate;
+            niControl.updateStateDC += _frmNI.NiControl_updateStateDC;*/
+            
+            
+            _frmNI.Show();
+            //_frmNI.Hide();
         }
+
+        
 
         void ShowBoards(List<Board> list)
         {
@@ -190,6 +223,23 @@ namespace _7637_WS4
         private void frmMain_Load(object sender, EventArgs e)
         {
             Init();
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _frmNI.Close();
+            Thread.Sleep(200);
+            niControl.CloseDCIVISession();
+            niControl.CloseRelaySession();
+            niControl.daqEtalon.Dispose();
+            niControl.daqMeasured.Dispose();
+
+            
+        }
+
+        private void frmMain_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            _frmNI.Show();
         }
     }
 }
