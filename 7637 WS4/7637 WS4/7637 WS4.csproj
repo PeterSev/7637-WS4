@@ -110,7 +110,7 @@
     <Compile Include="ColorProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Command.cs" />
+    <Compile Include="UDPCommand.cs" />
     <Compile Include="ExcelLib\BPPPTest.cs" />
     <Compile Include="ExcelLib\DAQTest.cs" />
     <Compile Include="ExcelLib\EData4.cs" />

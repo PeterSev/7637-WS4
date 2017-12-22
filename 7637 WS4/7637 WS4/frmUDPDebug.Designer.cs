@@ -34,6 +34,7 @@
             this.lstLogExc = new System.Windows.Forms.ListBox();
             this.btnSendCommand = new System.Windows.Forms.Button();
             this.numDescr = new System.Windows.Forms.NumericUpDown();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numDescr)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,7 +80,7 @@
             // 
             // btnSendCommand
             // 
-            this.btnSendCommand.Location = new System.Drawing.Point(515, 12);
+            this.btnSendCommand.Location = new System.Drawing.Point(342, 12);
             this.btnSendCommand.Name = "btnSendCommand";
             this.btnSendCommand.Size = new System.Drawing.Size(161, 23);
             this.btnSendCommand.TabIndex = 3;
@@ -110,11 +111,22 @@
             0,
             0});
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1072, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmUDPDebug
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1410, 570);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.numDescr);
             this.Controls.Add(this.btnSendCommand);
             this.Controls.Add(this.lstLogExc);
@@ -138,5 +150,6 @@
         private System.Windows.Forms.ListBox lstLogExc;
         private System.Windows.Forms.Button btnSendCommand;
         private System.Windows.Forms.NumericUpDown numDescr;
+        private System.Windows.Forms.Button button1;
     }
 }

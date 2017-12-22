@@ -1409,7 +1409,7 @@ namespace ExcelLib
                 }
 
                 xlWorkBook.SaveAs(path, MSExcel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
-                    MSExcel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                    MSExcel.XlSaveAsAccessMode.xlShared, misValue, misValue, misValue, misValue, misValue);
 
                 return "Success";
             }
