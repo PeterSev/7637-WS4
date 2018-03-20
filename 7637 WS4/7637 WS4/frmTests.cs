@@ -42,7 +42,12 @@ namespace _7637_WS4
             btnBU.Image = Properties.Resources.pict_BU;
             btnBZ.Image = Properties.Resources.pict_BZ;
             btnBPPP.Image = Properties.Resources.pict_BPPP;
+
+            //btnBPPP.SizeMode = PictureBoxSizeMode.StretchImage;
             btnPP.Image = Properties.Resources.pict_PP;
+            
+
+
 
             lblBU.ForeColor = lblBZ.ForeColor = lblBPPP.ForeColor = lblPP.ForeColor = Color.White;
 
@@ -83,21 +88,25 @@ namespace _7637_WS4
 
         private void frmTests_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            _frmMain._frmTests.Hide();
-            _frmMain.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                _frmMain._frmTests.Hide();
+                _frmMain.Show();
+            }
         }
 
         private void btnBZ_Click(object sender, EventArgs e)
         {
             this.Hide();
-            _frmMain._frmBZ_Help.Show();
+            _frmMain._frmBZ.Show();
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
+            //Button btn = (Button)sender;
+            Control btn = (Control)sender;
             string font = "Microsoft Sans Serif";
             float font_size_large = 16;
             float font_size_small = 10;
@@ -158,7 +167,8 @@ namespace _7637_WS4
         private void btnBU_Click(object sender, EventArgs e)
         {
             this.Hide();
-            _frmMain._frmBU.Show();
+            //_frmMain._frmBU.Show();
+            _frmMain._frmBU_Board.Show();
         }
     }
 }

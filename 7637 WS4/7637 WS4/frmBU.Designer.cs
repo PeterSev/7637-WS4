@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtComment = new System.Windows.Forms.TextBox();
             this.pict = new System.Windows.Forms.PictureBox();
-            this.btnProzvonka = new System.Windows.Forms.Button();
-            this.btnIndic = new System.Windows.Forms.Button();
-            this.btnOscill = new System.Windows.Forms.Button();
+            this.btn0 = new System.Windows.Forms.Button();
+            this.btn1 = new System.Windows.Forms.Button();
+            this.btn2 = new System.Windows.Forms.Button();
+            this.tip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pict)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,47 +58,59 @@
             this.pict.TabIndex = 15;
             this.pict.TabStop = false;
             // 
-            // btnProzvonka
+            // btn0
             // 
-            this.btnProzvonka.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnProzvonka.Location = new System.Drawing.Point(12, 12);
-            this.btnProzvonka.Name = "btnProzvonka";
-            this.btnProzvonka.Size = new System.Drawing.Size(300, 230);
-            this.btnProzvonka.TabIndex = 17;
-            this.btnProzvonka.Text = "Прозвонка";
-            this.btnProzvonka.UseVisualStyleBackColor = true;
-            this.btnProzvonka.Click += new System.EventHandler(this.btnProzvonka_Click);
+            this.btn0.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn0.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn0.ForeColor = System.Drawing.Color.White;
+            this.btn0.Location = new System.Drawing.Point(12, 12);
+            this.btn0.Name = "btn0";
+            this.btn0.Size = new System.Drawing.Size(300, 230);
+            this.btn0.TabIndex = 17;
+            this.btn0.Text = "Прозвонка";
+            this.btn0.UseVisualStyleBackColor = false;
+            this.btn0.Click += new System.EventHandler(this.btnProzvonka_Click);
             // 
-            // btnIndic
+            // btn1
             // 
-            this.btnIndic.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnIndic.Location = new System.Drawing.Point(12, 248);
-            this.btnIndic.Name = "btnIndic";
-            this.btnIndic.Size = new System.Drawing.Size(300, 230);
-            this.btnIndic.TabIndex = 17;
-            this.btnIndic.Text = "Индикация";
-            this.btnIndic.UseVisualStyleBackColor = true;
-            this.btnIndic.Click += new System.EventHandler(this.btnIndic_Click);
+            this.btn1.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn1.ForeColor = System.Drawing.Color.White;
+            this.btn1.Location = new System.Drawing.Point(12, 248);
+            this.btn1.Name = "btn1";
+            this.btn1.Size = new System.Drawing.Size(300, 230);
+            this.btn1.TabIndex = 17;
+            this.btn1.Text = "Индикация";
+            this.btn1.UseVisualStyleBackColor = false;
+            this.btn1.Click += new System.EventHandler(this.btnIndic_Click);
             // 
-            // btnOscill
+            // btn2
             // 
-            this.btnOscill.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnOscill.Location = new System.Drawing.Point(12, 484);
-            this.btnOscill.Name = "btnOscill";
-            this.btnOscill.Size = new System.Drawing.Size(300, 230);
-            this.btnOscill.TabIndex = 17;
-            this.btnOscill.Text = "Осциллограф";
-            this.btnOscill.UseVisualStyleBackColor = true;
-            this.btnOscill.Click += new System.EventHandler(this.btnOscill_Click);
+            this.btn2.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn2.ForeColor = System.Drawing.Color.White;
+            this.btn2.Location = new System.Drawing.Point(12, 484);
+            this.btn2.Name = "btn2";
+            this.btn2.Size = new System.Drawing.Size(300, 230);
+            this.btn2.TabIndex = 17;
+            this.btn2.Text = "Осциллограф";
+            this.btn2.UseVisualStyleBackColor = false;
+            this.btn2.Click += new System.EventHandler(this.btnOscill_Click);
+            // 
+            // tip
+            // 
+            this.tip.AutoPopDelay = 5000;
+            this.tip.InitialDelay = 300;
+            this.tip.ReshowDelay = 100;
             // 
             // frmBU
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1136, 721);
-            this.Controls.Add(this.btnOscill);
-            this.Controls.Add(this.btnIndic);
-            this.Controls.Add(this.btnProzvonka);
+            this.Controls.Add(this.btn2);
+            this.Controls.Add(this.btn1);
+            this.Controls.Add(this.btn0);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.pict);
             this.MaximizeBox = false;
@@ -115,8 +129,9 @@
 
         private System.Windows.Forms.TextBox txtComment;
         private System.Windows.Forms.PictureBox pict;
-        private System.Windows.Forms.Button btnProzvonka;
-        private System.Windows.Forms.Button btnIndic;
-        private System.Windows.Forms.Button btnOscill;
+        private System.Windows.Forms.Button btn0;
+        private System.Windows.Forms.Button btn1;
+        private System.Windows.Forms.Button btn2;
+        private System.Windows.Forms.ToolTip tip;
     }
 }

@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExcelLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ExcelLib.dll</HintPath>
-    </Reference>
     <Reference Include="Ivi.DCPwr, Version=1.2.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Ivi.DCPwr.dll</HintPath>
@@ -44,8 +40,58 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Ivi.Driver.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Multimedia, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Multimedia.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.Common, Version=15.1.40.49152, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NationalInstruments.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.DAQmx, Version=15.5.45.109, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NationalInstruments.DAQmx.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.ModularInstruments.Common, Version=1.4.45.19, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NationalInstruments.ModularInstruments.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.ModularInstruments.ModularInstrumentsSystem, Version=1.4.45.27, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NationalInstruments.ModularInstruments.ModularInstrumentsSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.ModularInstruments.NIDmm.Fx40, Version=15.2.0.49153, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NationalInstruments.ModularInstruments.NIDmm.Fx40.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.ModularInstruments.NISwitch.Fx45, Version=1.1.45.167, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NationalInstruments.ModularInstruments.NISwitch.Fx45.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.UI, Version=15.0.45.49153, Culture=neutral, PublicKeyToken=4febd62461bf11a4" />
+    <Reference Include="NationalInstruments.UI.WindowsForms, Version=15.0.45.49153, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=MSIL" />
+    <Reference Include="NPOI, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,8 +103,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Board.cs" />
+    <Compile Include="Classes\DAQ_Device.cs" />
+    <Compile Include="Classes\FunctionGenerator.cs" />
     <Compile Include="Classes\Help.cs" />
     <Compile Include="Classes\TestInfo.cs" />
+    <Compile Include="ColorProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UDPCommand.cs" />
+    <Compile Include="ExcelLib\BPPPTest.cs" />
+    <Compile Include="ExcelLib\DAQTest.cs" />
+    <Compile Include="ExcelLib\EData4.cs" />
+    <Compile Include="ExcelLib\Excel.cs" />
+    <Compile Include="ExcelLib\IndTest.cs" />
     <Compile Include="frmBPPP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +145,12 @@
     </Compile>
     <Compile Include="frmBU.Designer.cs">
       <DependentUpon>frmBU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Board.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Board.Designer.cs">
+      <DependentUpon>frmBU_Board.cs</DependentUpon>
     </Compile>
     <Compile Include="frmBU_Ind_Help.cs">
       <SubType>Form</SubType>
@@ -137,6 +200,12 @@
     <Compile Include="frmBU_Prozv_Test.Designer.cs">
       <DependentUpon>frmBU_Prozv_Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBZ.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBZ.Designer.cs">
+      <DependentUpon>frmBZ.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmBZ_Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +235,12 @@
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmNI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNI.Designer.cs">
+      <DependentUpon>frmNI.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPP.cs">
       <SubType>Form</SubType>
@@ -203,10 +278,19 @@
     <Compile Include="frmTests.Designer.cs">
       <DependentUpon>frmTests.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\NIControl.cs" />
+    <Compile Include="frmUDPDebug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUDPDebug.Designer.cs">
+      <DependentUpon>frmUDPDebug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="iConnect.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils.cs" />
-    <Compile Include="XMLParser.cs" />
+    <Compile Include="Classes\Utils.cs" />
+    <Compile Include="Classes\XMLParser.cs" />
+    <Compile Include="Udp.cs" />
     <EmbeddedResource Include="frmBPPP.resx">
       <DependentUpon>frmBPPP.cs</DependentUpon>
     </EmbeddedResource>
@@ -221,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBU.resx">
       <DependentUpon>frmBU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Board.resx">
+      <DependentUpon>frmBU_Board.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBU_Ind_Help.resx">
       <DependentUpon>frmBU_Ind_Help.cs</DependentUpon>
@@ -246,6 +333,9 @@
     <EmbeddedResource Include="frmBU_Prozv_Test.resx">
       <DependentUpon>frmBU_Prozv_Test.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmBZ.resx">
+      <DependentUpon>frmBZ.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmBZ_Help.resx">
       <DependentUpon>frmBZ_Help.cs</DependentUpon>
     </EmbeddedResource>
@@ -260,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNI.resx">
+      <DependentUpon>frmNI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPP.resx">
       <DependentUpon>frmPP.cs</DependentUpon>
@@ -278,6 +371,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmTests.resx">
       <DependentUpon>frmTests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUDPDebug.resx">
+      <DependentUpon>frmUDPDebug.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -325,6 +421,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ListBpppBoardInitmage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IMG_20170912_112649.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pict_BPPP.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

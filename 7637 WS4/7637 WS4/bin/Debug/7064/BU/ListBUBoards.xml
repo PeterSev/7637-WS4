@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BOARDS>
+	<BOARD NAME="Board1">
+		<CATALOG>Board1</CATALOG>
+		<IMAGELINK>Board1.jpg</IMAGELINK>
+		<COMMENT>Первый вариант платы</COMMENT>
+	</BOARD>
+	<BOARD NAME="Board2">
+		<CATALOG>Board2</CATALOG>
+		<IMAGELINK>Board2.jpg</IMAGELINK>
+		<COMMENT>Второй вариант платы</COMMENT>
+	</BOARD>
+</BOARDS>

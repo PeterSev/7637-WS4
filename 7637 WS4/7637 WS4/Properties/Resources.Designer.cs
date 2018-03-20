@@ -19,7 +19,7 @@ namespace _7637_WS4.Properties {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,7 +61,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Описание БППП.
+        ///   Ищет локализованную строку, похожую на Проверка плат с помощью блока проверки печатных плат.
         /// </summary>
         internal static string comment_BPPP {
             get {
@@ -70,7 +70,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Описание блока управления.
+        ///   Ищет локализованную строку, похожую на Проверка блока управления.
         /// </summary>
         internal static string comment_BU {
             get {
@@ -79,7 +79,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Описание блока зеркала.
+        ///   Ищет локализованную строку, похожую на Проверка блока зеркала.
         /// </summary>
         internal static string comment_BZ {
             get {
@@ -88,7 +88,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на В верхней панели выберите необходимую плату для проверки.
+        ///   Ищет локализованную строку, похожую на В верхней панели выберите необходимый прибор для проверки.
         /// </summary>
         internal static string comment_ListBoards_Initial {
             get {
@@ -106,7 +106,25 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Описание прозвонки плат.
+        ///   Ищет локализованную строку, похожую на Выберите нужный вам тип проверки.
+        /// </summary>
+        internal static string comment_ListBU_Initial {
+            get {
+                return ResourceManager.GetString("comment_ListBU_Initial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Слевы выберите проверяемый вариант исполнения блока зеркала.
+        /// </summary>
+        internal static string comment_ListBZ_Initial {
+            get {
+                return ResourceManager.GetString("comment_ListBZ_Initial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Проверка плат с помощью блока испытательных сигналов.
         /// </summary>
         internal static string comment_PP {
             get {

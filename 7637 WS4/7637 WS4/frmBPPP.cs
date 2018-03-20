@@ -41,7 +41,15 @@ namespace _7637_WS4
 
             if(Utils.isFileExist(catalog + listBpppBoardsFileName))
             {
-                listBpppBoards = XMLParser.OpenListBoards(catalog + listBpppBoardsFileName);
+                try
+                {
+                    listBpppBoards = XMLParser.OpenListBoards(catalog + listBpppBoardsFileName);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                    return;
+                }
                 pict.SizeMode = PictureBoxSizeMode.StretchImage;
                 pict.Image = Properties.Resources.ListBpppBoardInitmage;
                 txtComment.Text = Properties.Resources.comment_ListBpppBoards_Initial;
@@ -77,7 +85,7 @@ namespace _7637_WS4
                 btn.Left = 10;
                 btn.Top = i * 50 + 0;
                 btn.Height = 42;
-                btn.Width = 280;
+                btn.Width = 260;
 
                 panel.Controls.Add(btn);
             }
@@ -134,11 +142,14 @@ namespace _7637_WS4
 
         private void frmBPPP_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            bNeedReload = true;
-            curBpppBoard = null;
-            this.Hide();
-            _frmMain._frmTests.Show();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                bNeedReload = true;
+                curBpppBoard = null;
+                this.Hide();
+                _frmMain._frmTests.Show();
+            }
         }
     }
 }
