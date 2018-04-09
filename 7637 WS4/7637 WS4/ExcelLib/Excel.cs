@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using static System.String;
 using MSExcel = Microsoft.Office.Interop.Excel;
@@ -853,14 +853,23 @@ namespace ExcelLib
                         BPPPTest[k].Result = list[10, i];
                         // Колонка Error Description
                         var collums = list.GetLength(0);
-                        if (collums == 12)
+                        if (collums >= 12)
                             BPPPTest[k].ErrorDescription = list[11, i];
+                        if (collums >= 13)
+                        {
+                            double acr;
+                            Double.TryParse(list[12, i], out acr);
+                            if (acr != 3.5  && acr != 4.5 && acr != 5.5 && acr != 6.5 && acr != 7.5)
+                                acr = 0;
+                            BPPPTest[k].Accuracy = acr;
+                        }
+
                         k++;
                     }
                 }
                 return BPPPTest;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -952,7 +961,6 @@ namespace ExcelLib
                 ScreenUpdating = false,
                 DisplayAlerts = false
             };
-
             // Отключае запрос на перезапись файла (разрешает перезапись)
 
             MSExcel.Workbook xlWorkBook;
@@ -963,13 +971,13 @@ namespace ExcelLib
             xlWorkSheet = (MSExcel.Worksheet)xlWorkBook.Worksheets.Item[1];
 
             //При добавлении столбцов, изменить размер массива(ниже при  MSExcel.Range r  тоже!)
-            string[,] arr = new string[data.Length + 3, 12];
+            string[,] arr = new string[data.Length + 3, 13];
             arr[0, 0] = "Номер проверки";
             arr[0, 1] = "A";
             arr[0, 2] = "B";
             arr[0, 3] = "Задержка, мс";
-            arr[0, 4] = "Максимальные допустимые значения";
-            arr[0, 5] = " ";
+            arr[0, 4] = "Минимальное допустимое значения";
+            arr[0, 5] = "Максимальное допустимое значения";
             arr[1, 4] = "MIN";
             arr[1, 5] = "MAX";
             arr[0, 6] = "Измеренные значения";
@@ -981,7 +989,8 @@ namespace ExcelLib
             arr[1, 9] = "Ом";
             arr[0, 10] = "Результат";
             arr[0, 11] = "Описание ошибки";
-            
+            arr[0, 12] = "Точность измерения";
+
 
 
             bool[] successColor = new bool[data.Length + 3];
@@ -1022,11 +1031,13 @@ namespace ExcelLib
                 arr[i, 11] = data[k].ErrorDescription;
                 if (data[k].Result == "PASSED")
                     successColor[k] = true;
-                k++;
+                if (arr.GetLength(1) >= 13)
+                    arr[i, 12] = data[k].Accuracy.ToString(CultureInfo.CurrentCulture);
+                    k++;
             }
             try
             {
-                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 2, 12]];
+                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 2, 13]];
                 r.Value = arr;
                 xlWorkSheet.Columns.EntireColumn.AutoFit();
 

@@ -292,8 +292,8 @@ namespace _7637_WS4
             listDeviceDMM.Clear();
             listMeasureModeDMM.Clear();
 
-            powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
-            resolutionDMM = resolutionValues[1]; //6.5
+            //powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
+            //resolutionDMM = resolutionValues[2]; //6.5
 
             //Составляем список DMM оборудования
             ModularInstrumentsSystem modularInstrumentsSystem = new ModularInstrumentsSystem("NI-DMM");
@@ -312,7 +312,7 @@ namespace _7637_WS4
 
         }
 
-        void ConfigureDMM(MultimeterMode measurementFunction, double range)
+        void ConfigureDMM(MultimeterMode measurementFunction, double range, double accuracy)
         {
             DmmMeasurementFunction measurementMode = DmmMeasurementFunction.DCVolts;
             /*if(measurementFunction == "DCVolts")
@@ -325,8 +325,11 @@ namespace _7637_WS4
             DmmTriggerSource triggerSource = "Immediate";              //"Immediate", "External", "Software Trigger", "Ttl0", "Ttl1"
             //double range = 100000;
             //double triggerDelay = 0;
+            powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
+            //resolutionDMM = resolutionValues[2]; //6.5
             samplesPerReading = 7;
-            dmmSession.ConfigureMeasurementDigits(measurementMode, range, resolutionDMM);
+            if (accuracy == 0) accuracy = resolutionValues[1];   //если в таблице неверно указан параметр, то по умолчанию берем точность 4.5
+            dmmSession.ConfigureMeasurementDigits(measurementMode, range, accuracy);
             dmmSession.Advanced.PowerlineFrequency = powerlineFrequencyDMM;
 
             //dmmSession.Trigger.Configure(triggerSource, PrecisionTimeSpan.FromSeconds(triggerDelay));  //не находит почему то класс точного времени
@@ -334,14 +337,16 @@ namespace _7637_WS4
             dmmSession.Trigger.MultiPoint.SampleCount = samplesPerReading;
         }
 
-        public void ReadDMM(MultimeterMode measurementFunction, double range)
+        public void ReadDMM(MultimeterMode measurementFunction, double range, double accuracy)
         {
             //Application.DoEvents();
             double[] readBuf;
             try
             {
                 dmmSession = new NIDmm(listDeviceDMM[0], true, true);
-                ConfigureDMM(measurementFunction, range);
+
+                
+                ConfigureDMM(measurementFunction, range, accuracy);
 
                 dmmSession.Measurement.Initiate();
 

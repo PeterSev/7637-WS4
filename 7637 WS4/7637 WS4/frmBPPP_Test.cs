@@ -228,7 +228,7 @@ namespace _7637_WS4
             Thread.Sleep(test.Delay);
 
             //Проведение измерений---------------------------------------------
-            _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range);   //инициирование чтения мультиметра
+            _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range, test.Accuracy);   //инициирование чтения мультиметра
             
 
             if (double.IsNaN(_frmMain.resultOfMeasurementDMM))

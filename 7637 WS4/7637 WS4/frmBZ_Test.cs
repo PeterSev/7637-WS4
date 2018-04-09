@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelLib;
@@ -124,14 +125,16 @@ namespace _7637_WS4
 
             lastTest = test;
 
+            //После включения реле выжидаем паузу
+            Thread.Sleep(test.Delay);
 
             //Проведение измерений---------------------------------------------
-            _frmMain.niControl.ReadDMM( MultimeterMode.TwoWireResistance, test.Range);   //инициирование чтения мультиметра
+            _frmMain.niControl.ReadDMM( MultimeterMode.TwoWireResistance, test.Range, test.Accuracy);   //инициирование чтения мультиметра
 
             if (double.IsNaN(_frmMain.resultOfMeasurementDMM))
                 _frmMain.resultOfMeasurementDMM = double.PositiveInfinity - 1;
 
-            _frmMain.resultOfMeasurementDMM -= 4;
+            _frmMain.resultOfMeasurementDMM -= 6.5;
 
             if (_frmMain.resultOfMeasurementDMM < 0)     //искусственно зануляем значения ниже 0 Ом
                 _frmMain.resultOfMeasurementDMM = 0;

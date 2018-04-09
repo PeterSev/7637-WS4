@@ -5,4 +5,9 @@
 		<IMAGELINK>7064.01.00.000.jpg</IMAGELINK>
 		<COMMENT>Блок зеркала, вариант исполнения 7064.01.00.000</COMMENT>
 	</BOARD>
+	<BOARD NAME="Board1">
+		<CATALOG>Board1</CATALOG>
+		<IMAGELINK>Board1.jpg</IMAGELINK>
+		<COMMENT>Блок зеркала, вариант исполнения Board1</COMMENT>
+	</BOARD>
 </BOARDS>
