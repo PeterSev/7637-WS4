@@ -188,6 +188,7 @@ namespace _7637_WS4
 
         private void button1_Click(object sender, EventArgs e)
         {
+            _frmMain._frmNI.txtDMMWarning.Text = "";
             int num = (int)numTest.Value;
             TakeMeasureDMM(num);
         }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelLib;
 using System.Threading;
+using System.Globalization;
 
 namespace _7637_WS4
 {
@@ -53,25 +54,37 @@ namespace _7637_WS4
         public frmBZ _frmBZ;
         public frmBU_Board _frmBU_Board;
         public frmUDPDebug _frmUDPDebug;
-
-
-        string listBoardsFileName = "bin\\ListBoards.xml";
-
         public NIControl niControl;
 
-        public string ListBoardsFileName
-        {
-            get { return listBoardsFileName; }
-        }
+        public string ListBoardsFileName { get; } = "bin\\ListBoards.xml";
 
         public frmMain()
         {
             InitializeComponent();
 
-            byte[] buf = { 0x05 };
-            string str = Encoding.ASCII.GetString(buf);
-            byte[] b = Encoding.ASCII.GetBytes(str);
-            //var r = ExcelLib.Excel.ParseEx(@"D:\WORK\7637_тест файлы\тесты готово\7194\1_ и 2.xls");
+            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+
+            /*MessageBox.Show(
+                    "CurrentUI: " + Thread.CurrentThread.CurrentUICulture +
+                    Environment.NewLine +
+                    "CurrentCulture: " + Thread.CurrentThread.CurrentCulture);
+            try
+            {
+                double d = double.Parse("∞");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Программа не сможет открыть файлы Excel и будет закрыта!" + 
+                    Environment.NewLine + 
+                    ex.Message);
+                Environment.Exit(1);
+            }*/
+            
+
+            //byte[] buf = { 0x05 };
+            //string str = Encoding.ASCII.GetString(buf);
+            //byte[] b = Encoding.ASCII.GetBytes(str);
+
         }
 
         void Init()

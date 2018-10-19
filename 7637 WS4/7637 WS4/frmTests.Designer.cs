@@ -122,9 +122,9 @@
             this.lblPP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblPP.Location = new System.Drawing.Point(397, 563);
             this.lblPP.Name = "lblPP";
-            this.lblPP.Size = new System.Drawing.Size(36, 17);
+            this.lblPP.Size = new System.Drawing.Size(121, 17);
             this.lblPP.TabIndex = 1;
-            this.lblPP.Text = "БИС";
+            this.lblPP.Text = "Test signals block";
             this.lblPP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblBU
@@ -133,9 +133,9 @@
             this.lblBU.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblBU.Location = new System.Drawing.Point(397, 263);
             this.lblBU.Name = "lblBU";
-            this.lblBU.Size = new System.Drawing.Size(122, 17);
+            this.lblBU.Size = new System.Drawing.Size(82, 17);
             this.lblBU.TabIndex = 1;
-            this.lblBU.Text = "Блок управления";
+            this.lblBU.Text = "Control Unit";
             this.lblBU.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblBPPP
@@ -144,9 +144,9 @@
             this.lblBPPP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblBPPP.Location = new System.Drawing.Point(3, 563);
             this.lblBPPP.Name = "lblBPPP";
-            this.lblBPPP.Size = new System.Drawing.Size(47, 17);
+            this.lblBPPP.Size = new System.Drawing.Size(218, 17);
             this.lblBPPP.TabIndex = 1;
-            this.lblBPPP.Text = "БППП";
+            this.lblBPPP.Text = "Test Unit of printed circuit boards";
             this.lblBPPP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblBZ
@@ -155,9 +155,9 @@
             this.lblBZ.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblBZ.Location = new System.Drawing.Point(3, 263);
             this.lblBZ.Name = "lblBZ";
-            this.lblBZ.Size = new System.Drawing.Size(98, 17);
+            this.lblBZ.Size = new System.Drawing.Size(74, 17);
             this.lblBZ.TabIndex = 1;
-            this.lblBZ.Text = "Блок зеркала";
+            this.lblBZ.Text = "Mirror Unit";
             this.lblBZ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmTests

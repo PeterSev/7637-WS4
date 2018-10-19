@@ -57,12 +57,27 @@ namespace _7637_WS4
 
         private void btnCreateUDP_Click(object sender, EventArgs e)
         {
+            CreateUDP();
             
-            _frmMain._frmPP_Test.udp = new Udp(servicePort, debugPort, remotePort);
-            _frmMain._frmPP_Test.udp.receivedService += Udp_received;
-            _frmMain._frmPP_Test.udp.receivedDebug += Udp_received;
-            _frmMain._frmPP_Test.udp.warningException += Udp_warningException;
-            AddToList(String.Format("Сокеты созданы. Служебный порт: {0}, Отладочный порт: {1}, Удаленный служебный порт: {2}", servicePort, debugPort, remotePort));
+        }
+
+        public bool CreateUDP()
+        {
+            try
+            {
+                _frmMain._frmPP_Test.udp = new Udp(servicePort, debugPort, remotePort);
+                _frmMain._frmPP_Test.udp.receivedService += Udp_received;
+                _frmMain._frmPP_Test.udp.receivedDebug += Udp_received;
+                _frmMain._frmPP_Test.udp.warningException += Udp_warningException;
+                AddToList(String.Format("Сокеты созданы. Служебный порт: {0}, Отладочный порт: {1}, Удаленный служебный порт: {2}", servicePort, debugPort, remotePort));
+
+                btnCreateUDP.Enabled = false;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
 
@@ -311,11 +326,22 @@ namespace _7637_WS4
 
         private void btnCloseUDP_Click(object sender, EventArgs e)
         {
-            if (_frmMain._frmPP_Test.udp != null)
+            CloseUDP();
+        }
+
+        public bool CloseUDP()
+        {
+            try
             {
-                _frmMain._frmPP_Test.udp.Close();
-                AddToList("Сокеты закрыты");
+                if (_frmMain._frmPP_Test.udp != null)
+                {
+                    _frmMain._frmPP_Test.udp.Close();
+                    AddToList("Сокеты закрыты");
+                    btnCreateUDP.Enabled = true;
+                }
+                return true;
             }
+            catch { return false; }
         }
     }
 }

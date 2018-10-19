@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtDCWarning = new System.Windows.Forms.TextBox();
@@ -43,7 +43,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblI2 = new System.Windows.Forms.Label();
+            this.lblILim2 = new System.Windows.Forms.Label();
             this.lblV2 = new System.Windows.Forms.Label();
+            this.lblI1 = new System.Windows.Forms.Label();
+            this.lblILim1 = new System.Windows.Forms.Label();
             this.lblV1 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -88,10 +92,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.lstDAQEtalonValues = new System.Windows.Forms.ListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.lblILim1 = new System.Windows.Forms.Label();
-            this.lblILim2 = new System.Windows.Forms.Label();
-            this.lblI1 = new System.Windows.Forms.Label();
-            this.lblI2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -215,6 +215,24 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "2:";
             // 
+            // lblI2
+            // 
+            this.lblI2.AutoSize = true;
+            this.lblI2.Location = new System.Drawing.Point(130, 64);
+            this.lblI2.Name = "lblI2";
+            this.lblI2.Size = new System.Drawing.Size(29, 13);
+            this.lblI2.TabIndex = 0;
+            this.lblI2.Text = "ICur:";
+            // 
+            // lblILim2
+            // 
+            this.lblILim2.AutoSize = true;
+            this.lblILim2.Location = new System.Drawing.Point(71, 64);
+            this.lblILim2.Name = "lblILim2";
+            this.lblILim2.Size = new System.Drawing.Size(29, 13);
+            this.lblILim2.TabIndex = 0;
+            this.lblILim2.Text = "ILim:";
+            // 
             // lblV2
             // 
             this.lblV2.AutoSize = true;
@@ -223,6 +241,24 @@
             this.lblV2.Size = new System.Drawing.Size(20, 13);
             this.lblV2.TabIndex = 0;
             this.lblV2.Text = "V: ";
+            // 
+            // lblI1
+            // 
+            this.lblI1.AutoSize = true;
+            this.lblI1.Location = new System.Drawing.Point(130, 33);
+            this.lblI1.Name = "lblI1";
+            this.lblI1.Size = new System.Drawing.Size(32, 13);
+            this.lblI1.TabIndex = 0;
+            this.lblI1.Text = "ICur: ";
+            // 
+            // lblILim1
+            // 
+            this.lblILim1.AutoSize = true;
+            this.lblILim1.Location = new System.Drawing.Point(71, 33);
+            this.lblILim1.Name = "lblILim1";
+            this.lblILim1.Size = new System.Drawing.Size(32, 13);
+            this.lblILim1.TabIndex = 0;
+            this.lblILim1.Text = "ILim: ";
             // 
             // lblV1
             // 
@@ -659,61 +695,25 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(18, 318);
             this.chart1.Name = "chart1";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series6.Legend = "Legend1";
-            series6.Name = "Series2";
-            this.chart1.Series.Add(series5);
-            this.chart1.Series.Add(series6);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "Series2";
+            this.chart1.Series.Add(series3);
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(1079, 216);
             this.chart1.TabIndex = 16;
             this.chart1.Text = "chart1";
-            // 
-            // lblILim1
-            // 
-            this.lblILim1.AutoSize = true;
-            this.lblILim1.Location = new System.Drawing.Point(71, 33);
-            this.lblILim1.Name = "lblILim1";
-            this.lblILim1.Size = new System.Drawing.Size(32, 13);
-            this.lblILim1.TabIndex = 0;
-            this.lblILim1.Text = "ILim: ";
-            // 
-            // lblILim2
-            // 
-            this.lblILim2.AutoSize = true;
-            this.lblILim2.Location = new System.Drawing.Point(71, 64);
-            this.lblILim2.Name = "lblILim2";
-            this.lblILim2.Size = new System.Drawing.Size(29, 13);
-            this.lblILim2.TabIndex = 0;
-            this.lblILim2.Text = "ILim:";
-            // 
-            // lblI1
-            // 
-            this.lblI1.AutoSize = true;
-            this.lblI1.Location = new System.Drawing.Point(130, 33);
-            this.lblI1.Name = "lblI1";
-            this.lblI1.Size = new System.Drawing.Size(32, 13);
-            this.lblI1.TabIndex = 0;
-            this.lblI1.Text = "ICur: ";
-            // 
-            // lblI2
-            // 
-            this.lblI2.AutoSize = true;
-            this.lblI2.Location = new System.Drawing.Point(130, 64);
-            this.lblI2.Name = "lblI2";
-            this.lblI2.Size = new System.Drawing.Size(29, 13);
-            this.lblI2.TabIndex = 0;
-            this.lblI2.Text = "ICur:";
             // 
             // frmNI
             // 
@@ -754,7 +754,6 @@
         private System.Windows.Forms.Label lblV2;
         private System.Windows.Forms.Label lblV1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtDCWarning;
         private System.Windows.Forms.TextBox txtDCStatus;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -762,7 +761,6 @@
         private System.Windows.Forms.Button ind2OVP;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListBox lstDMMValues;
-        private System.Windows.Forms.TextBox txtDMMWarning;
         private System.Windows.Forms.TextBox txtDMMStatus;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
@@ -807,5 +805,7 @@
         private System.Windows.Forms.Label lblILim1;
         private System.Windows.Forms.Label lblI2;
         private System.Windows.Forms.Label lblI1;
+        public System.Windows.Forms.TextBox txtDCWarning;
+        public System.Windows.Forms.TextBox txtDMMWarning;
     }
 }

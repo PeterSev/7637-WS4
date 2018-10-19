@@ -28,7 +28,7 @@ namespace _7637_WS4
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             catalog = curBoard.Catalog + "/BU/bin/";
 
-            this.Text = curBoard.Name + " БУ. Прозвонка. Выбор режима проверки";
+            this.Text = curBoard.Name + " CU. Continuity. Select check mode";
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -46,9 +46,9 @@ namespace _7637_WS4
 
         void FillButtons(List<TestInfo> lst)
         {
-            btn0.Text = lst[0].Name.Length <= 11 ? lst[0].Name : lst[0].Name.Remove(11);
-            btn1.Text = lst[1].Name.Length <= 11 ? lst[1].Name : lst[1].Name.Remove(11);
-            btn2.Text = lst[2].Name.Length <= 11 ? lst[2].Name : lst[2].Name.Remove(11);
+            btn0.Text = lst[0].Name.Length <= 14 ? lst[0].Name : lst[0].Name.Remove(14);
+            btn1.Text = lst[1].Name.Length <= 14 ? lst[1].Name : lst[1].Name.Remove(14);
+            btn2.Text = lst[2].Name.Length <= 14 ? lst[2].Name : lst[2].Name.Remove(14);
 
             btn0.MouseEnter += Btn_MouseEnter;
             btn1.MouseEnter += Btn_MouseEnter;

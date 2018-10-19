@@ -34,7 +34,7 @@ namespace _7637_WS4
             catalog = curBoard.Catalog + "/BPPP/" + _frmMain._frmBPPP.curBpppBoard.Name + "/Help/";
             btnOK.Visible = false;
             listHelp = null;
-            this.Text = curBoard.Name + " БППП. " + "Плата " + _frmMain._frmBPPP.curBpppBoard.Name;
+            this.Text = curBoard.Name + " BPPP. " + "Board " + _frmMain._frmBPPP.curBpppBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 

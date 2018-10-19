@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="comment_ListBoards_Initial" xml:space="preserve">
-    <value>В верхней панели выберите необходимый прибор для проверки</value>
+    <value>In the top panel select the desired item to check</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ListBoardsInitImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -131,16 +131,16 @@
     <value>..\Resources\pictLoadError.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="comment_BPPP" xml:space="preserve">
-    <value>Проверка плат с помощью блока проверки печатных плат</value>
+    <value>Check boards using the test unit of printed circuit boards (PCB)</value>
   </data>
   <data name="comment_BU" xml:space="preserve">
-    <value>Проверка блока управления</value>
+    <value>Control unit check</value>
   </data>
   <data name="comment_BZ" xml:space="preserve">
-    <value>Проверка блока зеркала</value>
+    <value>Mirror unit check</value>
   </data>
   <data name="comment_PP" xml:space="preserve">
-    <value>Проверка плат с помощью блока испытательных сигналов</value>
+    <value>Inspection of circuit boards using test signal block</value>
   </data>
   <data name="pict_BU" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\bin\pict_BU.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -152,18 +152,21 @@
     <value>..\bin\Debug\bin\pict_PP.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="comment_ListBpppBoards_Initial" xml:space="preserve">
-    <value>Слева выберите плату для проверки</value>
+    <value>On the left select the board to check</value>
   </data>
   <data name="ListBpppBoardInitmage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ListBpppBoardInitmage.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="comment_ListBU_Initial" xml:space="preserve">
-    <value>Выберите нужный вам тип проверки</value>
+    <value>Select desired type of check</value>
   </data>
   <data name="pict_BPPP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pict_BPPP.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="comment_ListBZ_Initial" xml:space="preserve">
-    <value>Слевы выберите проверяемый вариант исполнения блока зеркала</value>
+    <value>Select version of mirror unit to check</value>
+  </data>
+  <data name="comment_OSC_Test" xml:space="preserve">
+    <value>Control the frequency and amplitude of the signals Up 1, Up 1 L, Uop 2, Uop 2 L on the oscilloscope. Switch them with the help of toggle switches of the transition unit. U=27±2V, f=400±8 Hz</value>
   </data>
 </root>

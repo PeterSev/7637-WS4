@@ -47,7 +47,7 @@
             this.grpBoards.Size = new System.Drawing.Size(306, 697);
             this.grpBoards.TabIndex = 22;
             this.grpBoards.TabStop = false;
-            this.grpBoards.Text = "Список плат";
+            this.grpBoards.Text = "Versions";
             // 
             // panel
             // 

@@ -33,6 +33,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.очиститьЛогToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.скопироватьВБуферToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.печататьВыделенныеСтрокиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,23 +55,31 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.очиститьЛогToolStripMenuItem,
-            this.скопироватьВБуферToolStripMenuItem});
+            this.скопироватьВБуферToolStripMenuItem,
+            this.печататьВыделенныеСтрокиToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(194, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(238, 92);
             // 
             // очиститьЛогToolStripMenuItem
             // 
             this.очиститьЛогToolStripMenuItem.Name = "очиститьЛогToolStripMenuItem";
-            this.очиститьЛогToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.очиститьЛогToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.очиститьЛогToolStripMenuItem.Text = "Очистить лог";
             this.очиститьЛогToolStripMenuItem.Click += new System.EventHandler(this.очиститьЛогToolStripMenuItem_Click);
             // 
             // скопироватьВБуферToolStripMenuItem
             // 
             this.скопироватьВБуферToolStripMenuItem.Name = "скопироватьВБуферToolStripMenuItem";
-            this.скопироватьВБуферToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.скопироватьВБуферToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.скопироватьВБуферToolStripMenuItem.Text = "Скопировать в буфер";
             this.скопироватьВБуферToolStripMenuItem.Click += new System.EventHandler(this.скопироватьВБуферToolStripMenuItem_Click);
+            // 
+            // печататьВыделенныеСтрокиToolStripMenuItem
+            // 
+            this.печататьВыделенныеСтрокиToolStripMenuItem.Name = "печататьВыделенныеСтрокиToolStripMenuItem";
+            this.печататьВыделенныеСтрокиToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+            this.печататьВыделенныеСтрокиToolStripMenuItem.Text = "Печатать выделенные строки";
+            this.печататьВыделенныеСтрокиToolStripMenuItem.Click += new System.EventHandler(this.печататьВыделенныеСтрокиToolStripMenuItem_Click);
             // 
             // frmBPPP_Report
             // 
@@ -93,5 +102,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem очиститьЛогToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem скопироватьВБуферToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem печататьВыделенныеСтрокиToolStripMenuItem;
     }
 }

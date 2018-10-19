@@ -35,7 +35,7 @@ namespace _7637_WS4
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " БУ. Индикация. Плата " +_frmMain._frmBU_Board.curBUBoard.Name;
+            this.Text = curBoard.Name + " CU. Indication. Board " +_frmMain._frmBU_Board.curBUBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 

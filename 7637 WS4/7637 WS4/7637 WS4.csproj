@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -110,11 +110,12 @@
     <Compile Include="ColorProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ExcelLib\Excel.cs" />
+    <Compile Include="Print.cs" />
     <Compile Include="UDPCommand.cs" />
     <Compile Include="ExcelLib\BPPPTest.cs" />
     <Compile Include="ExcelLib\DAQTest.cs" />
     <Compile Include="ExcelLib\EData4.cs" />
-    <Compile Include="ExcelLib\Excel.cs" />
     <Compile Include="ExcelLib\IndTest.cs" />
     <Compile Include="frmBPPP.cs">
       <SubType>Form</SubType>

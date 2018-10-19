@@ -35,7 +35,7 @@ namespace _7637_WS4
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " БУ. Прозвонка. Плата " + _frmMain._frmBU_Board.curBUBoard.Name;
+            this.Text = curBoard.Name + " CU. Continuity. Board " + _frmMain._frmBU_Board.curBUBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -65,7 +65,7 @@ namespace _7637_WS4
                 pict.Image = Properties.Resources.pictLoadError;
                 txtComment.Text = "Отсутствует запись о выбранном файле";
             }
-            lblNum.Text = (index + 1).ToString() + " из " + listHelp.Count;
+            lblNum.Text = (index + 1).ToString() + " of " + listHelp.Count;
         }
 
         private void frmBU_Prozv_Help_Activated(object sender, EventArgs e)

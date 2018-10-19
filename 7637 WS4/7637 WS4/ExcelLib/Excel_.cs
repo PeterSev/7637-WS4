@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using static System.String;
 using MSExcel = Microsoft.Office.Interop.Excel;
@@ -737,12 +736,13 @@ namespace ExcelLib
         /// </summary>
         /// <param name="path"></param>
         /// <returns>Возвращает BPPPTest[]</returns>
-        public static BPPPTest[] ParseBPPP(string path)
+        public static BPPPTest[] ParseBPPP(string path, out string error)
         {
+            error = Empty;
             try
             {
                 var table = ParseTable(path);
-
+                error = "745 ";
                 string[,] list = new string[table.Columns.Count, table.Rows.Count];
 
                 if (table.Columns.Count == 0 && table.Rows.Count == 0)
@@ -757,7 +757,7 @@ namespace ExcelLib
                         list[i, j] = table.Rows[j][i].ToString();
                     }
                 }
-
+                error = "760 ";
                 int lenght = 0;
                 for (int j = 0; j < table.Rows.Count; j++)
                 {
@@ -767,7 +767,7 @@ namespace ExcelLib
                         lenght = parsedValue;
                     }
                 }
-
+                error = "770 ";
                 int counter = 0;
                 int[] intSize = new int[lenght];
                 for (int i = 0; i < intSize.Length; i++)
@@ -783,6 +783,7 @@ namespace ExcelLib
                         counter++;
                     }
                 }
+                error = "786 ";
                 int counter2 = 0;
                 int[] intSize2 = new int[lenght];
                 for (int i = 0; i < intSize2.Length; i++)
@@ -799,7 +800,7 @@ namespace ExcelLib
                     }
 
                 }
-
+                error = "803 ";
                 BPPPTest = new BPPPTest[lenght];
                 for (int i = 0; i < BPPPTest.Length; i++)
                 {
@@ -816,11 +817,11 @@ namespace ExcelLib
                         if (list[3, i] != Empty)
                             BPPPTest[k].Delay = Convert.ToUInt16(list[3, i]); //list[3, i]
                         else BPPPTest[k].Delay = 0;
-
+                        error = "Value: " + list[4,i] +"i: " +i+ " --------------";
                         if (list[4, i] != Empty)
-                            BPPPTest[k].Min = Convert.ToDouble(list[4, i]); //list[4, i]
+                            BPPPTest[k].Min = Convert.ToDouble(list[4, i], CultureInfo.InvariantCulture); //list[4, i]
                         else BPPPTest[k].Min = Double.NegativeInfinity;
-
+                        error = "824 ";
                         if (list[5, i] != Empty)
                             BPPPTest[k].Max = Convert.ToDouble(list[5, i]); //list[5, i]
                         else BPPPTest[k].Max = Double.NegativeInfinity;
@@ -841,7 +842,7 @@ namespace ExcelLib
                             BPPPTest[k].Input[j].Device = "r" + indata2[1];
                             BPPPTest[k].Input[j].Channel = Convert.ToInt32(indata3[1]);
                         }
-
+                        error = "845 ";
                         list[2, i] = list[2, i].ToLower();
                         var outdata = list[2, i].Split('/');
                         for (int j = 0; j < BPPPTest[k].Output.Length; j++)
@@ -852,12 +853,20 @@ namespace ExcelLib
                             BPPPTest[k].Output[j].Channel = Convert.ToInt32(outdata3[1]);
                         }
                         BPPPTest[k].Result = list[10, i];
+                        error = "856 ";
                         // Колонка Error Description
                         var collums = list.GetLength(0);
                         if (collums >= 12)
                             BPPPTest[k].ErrorDescription = list[11, i];
                         if (collums >= 13)
-                            BPPPTest[k].Accuracy = Convert.ToDouble(list[12, i]);
+                        {
+                            double acr;
+                            Double.TryParse(list[12, i], out acr);
+                            if (acr != 3.5  && acr != 4.5 && acr != 5.5 && acr != 6.5 && acr != 7.5)
+                                acr = 0;
+                            BPPPTest[k].Accuracy = acr;
+                        }
+
                         k++;
                     }
                 }
@@ -865,6 +874,27 @@ namespace ExcelLib
             }
             catch (Exception ex)
             {
+                var st = new System.Diagnostics.StackTrace(ex, true);
+                var frame = st.GetFrame(0);
+                int line = frame.GetFileLineNumber();
+
+                var lineNumber = 0;
+                const string lineSearch = ":line ";
+                var index = ex.StackTrace.LastIndexOf(lineSearch);
+                if (index != -1)
+                {
+                    var lineNumberText = ex.StackTrace.Substring(index + lineSearch.Length);
+                    if (int.TryParse(lineNumberText, out lineNumber))
+                    {
+                    }
+                }
+
+                error += Environment.NewLine + 
+                    "Line: " + lineNumber + 
+                    Environment.NewLine + "Error: " 
+                    + ex.Message + 
+                    Environment.NewLine + "StackTrace: " +
+                    ex.StackTrace;
                 return null;
             }
         }
@@ -970,8 +1000,8 @@ namespace ExcelLib
             arr[0, 1] = "A";
             arr[0, 2] = "B";
             arr[0, 3] = "Задержка, мс";
-            arr[0, 4] = "Максимальные допустимые значения";
-            arr[0, 5] = " ";
+            arr[0, 4] = "Минимальное допустимое значения";
+            arr[0, 5] = "Максимальное допустимое значения";
             arr[1, 4] = "MIN";
             arr[1, 5] = "MAX";
             arr[0, 6] = "Измеренные значения";

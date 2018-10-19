@@ -30,7 +30,7 @@ namespace _7637_WS4
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
             grpBoards.ForeColor = Color.White;
-            this.Text = curBoard.Name + " БУ";
+            this.Text = curBoard.Name + " CU";
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
             listBUBoards = null;
@@ -56,7 +56,7 @@ namespace _7637_WS4
             }
             else
             {
-                MessageBox.Show("Список плат " + listBUBoardsFileName + " не найден!", "Ошибка");
+                MessageBox.Show("Boards list " + listBUBoardsFileName + " isn't found!", "Error");
             }
         }
 

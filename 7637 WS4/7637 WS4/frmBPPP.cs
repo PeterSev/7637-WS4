@@ -31,7 +31,7 @@ namespace _7637_WS4
             curBoard = _frmMain.curBoard;
             grpBoards.ForeColor = Color.White;
 
-            this.Text = curBoard.Name + " БППП";
+            this.Text = curBoard.Name + " BPPP";
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -58,7 +58,7 @@ namespace _7637_WS4
             }
             else
             {
-                MessageBox.Show("Список плат " + listBpppBoardsFileName + " не найден!", "Ошибка");
+                MessageBox.Show("File " + listBpppBoardsFileName + " isn't found!", "Load error");
             }
         }
 

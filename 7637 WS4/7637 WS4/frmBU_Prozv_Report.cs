@@ -60,6 +60,7 @@ namespace _7637_WS4
             /*string sInput = String.Format("{0}",
                 test.Comment);
             string sOutput = String.Format("k{0}{1}",
+
                 test.Output.Channel.ToString(),
                 test.Output.Device);*/
             string outstr = string.Format("{0:0000}:    Index - {1}{2}{3}{4}",
@@ -101,6 +102,13 @@ namespace _7637_WS4
             string s = "";
             foreach (object o in lstTest.SelectedItems) s += o.ToString() + "\r\n";
             Clipboard.SetText(s);
+        }
+
+        private void печататьВыделенныеСтрокиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string s = "";
+            foreach (object o in lstTest.SelectedItems) s += o.ToString() + "\r\n";
+            PrintClass.Print(s);
         }
     }
 }

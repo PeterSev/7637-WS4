@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TESTS>
-	<TEST NAME = "ПРОЗВОНКА">
-		<IMAGELINK>Pict1.jpg</IMAGELINK>
-		<COMMENT>Комментарий к описание Прозвонки</COMMENT> 
+	<TEST NAME = "CONTINUITY">
+		<IMAGELINK>prozvon.jpg</IMAGELINK>
+		<COMMENT>Checking the integrity of circuits</COMMENT> 
 	</TEST>
-	<TEST NAME = "ИНДИКАЦИЯ">
-		<IMAGELINK>Pict2.jpg</IMAGELINK>
-		<COMMENT>Комментарий к описанию Индикации</COMMENT> 
+	<TEST NAME = "INDICATION">
+		<IMAGELINK>IND.jpg</IMAGELINK>
+		<COMMENT>Checking the control unit elements</COMMENT> 
 	</TEST>
-	<TEST NAME = "ОСЦИЛЛОГРАФ">
-		<IMAGELINK>Pict3.jpg</IMAGELINK>
-		<COMMENT>Комментарий к описанию Осциллографа</COMMENT> 
+	<TEST NAME = "OSCILLOSCOPE">
+		<IMAGELINK>Osc.jpg</IMAGELINK>
+		<COMMENT>Check of control unit transformers</COMMENT> 
 	</TEST>
-	
 </TESTS>

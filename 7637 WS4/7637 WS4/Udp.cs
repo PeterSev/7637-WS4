@@ -23,9 +23,9 @@ namespace _7637_WS4
         private UDPCommand command_in_servicePort, command_in_debugPort;   //принятые команды по служебному и отладочному портах
         Queue<byte> rx_queue = new Queue<byte>();                       //в очередь принимаем пришедшие байты
         STATE_RX state_rx = STATE_RX.DESCR;                             //текущий статус приема
-        IPEndPoint remotePoint, pointPort;            //конечные точки. 
+        IPEndPoint remotePoint, pointPort;                              //конечные точки. 
 
-        public event Received receivedService, receivedDebug;                                 //событие прихода пакета
+        public event Received receivedService, receivedDebug;           //событие прихода пакета
         public event WarningException warningException;                 //событие возникшего исключения
 
         Task listenTaskDebugPort, listenTaskServicePort;

@@ -44,7 +44,8 @@ namespace _7637_WS4
 
             if (Utils.isFileExist(catalog + listBZTestFileName))
             {
-                tests = Excel.ParseBPPP(catalog + listBZTestFileName);    //открываем список тестов из экселевского файла
+                string str;
+                tests = Excel.ParseBPPP(catalog + listBZTestFileName, out str);    //открываем список тестов из экселевского файла
                 if (tests != null)
                 {
                     lblTEstCount.Text = tests.Length.ToString();
@@ -52,7 +53,7 @@ namespace _7637_WS4
                 }
                 else
                 {
-                    MessageBox.Show("Файл поврежден или имеет неверный формат");
+                    MessageBox.Show(str);
                 }
             }
             else

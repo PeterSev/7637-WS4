@@ -38,7 +38,7 @@ namespace _7637_WS4
             _frmMain.niControl.StatusDCUpdate += NiControl_statusUpdate;
             _frmMain.niControl.WarningDCUpdate += NiControl_warningUpdate;
             _frmMain.niControl.UpdateStateDC += NiControl_updateStateDC;
-
+            
             _frmMain.niControl.bufReadDMMReceived += NiControl_bufReadDMMReceived;
             _frmMain.niControl.StatusDMMUpdate += NiControl_statusDMMUpdate;
             _frmMain.niControl.WarningDMMUpdate += NiControl_warningDMMUpdate;

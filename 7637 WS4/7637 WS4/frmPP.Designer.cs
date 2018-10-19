@@ -48,6 +48,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "192.168.5.6";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
@@ -58,6 +59,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "192.168.400.400";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button1_Click);
             // 
             // grpBoards
@@ -133,8 +135,8 @@
         public System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox grpBoards;
         private System.Windows.Forms.Panel panel;
-        private System.Windows.Forms.TextBox txtComment;
         private System.Windows.Forms.PictureBox pict;
         private System.Windows.Forms.ToolTip tip;
+        public System.Windows.Forms.TextBox txtComment;
     }
 }

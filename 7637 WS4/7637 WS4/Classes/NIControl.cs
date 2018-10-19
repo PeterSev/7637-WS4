@@ -142,7 +142,7 @@ namespace _7637_WS4
                 //iviDCPower.Outputs["0"].OvpEnabled = true;
                 ConfigureChannelName();
                 ConfigureCurrentlimitBehavior();
-                StatusDCUpdate("SUCCESS");
+                StatusDCUpdate?.Invoke("SUCCESS");
                 //bOnOff1 = true;
                 bInitialized = true;
 
@@ -312,8 +312,21 @@ namespace _7637_WS4
 
         }
 
+        public void CreateDMM()
+        {
+            dmmSession = new NIDmm(listDeviceDMM[0], true, true);
+        }
+
+        public void CloseDMM()
+        {
+            if (dmmSession != null)
+                dmmSession.Close();
+            Application.DoEvents();
+        }
+
         void ConfigureDMM(MultimeterMode measurementFunction, double range, double accuracy)
         {
+            if (dmmSession == null) return;
             DmmMeasurementFunction measurementMode = DmmMeasurementFunction.DCVolts;
             /*if(measurementFunction == "DCVolts")
                 measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
@@ -328,10 +341,10 @@ namespace _7637_WS4
             powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
             //resolutionDMM = resolutionValues[2]; //6.5
             samplesPerReading = 7;
-            if (accuracy == 0) accuracy = resolutionValues[1];   //если в таблице неверно указан параметр, то по умолчанию берем точность 4.5
+            if (accuracy == 0) accuracy = resolutionValues[2];   //если в таблице неверно указан параметр, то по умолчанию берем точность 4.5
             dmmSession.ConfigureMeasurementDigits(measurementMode, range, accuracy);
             dmmSession.Advanced.PowerlineFrequency = powerlineFrequencyDMM;
-
+            
             //dmmSession.Trigger.Configure(triggerSource, PrecisionTimeSpan.FromSeconds(triggerDelay));  //не находит почему то класс точного времени
             dmmSession.Trigger.Configure(triggerSource, true);
             dmmSession.Trigger.MultiPoint.SampleCount = samplesPerReading;
@@ -343,10 +356,10 @@ namespace _7637_WS4
             double[] readBuf;
             try
             {
-                dmmSession = new NIDmm(listDeviceDMM[0], true, true);
+                //dmmSession = new NIDmm(listDeviceDMM[0], true, true);
 
                 
-                ConfigureDMM(measurementFunction, range, accuracy);
+                ConfigureDMM(measurementFunction, range, accuracy);                
 
                 dmmSession.Measurement.Initiate();
 
@@ -367,9 +380,9 @@ namespace _7637_WS4
             }
             finally
             {
-                if (dmmSession != null)
+                /*if (dmmSession != null)
                     dmmSession.Close();
-                Application.DoEvents();
+                Application.DoEvents();*/
             }
         }
 
