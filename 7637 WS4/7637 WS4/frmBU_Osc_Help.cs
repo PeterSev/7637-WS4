@@ -31,11 +31,11 @@ namespace _7637_WS4
             indexPic = 0;
             pict.SizeMode = PictureBoxSizeMode.StretchImage;
             curBoard = _frmMain.curBoard;
-            catalog = curBoard.Catalog + "/BU/" + _frmMain._frmBU_Board.curBUBoard.Name + "/Help /";
+            catalog = curBoard.Catalog + "/BU/" + _frmMain._frmBU_Board.curBUBoard.Name + "/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " БУ. Осциллограф";
+            this.Text = curBoard.Name + " CU. Oscilloscope";
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -58,14 +58,13 @@ namespace _7637_WS4
             {
                 pict.Image = Image.FromFile(catalog + listHelp[index].Imagelink);
                 txtComment.Text = listHelp[index].Comment;
-
             }
             else
             {
                 pict.Image = Properties.Resources.pictLoadError;
-                txtComment.Text = "Отсутствует запись о выбранном файле";
+                txtComment.Text = listHelp[index].Comment;
             }
-            lblNum.Text = (index + 1).ToString() + " из " + listHelp.Count;
+            lblNum.Text = (index + 1).ToString() + " of " + listHelp.Count;
         }
 
         private void lblLeft_Click(object sender, EventArgs e)

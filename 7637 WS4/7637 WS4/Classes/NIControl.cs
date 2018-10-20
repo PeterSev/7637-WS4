@@ -32,8 +32,8 @@ namespace _7637_WS4
         List<string> listDCChannels = new List<string>();
         string curDCChannel = string.Empty;
         List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();
-        public event delStatusUpdate statusDCUpdate, warningDCUpdate, warningDMMUpdate, statusDMMUpdate;
-        public event delStateDC updateStateDC;
+        public event delStatusUpdate StatusDCUpdate, WarningDCUpdate, WarningDMMUpdate, StatusDMMUpdate;
+        public event delStateDC UpdateStateDC;
 
         //-------------------------------------
 
@@ -69,6 +69,11 @@ namespace _7637_WS4
 
 
         public NIControl()
+        {
+            Init();
+        }
+
+        void Init()
         {
             InitDC();
             InitDMM();
@@ -137,7 +142,7 @@ namespace _7637_WS4
                 //iviDCPower.Outputs["0"].OvpEnabled = true;
                 ConfigureChannelName();
                 ConfigureCurrentlimitBehavior();
-                statusDCUpdate("SUCCESS");
+                StatusDCUpdate?.Invoke("SUCCESS");
                 //bOnOff1 = true;
                 bInitialized = true;
 
@@ -147,13 +152,13 @@ namespace _7637_WS4
             }
             catch (Exception ex)
             {
-                statusDCUpdate?.Invoke(ex.Message);
+                StatusDCUpdate?.Invoke(ex.Message);
             }
         }
 
         private void DriverOperationDC_Warning(object sender, Ivi.Driver.WarningEventArgs e)
         {
-            warningDCUpdate?.Invoke(e.Code.ToString() + " " + e.Text);
+            WarningDCUpdate?.Invoke(e.Code.ToString() + " " + e.Text);
         }
 
         private void updateDCProcessing()
@@ -170,7 +175,7 @@ namespace _7637_WS4
 
                 try
                 {
-                    updateStateDC?.Invoke(new StateDC(
+                    UpdateStateDC?.Invoke(new StateDC(
                         "0",
                         iviDCPower.Outputs["0"].Measure(MeasurementType.Voltage),
                         iviDCPower.Outputs["0"].CurrentLimit,
@@ -186,7 +191,7 @@ namespace _7637_WS4
                 }
                 catch(Exception ex)
                 {
-                    warningDCUpdate?.Invoke(ex.Message);
+                    WarningDCUpdate?.Invoke(ex.Message);
                 }
             }
         }
@@ -212,7 +217,7 @@ namespace _7637_WS4
                 }
                 bUpdateDone = true;
             }
-            catch (Exception ex) { statusDCUpdate?.Invoke(ex.Message); }
+            catch (Exception ex) { StatusDCUpdate?.Invoke(ex.Message); }
         }
 
         /// <summary>
@@ -272,7 +277,7 @@ namespace _7637_WS4
                 }
                 catch (Exception ex)
                 {
-                    statusDCUpdate?.Invoke(ex.Message);
+                    StatusDCUpdate?.Invoke(ex.Message);
                 }
             }
         }
@@ -287,17 +292,17 @@ namespace _7637_WS4
             listDeviceDMM.Clear();
             listMeasureModeDMM.Clear();
 
-            powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
-            resolutionDMM = resolutionValues[1]; //6.5
+            //powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
+            //resolutionDMM = resolutionValues[2]; //6.5
 
             //Составляем список DMM оборудования
             ModularInstrumentsSystem modularInstrumentsSystem = new ModularInstrumentsSystem("NI-DMM");
             foreach (DeviceInfo device in modularInstrumentsSystem.DeviceCollection)
                 listDeviceDMM.Add(device.Name);
             if (listDeviceDMM.Count < 1)
-                warningDMMUpdate?.Invoke("No DMM device found!");
+                WarningDMMUpdate?.Invoke("No DMM device found!");
             else
-                warningDMMUpdate?.Invoke("Device " + listDeviceDMM[0] + " found");
+                WarningDMMUpdate?.Invoke("Device " + listDeviceDMM[0] + " found");
 
             //Составляем список режимов измерения DMM
             listMeasureModeDMM.AddRange(Enum.GetNames(typeof(DmmMeasurementFunction)));
@@ -307,8 +312,22 @@ namespace _7637_WS4
 
         }
 
-        void ConfigureDMM(MultimeterMode measurementFunction, double range)
+        public void CreateDMM()
         {
+            if(listDeviceDMM.Count > 0)
+                dmmSession = new NIDmm(listDeviceDMM[0], true, true);
+        }
+
+        public void CloseDMM()
+        {
+            if (dmmSession != null)
+                dmmSession.Close();
+            Application.DoEvents();
+        }
+
+        void ConfigureDMM(MultimeterMode measurementFunction, double range, double accuracy)
+        {
+            if (dmmSession == null) return;
             DmmMeasurementFunction measurementMode = DmmMeasurementFunction.DCVolts;
             /*if(measurementFunction == "DCVolts")
                 measurementMode = (DmmMeasurementFunction)Enum.Parse(typeof(DmmMeasurementFunction), listMeasureModeDMM[0]);
@@ -320,29 +339,34 @@ namespace _7637_WS4
             DmmTriggerSource triggerSource = "Immediate";              //"Immediate", "External", "Software Trigger", "Ttl0", "Ttl1"
             //double range = 100000;
             //double triggerDelay = 0;
+            powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
+            //resolutionDMM = resolutionValues[2]; //6.5
             samplesPerReading = 7;
-            dmmSession.ConfigureMeasurementDigits(measurementMode, range, resolutionDMM);
+            if (accuracy == 0) accuracy = resolutionValues[2];   //если в таблице неверно указан параметр, то по умолчанию берем точность 4.5
+            dmmSession.ConfigureMeasurementDigits(measurementMode, range, accuracy);
             dmmSession.Advanced.PowerlineFrequency = powerlineFrequencyDMM;
-
+            
             //dmmSession.Trigger.Configure(triggerSource, PrecisionTimeSpan.FromSeconds(triggerDelay));  //не находит почему то класс точного времени
             dmmSession.Trigger.Configure(triggerSource, true);
             dmmSession.Trigger.MultiPoint.SampleCount = samplesPerReading;
         }
 
-        public void ReadDMM(MultimeterMode measurementFunction, double range)
+        public void ReadDMM(MultimeterMode measurementFunction, double range, double accuracy)
         {
             //Application.DoEvents();
             double[] readBuf;
             try
             {
-                dmmSession = new NIDmm(listDeviceDMM[0], true, true);
-                ConfigureDMM(measurementFunction, range);
+                //dmmSession = new NIDmm(listDeviceDMM[0], true, true);
+
+                
+                ConfigureDMM(measurementFunction, range, accuracy);                
 
                 dmmSession.Measurement.Initiate();
 
                 Application.DoEvents();
                 readBuf = dmmSession.Measurement.FetchMultiPoint(samplesPerReading);
-                statusDMMUpdate?.Invoke("SUCCESS");
+                StatusDMMUpdate?.Invoke("SUCCESS");
 
                 dmmResult.buf = readBuf;
                 //dmmResult.temp = dmmSession.Temperature.ToString();
@@ -353,13 +377,13 @@ namespace _7637_WS4
             }
             catch (Exception ex)
             {
-                warningDMMUpdate?.Invoke(ex.Message);
+                WarningDMMUpdate?.Invoke(ex.Message);
             }
             finally
             {
-                if (dmmSession != null)
+                /*if (dmmSession != null)
                     dmmSession.Close();
-                Application.DoEvents();
+                Application.DoEvents();*/
             }
         }
 

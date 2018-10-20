@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelLib;
@@ -43,7 +44,8 @@ namespace _7637_WS4
 
             if (Utils.isFileExist(catalog + listBZTestFileName))
             {
-                tests = Excel.ParseBPPP(catalog + listBZTestFileName);    //открываем список тестов из экселевского файла
+                string str;
+                tests = Excel.ParseBPPP(catalog + listBZTestFileName, out str);    //открываем список тестов из экселевского файла
                 if (tests != null)
                 {
                     lblTEstCount.Text = tests.Length.ToString();
@@ -51,7 +53,7 @@ namespace _7637_WS4
                 }
                 else
                 {
-                    MessageBox.Show("Файл поврежден или имеет неверный формат");
+                    MessageBox.Show(str);
                 }
             }
             else
@@ -124,14 +126,16 @@ namespace _7637_WS4
 
             lastTest = test;
 
+            //После включения реле выжидаем паузу
+            Thread.Sleep(test.Delay);
 
             //Проведение измерений---------------------------------------------
-            _frmMain.niControl.ReadDMM( MultimeterMode.TwoWireResistance, test.Range);   //инициирование чтения мультиметра
+            _frmMain.niControl.ReadDMM( MultimeterMode.TwoWireResistance, test.Range, test.Accuracy);   //инициирование чтения мультиметра
 
             if (double.IsNaN(_frmMain.resultOfMeasurementDMM))
                 _frmMain.resultOfMeasurementDMM = double.PositiveInfinity - 1;
 
-            _frmMain.resultOfMeasurementDMM -= 4;
+            _frmMain.resultOfMeasurementDMM -= 6.5;
 
             if (_frmMain.resultOfMeasurementDMM < 0)     //искусственно зануляем значения ниже 0 Ом
                 _frmMain.resultOfMeasurementDMM = 0;
@@ -286,7 +290,6 @@ namespace _7637_WS4
                 {
                     MessageBox.Show("Ошибка сохранения файла репорта! Проверьте в отладчике причину", "Ошибка");
                 }
-
             }
             catch (Exception ex)
             {
@@ -295,7 +298,7 @@ namespace _7637_WS4
 
             if (badTests.Count > 0)
             {
-                txtDAQInfo.BackColor = Color.Red;
+                txtDAQInfo.BackColor = Color.Red; 
                 txtDAQInfo.Text = "ТЕСТ НЕ ПРОЙДЕН";
             }
             else

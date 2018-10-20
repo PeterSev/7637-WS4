@@ -41,7 +41,7 @@ namespace _7637_WS4
                 case ProzvMode.КонтрольОбрыв: curMode = "Контроль на отсутствие цепей"; break;
                 case ProzvMode.КонтрольКЗ: curMode = "Контроль на отсутствие КЗ"; break;
                 case ProzvMode.Выборочная: curMode = "Выборочная проверка"; break;
-            }*/
+            }*/ 
 
             tests = null;
             bNeedReload = false;
@@ -138,7 +138,11 @@ namespace _7637_WS4
             else if (curMode == ProzvMode.КонтрольОбрыв)
                 RunStandartDAQTest(num);
             else if (curMode == ProzvMode.КонтрольКЗ)
+            {
+                colorProgressBarSmall.Visible = true;
                 RunGenerationKZTest(num);
+                colorProgressBarSmall.Visible = false;  
+            }
         }
 
         /// <summary>
@@ -384,7 +388,14 @@ namespace _7637_WS4
             {
                 txtDAQInfo.Text = "Сохраняем отчет..";
                 txtDAQInfo.BackColor = Color.DarkOrange;
-                string filename = "Report_"+curBoard.Name + "_" + _frmMain._frmBU_Board.curBUBoard.Name + "_"+listBUProzvTest;
+                string typeCheck = string.Empty;
+                switch (curMode)
+                {
+                    case ProzvMode.Выборочная: typeCheck = "_Выборочная_"; break;
+                    case ProzvMode.КонтрольОбрыв: typeCheck = "_Обрыв_"; break;
+                    case ProzvMode.КонтрольКЗ: typeCheck = "_КЗ_"; break;
+                }
+                string filename = "Report_"+curBoard.Name + "_" + _frmMain._frmBU_Board.curBUBoard.Name + typeCheck + listBUProzvTest;
                 string res = Excel.SaveDAQ(tests, Application.StartupPath + @"\" + catalog + filename);
                 if (res != "Success")
                 {
@@ -394,7 +405,7 @@ namespace _7637_WS4
                 if (badTests.Count > 0) //сохраняем отчет об ошибках лишь при их наличии
                 {
                     txtDAQInfo.Text = "Сохраняем ошибки..";
-                    filename = "BAD_" + curBoard.Name + "_" + _frmMain._frmBU_Board.curBUBoard.Name +"_"+ listBUProzvTest;
+                    filename = "BAD_" + curBoard.Name + "_" + _frmMain._frmBU_Board.curBUBoard.Name + typeCheck + listBUProzvTest;
                     res = Excel.SaveDAQ(badTests.ToArray(), Application.StartupPath + @"\" + catalog + filename);
 
                     if (res != "Success")
@@ -438,7 +449,7 @@ namespace _7637_WS4
             string ch1 = test.Input.Channel.ToString();
             _frmMain.niControl.OpenCloseRelay(false, dev1, ch1);
             if(dev1 == "R8")
-                _frmMain.niControl.OpenCloseRelay(false, dev1, "3");
+                _frmMain.niControl.OpenCloseRelay(false, dev1, "3");    //хер знает зачем нужно было. Просьба электриков 
 
             string dev2 = test.Output.Device;
             string ch2 = test.Output.Channel.ToString();

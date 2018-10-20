@@ -114,7 +114,12 @@ namespace _7637_WS4
             this.Hide();
             bNeedReload = true;
             _frmMain._frmPP.Show();
-            _frmMain._frmUDPDebug.Show();
+                if (_frmMain._frmUDPDebug.CreateUDP())
+                    _frmMain._frmPP.txtComment.BackColor = Color.LightGreen;
+                else
+                    _frmMain._frmPP.txtComment.BackColor = Color.LightBlue;
+
+            //_frmMain._frmUDPDebug.Show();
         }
     }
 }

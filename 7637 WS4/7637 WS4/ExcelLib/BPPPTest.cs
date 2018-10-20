@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using System;
+using Microsoft.Office.Interop.Excel;
 
 namespace ExcelLib
 {
@@ -10,6 +11,7 @@ namespace ExcelLib
         public BPPPTest(int sizeIn, int sizeOut)
         {
             Index = 0;
+            _errordescription = string.Empty;
             Input = new Contact[sizeIn];
             for (int i = 0; i < Input.Length; i++)
             {
@@ -27,8 +29,10 @@ namespace ExcelLib
         private double _min;
         private double _max;
         private double _value;
+        private double _accuracy;
         private string _comment;
         private string _result;
+        private string _errordescription;
         private int _range;
         private ushort _delay;
         public Contact[] Input;
@@ -57,7 +61,11 @@ namespace ExcelLib
             get { return _value; }
             set { _value = value; }
         }
-
+        public double Accuracy
+        {
+            get { return _accuracy; }
+            set { _accuracy = value; }
+        }
         public string Comment
         {
             get { return _comment; }
@@ -81,5 +89,12 @@ namespace ExcelLib
             get { return _delay; }
             set { _delay = value; }
         }
+
+        public string ErrorDescription
+        {
+            get { return _errordescription; }
+            set { _errordescription = value; }
+        }
+
     }
 }

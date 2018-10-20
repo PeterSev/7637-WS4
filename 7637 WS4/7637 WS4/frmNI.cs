@@ -34,13 +34,14 @@ namespace _7637_WS4
             chart1.Series[0].LegendText = "Эталон";
             chart1.Series[1].LegendText = "Фактич.";
 
-            _frmMain.niControl.statusDCUpdate += NiControl_statusUpdate;
-            _frmMain.niControl.warningDCUpdate += NiControl_warningUpdate;
-            _frmMain.niControl.updateStateDC += NiControl_updateStateDC;
-
+            _frmMain.niControl = new NIControl();
+            _frmMain.niControl.StatusDCUpdate += NiControl_statusUpdate;
+            _frmMain.niControl.WarningDCUpdate += NiControl_warningUpdate;
+            _frmMain.niControl.UpdateStateDC += NiControl_updateStateDC;
+            
             _frmMain.niControl.bufReadDMMReceived += NiControl_bufReadDMMReceived;
-            _frmMain.niControl.statusDMMUpdate += NiControl_statusDMMUpdate;
-            _frmMain.niControl.warningDMMUpdate += NiControl_warningDMMUpdate;
+            _frmMain.niControl.StatusDMMUpdate += NiControl_statusDMMUpdate;
+            _frmMain.niControl.WarningDMMUpdate += NiControl_warningDMMUpdate;
 
             _frmMain.niControl.relayR1.statusSWITCH += Relay_statusSWITCH;
             _frmMain.niControl.relayR1.warningSWITCH += Relay_warningSWITCH;
@@ -59,11 +60,12 @@ namespace _7637_WS4
             _frmMain.niControl.relayR8.statusSWITCH += Relay_statusSWITCH;
             _frmMain.niControl.relayR8.warningSWITCH += Relay_warningSWITCH;
 
-            _frmMain.niControl.daqEtalon.bufReadDAQReceived += NiControl_bufReadDAQReceived;
-            _frmMain.niControl.daqEtalon.warningDAQUpdate += NiControl_warningDAQUpdate;
-            _frmMain.niControl.daqMeasured.bufReadDAQReceived += NiControl_bufReadDAQMeasuredReceived;
-            _frmMain.niControl.daqMeasured.warningDAQUpdate += NiControl_warningDAQUpdate;
+            _frmMain.niControl.daqEtalon.BufReadDAQReceived += NiControl_bufReadDAQReceived;
+            _frmMain.niControl.daqEtalon.WarningDAQUpdate += NiControl_warningDAQUpdate;
+            _frmMain.niControl.daqMeasured.BufReadDAQReceived += NiControl_bufReadDAQMeasuredReceived;
+            _frmMain.niControl.daqMeasured.WarningDAQUpdate += NiControl_warningDAQUpdate;
 
+            //_frmMain.niControl.Init();
         }
 
         #region EVENTS
@@ -277,12 +279,12 @@ namespace _7637_WS4
             e.Cancel = true;
             bNeedReload = true;
             
-            _frmMain.niControl.statusDCUpdate -= NiControl_statusUpdate;
-            _frmMain.niControl.updateStateDC -= NiControl_updateStateDC;
-            _frmMain.niControl.warningDCUpdate -= NiControl_warningUpdate;
+            _frmMain.niControl.StatusDCUpdate -= NiControl_statusUpdate;
+            _frmMain.niControl.UpdateStateDC -= NiControl_updateStateDC;
+            _frmMain.niControl.WarningDCUpdate -= NiControl_warningUpdate;
 
-            _frmMain.niControl.statusDMMUpdate -= NiControl_statusDMMUpdate;
-            _frmMain.niControl.warningDMMUpdate -= NiControl_warningDMMUpdate;
+            _frmMain.niControl.StatusDMMUpdate -= NiControl_statusDMMUpdate;
+            _frmMain.niControl.WarningDMMUpdate -= NiControl_warningDMMUpdate;
             _frmMain.niControl.bufReadDMMReceived -= NiControl_bufReadDMMReceived;
             this.Hide();
         }

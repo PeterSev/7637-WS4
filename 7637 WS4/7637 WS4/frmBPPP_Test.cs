@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelLib;
 using Ivi.DCPwr;
@@ -13,40 +14,42 @@ using Ivi.DCPwr;
 namespace _7637_WS4
 {
     public enum MultimeterMode { DCVolts, TwoWireResistance, Diode };
+    delegate void DelFinishTests();
+
     public partial class frmBPPP_Test : Form
     {
+        CancellationTokenSource cancelTokenSource;
+        CancellationToken token;
+        event DelFinishTests delFinishTests;
+
+        System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+        
+
+
         public frmMain _frmMain;
         bool bNeedReload = true;
         string listBPPPTestFileName = String.Empty; //"BPPP_test.xls";
         string catalog = string.Empty;
         Board curBoard = null;
-        bool bNeedStop = false;
+        //bool bNeedStop = false;
         //int numCurTest = 0;
         BPPPTest[] tests;
         public List<BPPPTest> badTests;
         BPPPTest lastTest = null;
-
-        //Переменные для источника питания. Перемещено в отдельный класс
-        /*IIviDCPwr iviDCPower;
-        Thread thr;
-        bool bNeedUpdate = false, bNeedExit = false;
-        static string DC_DeviceName = "DC";
-        CurrentLimitBehavior curLimitBehavior = CurrentLimitBehavior.Regulate;
-        double curLimit = 0.02, voltageLevel = 1.0;
-        List<string> listDCChannels = new List<string>();
-        string curDCChannel = string.Empty;
-        List<CurrentLimitBehavior> listDCCurLimitBehaviour = new List<CurrentLimitBehavior>();*/
         //--------------------------------
 
         void Init()
         {
+            //cancelTokenSource = new CancellationTokenSource();
+            //token = cancelTokenSource.Token;
+            delFinishTests += FrmBPPP_Test_delFinishTests;
             bNeedReload = false;
             tests = null;
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BPPP/" +_frmMain._frmBPPP.curBpppBoard.Name + "/";
             listBPPPTestFileName = _frmMain._frmBPPP.curBpppBoard.Name + ".xls";
 
-            this.Text = curBoard.Name + " БППП. Плата " + _frmMain._frmBPPP.curBpppBoard.Name + ". Прохождение тестов";
+            this.Text = curBoard.Name + " BPPP. Board " + _frmMain._frmBPPP.curBpppBoard.Name + ". Passing tests";
             this.BackColor = Color.RoyalBlue;
             grpBPPPTest.ForeColor = Color.White;
             grpDC.ForeColor = Color.White;
@@ -57,15 +60,20 @@ namespace _7637_WS4
 
             if(Utils.isFileExist(catalog + listBPPPTestFileName))
             {
-                tests = Excel.ParseBPPP(catalog + listBPPPTestFileName);    //открываем список тестов из экселевского файла
+                string str;
+                tests = Excel.ParseBPPP(catalog + listBPPPTestFileName, out str);    //открываем список тестов из экселевского файла
                 if (tests != null)
                 {
                     lblTEstCount.Text = tests.Length.ToString();
                     _frmMain.niControl.DCSetOnOff(0.1, 0.02, false, 0.1, 0.02, false);
+
+
+                    //тестово!!!
+                    _frmMain.niControl.CreateDMM();
                 }
                 else
                 {
-                    MessageBox.Show("Файл поврежден или имеет неверный формат");
+                    MessageBox.Show(str);
                 }
                 //RunTests(tests);
 
@@ -76,25 +84,45 @@ namespace _7637_WS4
             }
         }
 
-        //void RunTests(BPPPTest[] tests)
-        void RunBPPPAllTests(int cnt)
+        private void FrmBPPP_Test_delFinishTests()
         {
+            Invoke((MethodInvoker)delegate ()
+            {
+                SaveReportAndShowResult();
+            });
+            
+        }
+
+        void RunBPPPAllTests(object cnt_)
+        {
+            int cnt = (int)cnt_;
+            //cnt = 1000000;
             //_frmMain.niControl.DCSetOnOff("0", 24, true);
             //_frmMain.niControl.OpenCloseRelay(true, "R6", "64");
             //_frmMain.niControl.OpenCloseRelay(true, "R7", "66");
-            
+            sw.Start();
+
             for (int i = 0; i < cnt; i++)
             {
-                lblRunCount.Text = "Выполняется № " + (i + 1).ToString();
-                int v = ((i + 1) * 100 / cnt);
-                if (colorProgressBar.Value != v) colorProgressBar.Value = v;
+                if (token.IsCancellationRequested)
+                {
+                    delFinishTests?.Invoke();
+                    break;
+                }
 
-                if (bNeedStop) break;
-                RunBPPPTest(i, cnt);
+                Invoke((MethodInvoker)delegate ()
+                {
+                    lblRunCount.Text = (i + 1).ToString();
+                    int v = ((i + 1) * 100 / cnt);
+                    if (colorProgressBar.Value != v) colorProgressBar.Value = v;
+
+                    RunBPPPTest(i, cnt);
+                });
             }
-            
 
+            sw.Stop();
 
+            delFinishTests?.Invoke();
             //_frmMain.niControl.OpenCloseRelay(false, "R6", "64");
             //_frmMain.niControl.OpenCloseRelay(false, "R7", "66");
             //_frmMain.niControl.DCSetOnOff("0", 24, false);
@@ -117,7 +145,11 @@ namespace _7637_WS4
             {
                 e.Cancel = true;
                 bNeedReload = true;
-                bNeedStop = true;
+                //bNeedStop = true;
+                if(cancelTokenSource!=null)
+                    cancelTokenSource.Cancel();
+
+                _frmMain.niControl.CloseDMM();
                 //CloseDCIVISession();
                 this.Hide();
                 _frmMain._frmBPPP.Show();
@@ -161,21 +193,21 @@ namespace _7637_WS4
 
         private void button5_Click(object sender, EventArgs e)
         {
-            //RunTests((int)numTest.Value);
+            if (tests == null) return;
             int num = (int)numTest.Value;
-            if(num>=tests.Length)
+            if(num>=tests.Length + 1)
             {
-                MessageBox.Show("Такого номера теста в файле тестов нет!", "Ошибка");
+                MessageBox.Show("There is NO such a test!", "Error");
                 return;
             }
-            RunBPPPTest(num, 1);
-
+            RunBPPPTest(num - 1, 1);
         }
-
         
         private void RunBPPPTest(int num, int cntTotal)
         {
+            _frmMain._frmNI.txtDMMWarning.Text = "";
             BPPPTest test = tests[num]; //получаем текущий тест из общего списка
+            lblRunCount.Text = num.ToString();
 
             if (lastTest != null) //будет НУЛЛОМ только в первый заход в цикл
             {
@@ -228,7 +260,7 @@ namespace _7637_WS4
             Thread.Sleep(test.Delay);
 
             //Проведение измерений---------------------------------------------
-            _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range);   //инициирование чтения мультиметра
+            _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range, test.Accuracy);   //инициирование чтения мультиметра
             
 
             if (double.IsNaN(_frmMain.resultOfMeasurementDMM))
@@ -309,10 +341,25 @@ namespace _7637_WS4
             }
         }
 
-        private void btnRunAllBPPPTest_Click(object sender, EventArgs e)
+        private void btnRunAllBPPPTest_ClickAsync(object sender, EventArgs e)
+        {
+            cancelTokenSource = new CancellationTokenSource();
+            token = cancelTokenSource.Token;
+            if (tests == null) return;
+
+            PrepareToTest();
+
+            //Task.Run(() => RunBPPPAllTests(tests.Length));
+            //Task.Factory.StartNew(RunBPPPAllTests, tests.Length);
+            RunBPPPAllTests(tests.Length);
+
+            //SaveReportAndShowResult();
+        }
+
+        void PrepareToTest()
         {
             btnShowReport.Visible = false;
-            bNeedStop = false;
+            //bNeedStop = false;
             btnStopAllTest.Enabled = true;
             btnRunAllBPPPTest.Enabled = false;
             colorProgressBar.Visible = true;
@@ -322,63 +369,62 @@ namespace _7637_WS4
                 _frmMain._frmBPPP_Report.Close();
             else
                 _frmMain._frmBPPP_Report.Hide();
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
-            //_frmMain.niControl.DCSetOnOff("0", 24, true);
-            //_frmMain.niControl.OpenCloseRelay(true, "R6", "64");
-            //_frmMain.niControl.OpenCloseRelay(true, "R7", "66");
-            //Thread.Sleep(200);
 
-            txtDAQInfo.Text = "Идет тестирование..";
+            //sw.Start();
+
+            txtDAQInfo.Text = "Testing in progress..";
             txtDAQInfo.BackColor = Color.RoyalBlue;
-
-            RunBPPPAllTests(tests.Length);
-
-            //_frmMain.niControl.OpenCloseRelay(false, "R6", "64");
-            //_frmMain.niControl.OpenCloseRelay(false, "R7", "66");
-            //_frmMain.niControl.DCSetOnOff("0", 24, false);
-            sw.Stop();
+        }
+        void SaveReportAndShowResult()
+        {
             lblT.Text = sw.Elapsed.ToString();
             btnStopAllTest.Enabled = false;
             btnRunAllBPPPTest.Enabled = true;
             colorProgressBar.Visible = false;
             btnShowReport.Visible = true;
-            //var obj = tests.Where(p => p.Value > 0);
-
-            try
+            Task.Factory.StartNew(() =>
             {
-                txtDAQInfo.Text = "Сохраняем отчет..";
-                txtDAQInfo.BackColor = Color.DarkOrange;
-                
-                string filename = "Report_" + curBoard.Name + "_" + listBPPPTestFileName;
-                if (Excel.SaveBPPP(tests, Application.StartupPath + @"\" + catalog + filename) != "Success")
+                try
                 {
-                    MessageBox.Show("Ошибка сохранения файла репорта! Проверьте в отладчике причину", "Ошибка");
+                    Invoke((MethodInvoker)delegate ()
+                    {
+                        txtDAQInfo.Text = "Saving report..";
+                        txtDAQInfo.BackColor = Color.DarkOrange;
+                    });
+                    string filename = "Report_" + curBoard.Name + "_" + listBPPPTestFileName;
+                    if (Excel.SaveBPPP(tests, Application.StartupPath + @"\" + catalog + filename) != "Success")
+                    {
+                        MessageBox.Show("Report file saving ERROR!", "Saving");
+                    }
+
                 }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка сохранения файла отчета Excel " + ex.Message, "Сохранение");
-            }
-
-            if (badTests.Count > 0)
-            {
-                txtDAQInfo.BackColor = Color.Red;
-                txtDAQInfo.Text = "ТЕСТ НЕ ПРОЙДЕН";
-                //_frmMain._frmBPPP_Report.Activate();
-                _frmMain._frmBPPP_Report.Show();
-            }
-            else
-            {
-                txtDAQInfo.BackColor = Color.Green;
-                txtDAQInfo.Text = "ТЕСТ ПРОЙДЕН";
-            }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Excel report file saving ERROR!" + ex.Message, "Saving");
+                    return;
+                }
+                Invoke((MethodInvoker)delegate ()
+                {
+                    if (badTests.Count > 0)
+                    {
+                        txtDAQInfo.BackColor = Color.Red;
+                        txtDAQInfo.Text = "FAILED";
+                        //_frmMain._frmBPPP_Report.Activate();
+                        _frmMain._frmBPPP_Report.Show();
+                    }
+                    else
+                    {
+                        txtDAQInfo.BackColor = Color.Green;
+                        txtDAQInfo.Text = "PASSED";
+                    }
+                });
+            });
         }
 
         private void btnStopAllTest_Click(object sender, EventArgs e)
         {
-            bNeedStop = true;
+            //bNeedStop = true;
+            cancelTokenSource.Cancel();
 
             btnStopAllTest.Enabled = false;
             btnRunAllBPPPTest.Enabled = true;

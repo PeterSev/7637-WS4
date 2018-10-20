@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using NPOI.SS.UserModel;
+using static System.String;
 using MSExcel = Microsoft.Office.Interop.Excel;
+// ReSharper disable InconsistentNaming
 
 namespace ExcelLib
 {
@@ -77,85 +80,76 @@ namespace ExcelLib
                                         for (int i = 0; i < 2; i++)
                                         {
                                             ICell cell2;
-                                            if (i == 0)
-                                            {
-                                                cell2 = row2.GetCell(cell.ColumnIndex);
-                                            }
-                                            else
-                                            {
-                                                cell2 = row3.GetCell(cell.ColumnIndex);
-                                            }
+                                            cell2 = i == 0 ? row2.GetCell(cell.ColumnIndex) : row3.GetCell(cell.ColumnIndex);
 
-                                            if (cell2 != null)
+                                            if (cell2 == null) continue;
+                                            switch (cell2.CellType)
                                             {
-                                                switch (cell2.CellType)
-                                                {
-                                                    case CellType.Blank: break;
-                                                    case CellType.Boolean:
-                                                        cellType2[i] = "System.Boolean";
-                                                        break;
-                                                    case CellType.String:
-                                                        cellType2[i] = "System.String";
-                                                        break;
-                                                    case CellType.Numeric:
-                                                        if (DateUtil.IsCellDateFormatted(cell2))
-                                                        {
-                                                            cellType2[i] = "System.DateTime";
-                                                        }
-                                                        else
-                                                        {
-                                                            cellType2[i] =
-                                                                "System.Double"; //valorCell = cell2.NumericCellValue;
-                                                        }
-                                                        break;
+                                                case CellType.Blank: break;
+                                                case CellType.Boolean:
+                                                    cellType2[i] = "System.Boolean";
+                                                    break;
+                                                case CellType.String:
+                                                    cellType2[i] = "System.String";
+                                                    break;
+                                                case CellType.Numeric:
+                                                    if (DateUtil.IsCellDateFormatted(cell2))
+                                                    {
+                                                        cellType2[i] = "System.DateTime";
+                                                    }
+                                                    else
+                                                    {
+                                                        cellType2[i] =
+                                                            "System.Double"; //valorCell = cell2.NumericCellValue;
+                                                    }
+                                                    break;
 
-                                                    case CellType.Formula:
-                                                        bool continuar = true;
-                                                        switch (cell2.CachedFormulaResultType)
-                                                        {
-                                                            case CellType.Boolean:
-                                                                cellType2[i] = "System.Boolean";
-                                                                break;
-                                                            case CellType.String:
-                                                                cellType2[i] = "System.String";
-                                                                break;
-                                                            case CellType.Numeric:
-                                                                if (DateUtil.IsCellDateFormatted(cell2))
+                                                case CellType.Formula:
+                                                    bool continuar = true;
+                                                    switch (cell2.CachedFormulaResultType)
+                                                    {
+                                                        case CellType.Boolean:
+                                                            cellType2[i] = "System.Boolean";
+                                                            break;
+                                                        case CellType.String:
+                                                            cellType2[i] = "System.String";
+                                                            break;
+                                                        case CellType.Numeric:
+                                                            if (DateUtil.IsCellDateFormatted(cell2))
+                                                            {
+                                                                cellType2[i] = "System.DateTime";
+                                                            }
+                                                            else
+                                                            {
+                                                                try
                                                                 {
-                                                                    cellType2[i] = "System.DateTime";
-                                                                }
-                                                                else
-                                                                {
-                                                                    try
+                                                                    //DETERMINAR SI ES BOOLEANO
+                                                                    if (cell2.CellFormula == "TRUE()")
                                                                     {
-                                                                        //DETERMINAR SI ES BOOLEANO
-                                                                        if (cell2.CellFormula == "TRUE()")
-                                                                        {
-                                                                            cellType2[i] = "System.Boolean";
-                                                                            continuar = false;
-                                                                        }
-                                                                        if (continuar && cell2.CellFormula == "FALSE()")
-                                                                        {
-                                                                            cellType2[i] = "System.Boolean";
-                                                                            continuar = false;
-                                                                        }
-                                                                        if (continuar)
-                                                                        {
-                                                                            cellType2[i] = "System.Double";
-                                                                        }
+                                                                        cellType2[i] = "System.Boolean";
+                                                                        continuar = false;
                                                                     }
-                                                                    catch
+                                                                    if (continuar && cell2.CellFormula == "FALSE()")
                                                                     {
-                                                                        // ignored
+                                                                        cellType2[i] = "System.Boolean";
+                                                                        continuar = false;
+                                                                    }
+                                                                    if (continuar)
+                                                                    {
+                                                                        cellType2[i] = "System.Double";
                                                                     }
                                                                 }
-                                                                break;
-                                                        }
-                                                        break;
-                                                    default:
-                                                        cellType2[i] = "System.String";
-                                                        break;
-                                                }
+                                                                catch
+                                                                {
+                                                                    // ignored
+                                                                }
+                                                            }
+                                                            break;
+                                                    }
+                                                    break;
+                                                default:
+                                                    cellType2[i] = "System.String";
+                                                    break;
                                             }
                                         }
 
@@ -180,14 +174,14 @@ namespace ExcelLib
                                         }
                                         catch
                                         {
-                                            colName = string.Format(colName, colIndex);
+                                            colName = Format(colName, colIndex);
                                         }
 
                                         //Verificar que NO se repita el Nombre de la Columna
                                         foreach (DataColumn col in table.Columns)
                                         {
                                             if (col.ColumnName == colName)
-                                                colName = string.Format("{0}_{1}", colName, colIndex);
+                                                colName = Format("{0}_{1}", colName, colIndex);
                                         }
 
                                         //Agregar el campos de la tabla:
@@ -263,7 +257,7 @@ namespace ExcelLib
                     throw new Exception("ERROR 404: El archivo especificado NO existe.");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -302,7 +296,7 @@ namespace ExcelLib
                 for (int j = 0; j < table.Rows.Count; j++)
                 {
                     int parsedValue;
-                    if (list[0, j] != String.Empty && int.TryParse(list[0, j], out parsedValue) && parsedValue > lenght)
+                    if (list[0, j] != Empty && int.TryParse(list[0, j], out parsedValue) && parsedValue > lenght)
                     {
                         lenght = parsedValue;
                     }
@@ -330,7 +324,7 @@ namespace ExcelLib
 
                             for (int i = 1; i < table.Columns.Count; i++)
                             {
-                                if (list[i, j] != String.Empty)
+                                if (list[i, j] != Empty)
                                 {
                                     if (i == 1)
                                     {
@@ -364,7 +358,7 @@ namespace ExcelLib
                     {
                         for (int i = 0; i < table.Columns.Count; i++)
                         {
-                            if (list[i, j] != String.Empty)
+                            if (list[i, j] != Empty)
                             {
                                 tabHeader[i] = list[i, j];
                             }
@@ -373,7 +367,7 @@ namespace ExcelLib
                 }
                 return DAQTest;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -423,12 +417,14 @@ namespace ExcelLib
                     DAQTest[k].Comment = list[5, i];
                     DAQTest[k].Value = list[6, i];
                     DAQTest[k].Result = list[7, i];
+                    if (list.GetLength(0) >= 9)
+                        DAQTest[k].ErrorDescription = list[8, i];
                     k++;
                 }
              
                 return DAQTest;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -464,7 +460,7 @@ namespace ExcelLib
                 for (int j = 0; j < table.Rows.Count; j++)
                 {
                     int parsedValue;
-                    if (list[0, j] != String.Empty && int.TryParse(list[0, j], out parsedValue) && parsedValue > lenght)
+                    if (list[0, j] != Empty && int.TryParse(list[0, j], out parsedValue) && parsedValue > lenght)
                     {
                         lenght = parsedValue;
                     }
@@ -488,7 +484,7 @@ namespace ExcelLib
                 {
                     while (true)
                     {
-                        if (list[2, counter2] != String.Empty && list[2, counter2] != "источник питания,I mA")
+                        if (list[2, counter2] != Empty && list[2, counter2] != "источник питания,I mA")
                         {
                             intSize2[i] = list[2, counter2].ToCharArray().Where(x => x == '/').Count();
                             counter2++;
@@ -509,7 +505,7 @@ namespace ExcelLib
                 {
                     int num;
                     bool isNum = int.TryParse(list[0, i], out num);
-                    if (list[0, i] != String.Empty && isNum)
+                    if (list[0, i] != Empty && isNum)
                     {
                         IndTest[k].Index = Convert.ToInt32(list[0, i]);
                         switch (list[1, i])
@@ -566,7 +562,7 @@ namespace ExcelLib
                             var device2 = device[j].Split('r');
                             var device3 = device2[0].Split('k');
                             IndTest[k].Input[j].Device = @"r" + device2[1];
-                            if (device3[0] != String.Empty)
+                            if (device3[0] != Empty)
                             {
                                 IndTest[k].Input[j].Channel = Convert.ToInt32(device3[0]);
                             }
@@ -581,10 +577,6 @@ namespace ExcelLib
                         //Контроль
                         switch (list[6, i])
                         {
-                            case "напряжение":
-                            default:
-                                IndTest[k].Control = Control.Напряжение;
-                                break;
                             case "сопротивление":
                                 IndTest[k].Control = Control.Сопротивление;
                                 break;
@@ -606,9 +598,12 @@ namespace ExcelLib
                             case "падение напряжения ЭК":
                                 IndTest[k].Control = Control.ПадениеНапряженияЭк;
                                 break;
+                            default:
+                                IndTest[k].Control = Control.Напряжение;
+                                break;
                         }
 
-                        if (list[7, i] != String.Empty)
+                        if (list[7, i] != Empty)
                         {
                             double data;
                             if (!Double.TryParse(list[7, i], out data))
@@ -627,12 +622,12 @@ namespace ExcelLib
                             IndTest[k].ValMin = 0;
                         }
 
-                        if (list[8, i] != String.Empty)
+                        if (list[8, i] != Empty)
                         {
                             if (list[8, i] != "∞")
                             {
                                 double data2;
-                                if (!Double.TryParse(list[8, i], out data2) && list[8, i] != String.Empty)
+                                if (!Double.TryParse(list[8, i], out data2) && list[8, i] != Empty)
                                 {
                                     var max = list[8, i].Split(' ');
                                     IndTest[k].ValMax = Convert.ToDouble(max[0]);
@@ -651,12 +646,14 @@ namespace ExcelLib
                         {
                             IndTest[k].ValMax = 0;
                         }
+                        if (list.GetLength(0) >= 10)
+                            IndTest[k].ErrorDescription = list[9, i];
                         k++;
                     }
                 }
                 return IndTest;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -692,7 +689,7 @@ namespace ExcelLib
                 for (int j = 0; j < table.Rows.Count; j++)
                 {
                     int parsedValue;
-                    if (list[0, j] != String.Empty && int.TryParse(list[0, j], out parsedValue) && parsedValue > lenght)
+                    if (list[0, j] != Empty && int.TryParse(list[0, j], out parsedValue) && parsedValue > lenght)
                     {
                         lenght = parsedValue;
                     }
@@ -708,7 +705,7 @@ namespace ExcelLib
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
                     int value;
-                    if (list[0, i] != String.Empty && int.TryParse(list[0, i], out value))
+                    if (list[0, i] != Empty && int.TryParse(list[0, i], out value))
                     {
                         EData4[k].Index = value;
 
@@ -735,16 +732,17 @@ namespace ExcelLib
         }
 
         /// <summary>
-        /// Используется для блока проверки печатных плат, возвращает тесты ввиде массива (BPPP)
+        /// Используется для блока проверки печатных плат, возвращает тесты ввиде массива (BPPP) [Без описания ошибки]
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">Путь к файлу</param>
+        /// <param name="error">Описание ошибки ошибку</param>
         /// <returns>Возвращает BPPPTest[]</returns>
-        public static BPPPTest[] ParseBPPP(string path)
+        public static BPPPTest[] ParseBPPP(string path, out string error)
         {
+            error = Empty;
             try
             {
                 var table = ParseTable(path);
-
                 string[,] list = new string[table.Columns.Count, table.Rows.Count];
 
                 if (table.Columns.Count == 0 && table.Rows.Count == 0)
@@ -764,19 +762,18 @@ namespace ExcelLib
                 for (int j = 0; j < table.Rows.Count; j++)
                 {
                     int parsedValue;
-                    if (list[0, j] != String.Empty && int.TryParse(list[0, j], out parsedValue) && parsedValue > lenght)
+                    if (list[0, j] != Empty && int.TryParse(list[0, j], out parsedValue) && parsedValue > lenght)
                     {
                         lenght = parsedValue;
                     }
                 }
-
                 int counter = 0;
                 int[] intSize = new int[lenght];
                 for (int i = 0; i < intSize.Length; i++)
                 {
                     while (true)
                     {
-                        if ((list[1, counter] != String.Empty))
+                        if ((list[1, counter] != Empty))
                         {
                             intSize[i] = list[1, counter].ToCharArray().Where(x => x == '/').Count();
                             counter++;
@@ -791,7 +788,7 @@ namespace ExcelLib
                 {
                     while (true)
                     {
-                        if (list[2, counter2] != String.Empty)
+                        if (list[2, counter2] != Empty)
                         {
                             intSize2[i] = list[2, counter2].ToCharArray().Where(x => x == '/').Count();
                             counter2++;
@@ -801,7 +798,6 @@ namespace ExcelLib
                     }
 
                 }
-
                 BPPPTest = new BPPPTest[lenght];
                 for (int i = 0; i < BPPPTest.Length; i++)
                 {
@@ -811,25 +807,28 @@ namespace ExcelLib
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
                     int value;
-                    if (list[0, i] != String.Empty && int.TryParse(list[0, i], out value))
+                    if (list[0, i] != Empty && int.TryParse(list[0, i], out value))
                     {
                         BPPPTest[k].Index = value;
 
-                        if (list[3, i] != String.Empty)
+                        if (list[3, i] != Empty)
                             BPPPTest[k].Delay = Convert.ToUInt16(list[3, i]); //list[3, i]
                         else BPPPTest[k].Delay = 0;
 
-                        if (list[4, i] != String.Empty)
-                            BPPPTest[k].Min = Convert.ToDouble(list[4, i]); //list[4, i]
-                        else BPPPTest[k].Min = Double.NegativeInfinity;
+                            double min;
+                        if (double.TryParse(list[4, i], out min))
+                            BPPPTest[k].Min = min;
+                        else BPPPTest[k].Min = double.PositiveInfinity;
 
-                        if (list[5, i] != String.Empty)
-                            BPPPTest[k].Max = Convert.ToDouble(list[5, i]); //list[5, i]
-                        else BPPPTest[k].Max = Double.NegativeInfinity;
+                            double max;
+                        if (double.TryParse(list[5, i], out max))
+                            BPPPTest[k].Max = max;
+                        else BPPPTest[k].Max = double.PositiveInfinity;
 
-                        if (list[6, i] != String.Empty)
-                            BPPPTest[k].Value = Convert.ToDouble(list[6, i]); //list[6, i]
-                        else BPPPTest[k].Value = Double.NegativeInfinity;
+                            double value1;
+                        if (double.TryParse(list[6, i], out value1))
+                            BPPPTest[k].Value = value1;
+                        else BPPPTest[k].Value = double.PositiveInfinity;
 
                         BPPPTest[k].Comment = list[7, i] + " " + list[8, i];
                         BPPPTest[k].Range = Convert.ToInt32(list[9, i]);
@@ -843,7 +842,6 @@ namespace ExcelLib
                             BPPPTest[k].Input[j].Device = "r" + indata2[1];
                             BPPPTest[k].Input[j].Channel = Convert.ToInt32(indata3[1]);
                         }
-
                         list[2, i] = list[2, i].ToLower();
                         var outdata = list[2, i].Split('/');
                         for (int j = 0; j < BPPPTest[k].Output.Length; j++)
@@ -854,6 +852,19 @@ namespace ExcelLib
                             BPPPTest[k].Output[j].Channel = Convert.ToInt32(outdata3[1]);
                         }
                         BPPPTest[k].Result = list[10, i];
+                        // Колонка Error Description
+                        var collums = list.GetLength(0);
+                        if (collums >= 12)
+                            BPPPTest[k].ErrorDescription = list[11, i];
+                        if (collums >= 13)
+                        {
+                            double acr;
+                            Double.TryParse(list[12, i], out acr);
+                            if (acr != 3.5  && acr != 4.5 && acr != 5.5 && acr != 6.5 && acr != 7.5)
+                                acr = 0;
+                            BPPPTest[k].Accuracy = acr;
+                        }
+
                         k++;
                     }
                 }
@@ -861,6 +872,11 @@ namespace ExcelLib
             }
             catch (Exception ex)
             {
+                error =  Environment.NewLine + "Error: " 
+                         + ex.Message + 
+                         Environment.NewLine + "StackTrace: " +
+                         ex.StackTrace;
+
                 return null;
             }
         }
@@ -945,12 +961,13 @@ namespace ExcelLib
     {
         public static string SaveBpppWrapper(BPPPTest[] data, string path)
         {
-            MSExcel.Application exApp = new MSExcel.Application();
-
-            exApp.Visible = false;
-            exApp.ScreenUpdating = false;
+            MSExcel.Application exApp = new MSExcel.Application
+            {
+                Visible = false,
+                ScreenUpdating = false,
+                DisplayAlerts = false
+            };
             // Отключае запрос на перезапись файла (разрешает перезапись)
-            exApp.DisplayAlerts = false;
 
             MSExcel.Workbook xlWorkBook;
             MSExcel.Worksheet xlWorkSheet;
@@ -960,13 +977,13 @@ namespace ExcelLib
             xlWorkSheet = (MSExcel.Worksheet)xlWorkBook.Worksheets.Item[1];
 
             //При добавлении столбцов, изменить размер массива(ниже при  MSExcel.Range r  тоже!)
-            string[,] arr = new string[data.Length + 3, 11];
+            string[,] arr = new string[data.Length + 3, 13];
             arr[0, 0] = "Номер проверки";
             arr[0, 1] = "A";
             arr[0, 2] = "B";
             arr[0, 3] = "Задержка, мс";
-            arr[0, 4] = "Максимальные допустимые значения";
-            arr[0, 5] = " ";
+            arr[0, 4] = "Минимальное допустимое значения";
+            arr[0, 5] = "Максимальное допустимое значения";
             arr[1, 4] = "MIN";
             arr[1, 5] = "MAX";
             arr[0, 6] = "Измеренные значения";
@@ -977,6 +994,9 @@ namespace ExcelLib
             arr[0, 9] = "Диапазон";
             arr[1, 9] = "Ом";
             arr[0, 10] = "Результат";
+            arr[0, 11] = "Описание ошибки";
+            arr[0, 12] = "Точность измерения";
+
 
 
             bool[] successColor = new bool[data.Length + 3];
@@ -1003,23 +1023,42 @@ namespace ExcelLib
 
                 arr[i, 3] = data[k].Delay.ToString();
                 // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-                arr[i, 4] = data[k].Min.ToString();
+                if (double.IsNegativeInfinity(data[k].Min))
+                    arr[i, 4] = "-∞";
+                else if (double.IsPositiveInfinity(data[k].Min))
+                    arr[i, 4] = "∞";
+                else arr[i, 4] = data[k].Min.ToString();
+
                 // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-                arr[i, 5] = data[k].Max.ToString();
+                if (double.IsNegativeInfinity(data[k].Max))
+                    arr[i, 5] = "-∞";
+                else if (double.IsPositiveInfinity(data[k].Max))
+                    arr[i, 5] = "∞";
+                else arr[i, 5] = data[k].Max.ToString();
+
                 // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-                arr[i, 6] = data[k].Value.ToString();
+                if (double.IsNegativeInfinity(data[k].Value))
+                    arr[i, 6] = "-∞";
+                else if (double.IsPositiveInfinity(data[k].Value))
+                    arr[i, 6] = "∞";
+                else arr[i, 6] = data[k].Value.ToString();
+
                 var tcom = data[k].Comment.Split(' ');
                 arr[i, 7] = tcom[0];
                 arr[i, 8] = tcom[1];
                 arr[i, 9] = data[k].Range.ToString();
-                arr[i, 10] = data[k].Result;
+                arr[i, 10] = data[k].Result;           
+                if(arr.GetLength(1) >= 12)
+                arr[i, 11] = data[k].ErrorDescription;
                 if (data[k].Result == "PASSED")
                     successColor[k] = true;
-                k++;
+                if (arr.GetLength(1) >= 13)
+                    arr[i, 12] = data[k].Accuracy.ToString(CultureInfo.CurrentCulture);
+                    k++;
             }
             try
             {
-                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 2, 11]];
+                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 2, 13]];
                 r.Value = arr;
                 xlWorkSheet.Columns.EntireColumn.AutoFit();
 
@@ -1066,12 +1105,14 @@ namespace ExcelLib
 
         public static string SaveDaq_Old_Wrapper(DAQTest[] data, string path)
         {
-            MSExcel.Application exApp = new MSExcel.Application();
+            MSExcel.Application exApp = new MSExcel.Application
+            {
+                Visible = false,
+                ScreenUpdating = false,
+                DisplayAlerts = false
+            };
 
-            exApp.Visible = false;
-            exApp.ScreenUpdating = false;
             // Отключае запрос на перезапись файла (разрешает перезапись)
-            exApp.DisplayAlerts = false;
 
             MSExcel.Workbook xlWorkBook;
             MSExcel.Worksheet xlWorkSheet;
@@ -1342,12 +1383,14 @@ namespace ExcelLib
 
         public static string SaveDaqWrapper(DAQTest[] data, string path)
         {
-            MSExcel.Application exApp = new MSExcel.Application();
+            MSExcel.Application exApp = new MSExcel.Application
+            {
+                Visible = false,
+                ScreenUpdating = false,
+                DisplayAlerts = false
+            };
 
-            exApp.Visible = false;
-            exApp.ScreenUpdating = false;
             // Отключае запрос на перезапись файла (разрешает перезапись)
-            exApp.DisplayAlerts = false;
 
             MSExcel.Workbook xlWorkBook;
             MSExcel.Worksheet xlWorkSheet;
@@ -1357,7 +1400,7 @@ namespace ExcelLib
             xlWorkSheet = (MSExcel.Worksheet)xlWorkBook.Worksheets.Item[1];
 
             //При добавлении столбцов, изменить размер массива(ниже при  MSExcel.Range r  тоже!)
-            string[,] arr = new string[data.Length + 2, 8];
+            string[,] arr = new string[data.Length + 2, 9];
             for (int i = 0; i < 7; i++)
                 arr[0, i] = " ";
             arr[0, 1] = "Входы";
@@ -1371,6 +1414,8 @@ namespace ExcelLib
             arr[1, 6] = "Значение";
             arr[0, 7] = " ";
             arr[1, 7] = "Результат";
+            arr[0, 8] = " ";
+            arr[1, 8] = "Описание ошибки";
 
             int k = 0;
             bool[] color = new bool[data.Length];
@@ -1384,13 +1429,15 @@ namespace ExcelLib
                 arr[i, 5] = data[k].Comment;
                 arr[i, 6] = data[k].Value;
                 arr[i, 7] = data[k].Result;
+                if(data[k].ErrorDescription != null)
+                arr[i, 8] = data[k].ErrorDescription;
                 if (data[k].Result == "PASSED")
                     color[k] = true;
                 k++;
             }
             try
             {
-                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 2, 8]];
+                MSExcel.Range r = xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[data.Length + 2, 9]];
                 r.Value = arr;
                 xlWorkSheet.Columns.EntireColumn.AutoFit();
 
@@ -1409,7 +1456,7 @@ namespace ExcelLib
                 }
 
                 xlWorkBook.SaveAs(path, MSExcel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
-                    MSExcel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                    MSExcel.XlSaveAsAccessMode.xlShared, misValue, misValue, misValue, misValue, misValue);
 
                 return "Success";
             }

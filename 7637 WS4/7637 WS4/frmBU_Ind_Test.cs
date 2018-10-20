@@ -164,15 +164,15 @@ namespace _7637_WS4
             switch (test.Control)
             {
                 case ExcelLib.Control.Напряжение:
-                    _frmMain.niControl.ReadDMM(MultimeterMode.DCVolts, 50); break;
+                    _frmMain.niControl.ReadDMM(MultimeterMode.DCVolts, 50, 0); break;
                 case ExcelLib.Control.ПадениеНапряженияБк:
                 case ExcelLib.Control.ПадениеНапряженияБэ:
                 case ExcelLib.Control.ПадениеНапряженияКб:
                 case ExcelLib.Control.ПадениеНапряженияЭб:
                 case ExcelLib.Control.ПадениеНапряженияЭк:
-                    _frmMain.niControl.ReadDMM(MultimeterMode.Diode, 10); break;
+                    _frmMain.niControl.ReadDMM(MultimeterMode.Diode, 10, 0); break;
                 case ExcelLib.Control.Сопротивление:
-                    _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, 100); break;
+                    _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, 100, 0); break;
                 default:
                     break;
             }
@@ -188,6 +188,7 @@ namespace _7637_WS4
 
         private void button1_Click(object sender, EventArgs e)
         {
+            _frmMain._frmNI.txtDMMWarning.Text = "";
             int num = (int)numTest.Value;
             TakeMeasureDMM(num);
         }

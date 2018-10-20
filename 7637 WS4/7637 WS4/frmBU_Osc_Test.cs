@@ -29,8 +29,10 @@ namespace _7637_WS4
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BU/";
 
-            this.Text = curBoard.Name + " БУ. Осциллограф. Тесты";
+            this.Text = curBoard.Name + " CU. Ocsilloscope. Tests";
             this.BackColor = Color.RoyalBlue;
+            txtComment.BackColor = Color.LightBlue;
+            txtComment.Text = Properties.Resources.comment_OSC_Test;
         }
 
         private void frmBU_Osc_Test_FormClosing(object sender, FormClosingEventArgs e)
@@ -48,6 +50,11 @@ namespace _7637_WS4
         {
             if (bNeedReload)
                 Init();
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            PrintClass.Print("На осциллографе контролировать частоту и амплитуду сигналов Uop1, Uop1L, Uop2, Uop2L. Переключая их с помощью тумблеров блока переходного. U=27±2V, f=400±8 Hz.");
         }
     }
 }

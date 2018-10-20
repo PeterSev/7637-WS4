@@ -21,10 +21,10 @@ namespace _7637_WS4
 
         void Init()
         {
-            bNeedReload = false;
+            bNeedReload = false; 
             curBoard = _frmMain.curBoard;
             lstBad = _frmMain._frmBPPP_Test.badTests;
-            this.Text = curBoard.Name + " БППП. Отчет. Тесты, не прошедшие проверку";
+            this.Text = curBoard.Name + " BPPP. Report. Failed tests";
             this.BackColor = Color.RoyalBlue;
             lstTest.BackColor = Color.RoyalBlue;
             lstTest.ForeColor = Color.White;
@@ -106,6 +106,13 @@ namespace _7637_WS4
             string s = "";
             foreach (object o in lstTest.SelectedItems) s += o.ToString() + "\r\n";
             Clipboard.SetText(s);
+        }
+
+        private void печататьВыделенныеСтрокиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string s = "";
+            foreach (object o in lstTest.SelectedItems) s += o.ToString() + "\r\n";
+            PrintClass.Print(s);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace _7637_WS4
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
             grpBoards.ForeColor = Color.White;
-            this.Text = curBoard.Name + " Проверка плат. Выбор платы";
+            this.Text = curBoard.Name + " Boards checking. Select the board";
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -146,6 +146,7 @@ namespace _7637_WS4
                 e.Cancel = true;
                 bNeedReload = true;
                 selectedBoard = string.Empty;
+                _frmMain._frmUDPDebug.CloseUDP();
                 this.Hide();
                 _frmMain._frmTests.Show();
             }

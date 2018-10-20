@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HELPS>
 	<HELP>
-		<IMAGELINK>help1.jpg</IMAGELINK>
-		<COMMENT>Подключите согласно схеме</COMMENT>
+		<IMAGELINK>7194.03.09.000_Help.jpg</IMAGELINK>
+		<COMMENT>Внешний вид платы</COMMENT>
 	</HELP>
 	<HELP>
-		<IMAGELINK>help2.jpg</IMAGELINK>
-		<COMMENT>Возьмите эту хрень и воткните согласно схеме</COMMENT>
+		<IMAGELINK>7194.03.09.000_Help_Back.jpg</IMAGELINK>
+		<COMMENT>Обратная сторона платы</COMMENT>
 	</HELP>
 </HELPS>

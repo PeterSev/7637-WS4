@@ -19,7 +19,7 @@ namespace _7637_WS4.Properties {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,7 +61,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Описание БППП.
+        ///   Ищет локализованную строку, похожую на Check boards using the test unit of printed circuit boards (PCB).
         /// </summary>
         internal static string comment_BPPP {
             get {
@@ -70,7 +70,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Описание блока управления.
+        ///   Ищет локализованную строку, похожую на Control unit check.
         /// </summary>
         internal static string comment_BU {
             get {
@@ -79,7 +79,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Описание блока зеркала.
+        ///   Ищет локализованную строку, похожую на Mirror unit check.
         /// </summary>
         internal static string comment_BZ {
             get {
@@ -88,7 +88,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на В верхней панели выберите необходимую плату для проверки.
+        ///   Ищет локализованную строку, похожую на In the top panel select the desired item to check.
         /// </summary>
         internal static string comment_ListBoards_Initial {
             get {
@@ -97,7 +97,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Слева выберите плату для проверки.
+        ///   Ищет локализованную строку, похожую на On the left select the board to check.
         /// </summary>
         internal static string comment_ListBpppBoards_Initial {
             get {
@@ -106,7 +106,7 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Выберите нужный вам тип проверки.
+        ///   Ищет локализованную строку, похожую на Select desired type of check.
         /// </summary>
         internal static string comment_ListBU_Initial {
             get {
@@ -115,7 +115,25 @@ namespace _7637_WS4.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Описание прозвонки плат.
+        ///   Ищет локализованную строку, похожую на Select version of mirror unit to check.
+        /// </summary>
+        internal static string comment_ListBZ_Initial {
+            get {
+                return ResourceManager.GetString("comment_ListBZ_Initial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Control the frequency and amplitude of the signals Up 1, Up 1 L, Uop 2, Uop 2 L on the oscilloscope. Switch them with the help of toggle switches of the transition unit. U=27±2V, f=400±8 Hz.
+        /// </summary>
+        internal static string comment_OSC_Test {
+            get {
+                return ResourceManager.GetString("comment_OSC_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Inspection of circuit boards using test signal block.
         /// </summary>
         internal static string comment_PP {
             get {

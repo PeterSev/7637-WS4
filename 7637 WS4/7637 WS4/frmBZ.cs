@@ -51,7 +51,7 @@ namespace _7637_WS4
 
                 pict.SizeMode = PictureBoxSizeMode.StretchImage;
                 pict.Image = Properties.Resources.ListBpppBoardInitmage;
-                txtComment.Text = Properties.Resources.comment_ListBpppBoards_Initial;
+                txtComment.Text = Properties.Resources.comment_ListBZ_Initial;
 
                 ShowBoards(listBZBoards);
             }
@@ -104,7 +104,7 @@ namespace _7637_WS4
             btn.ForeColor = Color.White;
             pict.Image = Properties.Resources.ListBpppBoardInitmage;
 
-            txtComment.Text = Properties.Resources.comment_ListBpppBoards_Initial;
+            txtComment.Text = Properties.Resources.comment_ListBZ_Initial;
         }
 
         private void Btn_MouseEnter(object sender, EventArgs e)

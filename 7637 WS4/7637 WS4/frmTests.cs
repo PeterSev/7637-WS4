@@ -15,11 +15,7 @@ namespace _7637_WS4
         public frmMain _frmMain;
         Board board = null;
         List<TestInfo> listTests = null;
-        string listTestsFileName = "TestsInfo.xml";
-        public string ListTestsFileName
-        {
-            get { return listTestsFileName; }
-        }
+        //public string ListTestsFileName { get; } = "TestsInfo.xml";
 
         private bool bNeedReload = true;
 
@@ -42,35 +38,13 @@ namespace _7637_WS4
             btnBU.Image = Properties.Resources.pict_BU;
             btnBZ.Image = Properties.Resources.pict_BZ;
             btnBPPP.Image = Properties.Resources.pict_BPPP;
-
-            //btnBPPP.SizeMode = PictureBoxSizeMode.StretchImage;
             btnPP.Image = Properties.Resources.pict_PP;
-            
-
-
 
             lblBU.ForeColor = lblBZ.ForeColor = lblBPPP.ForeColor = lblPP.ForeColor = Color.White;
-
-
-            /*if (Utils.isFileExist(board.Catalog + "/" + ListTestsFileName))
-            {
-                listTests = XMLParser.OpenListTests(board.Catalog + "/" + ListTestsFileName);
-                ShowTests(listTests);
-            }
-            else
-            {
-                MessageBox.Show("File " + board.Catalog + "/" + ListTestsFileName + " isn't found!", "Load error");
-                this.Close();
-            }*/
         }
 
         void ShowTests(List<TestInfo> list)
         {
-           /* var bz = from item in listTests
-                     where item.Name == "БЗ"
-                     select item.
-            btnBZ.Text = listTests.Select(n => n.Name).*/
-
             var s = from t in listTests
                     where t.Name == "БЗ"
                     select t.Imagelink;

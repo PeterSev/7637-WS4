@@ -29,8 +29,8 @@ namespace _7637_WS4
         double dRateGen;     //частота дискредитизации генератора синусоиды
         string _name;
         //bool bSynchronizeCallbacks;
-        public event delDAQBufReadReceived bufReadDAQReceived;
-        public event delStatusUpdate warningDAQUpdate;
+        public event delDAQBufReadReceived BufReadDAQReceived;
+        public event delStatusUpdate WarningDAQUpdate;
         FunctionGenerator fGen;
         string terminalNameBase;
         System.Windows.Forms.Timer statusDAQtimer;
@@ -107,7 +107,7 @@ namespace _7637_WS4
                 //------------ТЕСТОВЫЙ КУСОК------------ ЧТЕНИЕ В ЭТОМ ЖЕ ПОТОКЕ--
                 double[] data = reader.ReadMultiSample(iInputOutputSamples);
                 
-                bufReadDAQReceived?.Invoke(data);
+                BufReadDAQReceived?.Invoke(data);
                 StopTask();
                 //----------------------------------------------------------------
 
@@ -123,7 +123,7 @@ namespace _7637_WS4
             catch (Exception ex)
             {
                 StopTask();
-                warningDAQUpdate?.Invoke(ex.Message);
+                WarningDAQUpdate?.Invoke(ex.Message);
             }
         }
 
@@ -175,7 +175,7 @@ namespace _7637_WS4
             catch (Exception ex)
             {
                 StopTask();
-                warningDAQUpdate?.Invoke(ex.Message);
+                WarningDAQUpdate?.Invoke(ex.Message);
             }
         }
 
@@ -187,7 +187,7 @@ namespace _7637_WS4
                 {
                     data = reader.EndReadWaveform(ar);
                     //data.Samples
-                    bufReadDAQReceived(data.GetRawData());
+                    BufReadDAQReceived(data.GetRawData());
 
                     reader.BeginMemoryOptimizedReadWaveform(iInputOutputSamples, inputCallback, inputTask, data);
 
@@ -195,7 +195,7 @@ namespace _7637_WS4
             }
             catch(DaqException ex)
             {
-                warningDAQUpdate?.Invoke(ex.Message);
+                WarningDAQUpdate?.Invoke(ex.Message);
                 StopTask();
             }
         }
@@ -206,7 +206,7 @@ namespace _7637_WS4
             {
                 double[] data = reader.ReadMultiSample(iInputOutputSamples);
 
-                bufReadDAQReceived?.Invoke(data);
+                BufReadDAQReceived?.Invoke(data);
 
                 if (outputTask.IsDone)
                 {
@@ -217,7 +217,7 @@ namespace _7637_WS4
             catch(DaqException ex)
             {
                 statusDAQtimer.Enabled = false;
-                warningDAQUpdate?.Invoke(ex.Message);
+                WarningDAQUpdate?.Invoke(ex.Message);
                 StopTask();
             }
         }
@@ -235,7 +235,7 @@ namespace _7637_WS4
                 if (runningTask != null && runningTask == ar.AsyncState)
                 {
                     double[] data = reader.EndReadMultiSample(ar);  // Читаем данные
-                    bufReadDAQReceived?.Invoke(data);   // Инициируем событие и передаем буфер в обработчик
+                    BufReadDAQReceived?.Invoke(data);   // Инициируем событие и передаем буфер в обработчик
                     
                     StopTask();
                 }
@@ -243,7 +243,7 @@ namespace _7637_WS4
             catch (Exception ex)
             {
                 StopTask();
-                warningDAQUpdate?.Invoke(ex.Message);
+                WarningDAQUpdate?.Invoke(ex.Message);
             }
         }
 
@@ -267,7 +267,7 @@ namespace _7637_WS4
             }
             catch(Exception ex)
             {
-                warningDAQUpdate?.Invoke(ex.Message);
+                WarningDAQUpdate?.Invoke(ex.Message);
             }
             //Dispose();
         }
@@ -283,7 +283,7 @@ namespace _7637_WS4
                 outputTask.Dispose();
         }
 
-        static string GetDAQDeviceName(string deviceName)
+        string GetDAQDeviceName(string deviceName)
         {
             try
             {
@@ -293,8 +293,9 @@ namespace _7637_WS4
                 else
                     return device.CompactDaqChassisDeviceName;
             }
-            catch
+            catch(DaqException ex)
             {
+                WarningDAQUpdate?.Invoke(ex.Message);
                 return null;
             }
         }

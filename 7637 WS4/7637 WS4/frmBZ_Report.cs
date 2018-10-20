@@ -44,6 +44,7 @@ namespace _7637_WS4
 
         void ShowBadTests()
         {
+            
             foreach (ExcelLib.BPPPTest test in lstBad)
             {
                 AddToList(test);
@@ -59,13 +60,20 @@ namespace _7637_WS4
                 listCount = 1;
             }
 
-            string sInput = String.Format("{0}",
+            string outstr = string.Format("{0:0000}     Между контактами {1} разъема Х1 измеренное значение R = {2} при граничных условиях ({3} -> {4})Ом",
+                listCount,
+                test.Comment,
+                test.Value,
+                test.Min,
+                test.Max);
+
+            /*string sInput = String.Format("{0}",
                 test.Comment);
-            /*string sOutput = String.Format("k{0}{1}/k{2}{3}",
+            string sOutput = String.Format("k{0}{1}/k{2}{3}",
                 test.Output[0].Channel.ToString(),
                 test.Output[0].Device,
                 test.Output[1].Channel.ToString(),
-                test.Output[1].Device);*/
+                test.Output[1].Device);
             string outstr = String.Format("{0:0000}:    Index - {1}{2}Min - {3} Max - {4}Value - {5}",
                 listCount,
                 test.Index.ToString().PadRight(10),
@@ -74,8 +82,15 @@ namespace _7637_WS4
                 test.Min.ToString().PadRight(15),
                 test.Max.ToString().PadRight(15),
                 test.Value
-                );
+                );*/
             lstTest.Items.Add(outstr);
+        }
+
+        void AddToListHead()
+        {
+            string sOutput = string.Format("{0:0000}     Между контактами {1} и {2} разъема Х1 измеренное значение R = {3} при граничных условиях ({4} -> {5})Ом",
+                listCount
+                );
         }
 
         private void frmBZ_Report_Activated(object sender, EventArgs e)
@@ -106,6 +121,13 @@ namespace _7637_WS4
             string s = "";
             foreach (object o in lstTest.SelectedItems) s += o.ToString() + "\r\n";
             Clipboard.SetText(s);
+        }
+
+        private void печататьВыделенныеСтрокиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string s = "";
+            foreach (object o in lstTest.SelectedItems) s += o.ToString() + "\r\n";
+            PrintClass.Print(s);
         }
     }
 }

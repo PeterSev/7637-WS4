@@ -8,7 +8,7 @@ namespace _7637_WS4
 {
     public interface iConnect
     {
-        void SendCommand(Command com_out);
+        void SendCommand(UDPCommand com_out);
         bool Open();
         bool Close();
     }

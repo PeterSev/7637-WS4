@@ -26,7 +26,7 @@ namespace _7637_WS4
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BU/bin/";
 
-            this.Text = curBoard.Name + " Блок управления. Плата " + _frmMain._frmBU_Board.curBUBoard.Name;
+            this.Text = curBoard.Name + " Control unit. Board " + _frmMain._frmBU_Board.curBUBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -44,9 +44,9 @@ namespace _7637_WS4
 
         void FillButtons(List<TestInfo> lst)
         {
-            btn0.Text = lst[0].Name.Length <= 11 ? lst[0].Name : lst[0].Name.Remove(11);
-            btn1.Text = lst[1].Name.Length <= 11 ? lst[1].Name : lst[1].Name.Remove(11);
-            btn2.Text = lst[2].Name.Length <= 11 ? lst[2].Name : lst[2].Name.Remove(11);
+            btn0.Text = lst[0].Name.Length <= 12 ? lst[0].Name : lst[0].Name.Remove(12);
+            btn1.Text = lst[1].Name.Length <= 12 ? lst[1].Name : lst[1].Name.Remove(12);
+            btn2.Text = lst[2].Name.Length <= 12 ? lst[2].Name : lst[2].Name.Remove(12);
 
             btn0.MouseEnter += Btn_MouseEnter;
             btn1.MouseEnter += Btn_MouseEnter;

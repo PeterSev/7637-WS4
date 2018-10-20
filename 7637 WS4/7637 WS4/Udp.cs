@@ -9,28 +9,31 @@ using System.Threading;
 
 namespace _7637_WS4
 {
-    public delegate void Received(Command com_in, IPEndPoint endPoint);
+    public delegate void Received(UDPCommand com_in, IPEndPoint endPoint);
     public delegate void WarningException(string message);
     public enum STATE_RX { DESCR, DATA};
 
     public class Udp
     {
-        protected Socket socket;                    //Класс, через который реализуем отправку пакетов и прослушивание портов    
+        protected Socket socketService;                    //Класс, через который реализуем отправку пакетов и прослушивание служебного порта   
+        protected Socket socketDebug;
         int _servicePort, _debugPort, _portSendTo;  //порты
         IPAddress _addr;                            //ай-пи адрес, на котором ведем работу
         string strIPAddr = "127.0.0.1";             
-        private Command command_in_servicePort, command_in_debugPort;   //принятые команды по служебному и отладочному портах
+        private UDPCommand command_in_servicePort, command_in_debugPort;   //принятые команды по служебному и отладочному портах
         Queue<byte> rx_queue = new Queue<byte>();                       //в очередь принимаем пришедшие байты
         STATE_RX state_rx = STATE_RX.DESCR;                             //текущий статус приема
-        IPEndPoint remotePoint, pointPort, pointServicePort;            //конечные точки. 
+        IPEndPoint remotePoint, pointPort;                              //конечные точки. 
 
-        public event Received received;                                 //событие прихода пакета
+        public event Received receivedService, receivedDebug;           //событие прихода пакета
         public event WarningException warningException;                 //событие возникшего исключения
 
-        Task listenTaskPort, listenTaskServicePort;
+        Task listenTaskDebugPort, listenTaskServicePort;
 
         CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
         CancellationToken token;
+
+        bool bIsClosed = false;
 
         /// <summary>
         /// Конструктор класса UDP
@@ -40,18 +43,25 @@ namespace _7637_WS4
         /// <param name="portSendTo">удаленный служебный порт (ПУС)</param>
         public Udp(int servicePort, int debugPort, int portSendTo)
         {
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            //--УДАЛИТЬ нужно! Это временная отладка для другого проекта!
+            //servicePort = 0; portSendTo = 40100;
+            //strIPAddr = "192.168.0.100";
+            //-------------------------------------------
+
+
+            socketService = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socketDebug = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             _addr = IPAddress.Parse(strIPAddr);
             _servicePort = servicePort;
             _debugPort = debugPort;
             _portSendTo = portSendTo;
             state_rx = STATE_RX.DESCR;
-            command_in_servicePort = new Command();
-            command_in_debugPort = new Command();
+            command_in_servicePort = new UDPCommand();
+            command_in_debugPort = new UDPCommand();
             remotePoint = new IPEndPoint(_addr, _portSendTo);
-
-            listenTaskPort = new Task(ListenPort);     //Запускаем прослушивание портов в отдельных потоках
-            listenTaskPort.Start();
+            bIsClosed = false;
+            listenTaskDebugPort = new Task(ListenDebugPort);     //Запускаем прослушивание портов в отдельных потоках
+            listenTaskDebugPort.Start();
 
             listenTaskServicePort = new Task(ListenServicePort);
             listenTaskServicePort.Start();
@@ -61,12 +71,12 @@ namespace _7637_WS4
 
         void ListenServicePort()
         {
-            Listen(_debugPort, command_in_debugPort);
+            ListenService(_servicePort, command_in_servicePort);
         }
 
-        void ListenPort()
+        void ListenDebugPort()
         {
-            Listen(_servicePort, command_in_servicePort);  //!!!!сделать другой обработчик для этого потока!
+            ListenDebug(_debugPort, command_in_debugPort);
         }
 
         /// <summary>
@@ -74,15 +84,70 @@ namespace _7637_WS4
         /// </summary>
         /// <param name="port">Порт для прослушивания</param>
         /// <param name="com">В какую команду формируем входящие данные</param>
-        void Listen(int port, Command com)
+        void ListenService(int port, UDPCommand com)
         {
+            Socket socket = socketService;
+            //Привязываем сокет к нужному адресу и порту, который будем прослушивать
+            //_addr = IPAddress.Any;
+            pointPort = new IPEndPoint(_addr, port);
+            socket.Bind(pointPort);
+
+            //Адрес, с которого пришли данные.
+            
+            //socket.ReceiveTimeout = 5000;
+            byte[] data = new byte[256];
+            
+
+            while (true)
+            {
+                try
+                {
+                    int bytes = 0;
+                    
+                    if (token.IsCancellationRequested)
+                    {
+                        socket.Close();
+                        return;
+                    }
+                    EndPoint remoteIP = new IPEndPoint(IPAddress.Any, 0);
+                    do
+                    {
+                        bytes = socket.ReceiveFrom(data, ref remoteIP);
+                    }
+                    while (socket.Available > 0);
+
+                    com.descriptor = data[0];
+                    com.data = new byte[bytes];
+                    Array.Copy(data, 1, com.data, 0, bytes);
+
+                    IPEndPoint remoteFullIp = remoteIP as IPEndPoint;   //получаем данные о подключении
+                    receivedService?.Invoke(com, remoteFullIp);                //генерируем событие
+
+                }
+                catch (Exception ex)
+                {
+                    if(!bIsClosed)
+                        warningException?.Invoke("SocketService \n\r" + ex.Message);       //генерируем событие о возникшей ошибке
+                }
+                finally
+                {
+                    //Close();
+                }
+            }
+        }
+
+        void ListenDebug(int port, UDPCommand com)
+        {
+            Socket socket = socketDebug;
             //Привязываем сокет к нужному адресу и порту, который будем прослушивать
             pointPort = new IPEndPoint(_addr, port);
             socket.Bind(pointPort);
 
             //Адрес, с которого пришли данные.
-            EndPoint remoteIP = new IPEndPoint(IPAddress.Any, 0);
+
             //socket.ReceiveTimeout = 5000;
+            byte[] data = new byte[256];
+
 
             while (true)
             {
@@ -92,10 +157,24 @@ namespace _7637_WS4
 
                     if (token.IsCancellationRequested)
                     {
+                        socket.Close();
                         return;
                     }
+                    EndPoint remoteIP = new IPEndPoint(IPAddress.Any, 0);
+                    do
+                    {
+                        bytes = socket.ReceiveFrom(data, ref remoteIP);
+                    }
+                    while (socket.Available > 0);
 
-                    if (socket.Available > 0)
+                    com.descriptor = data[0];
+                    com.data = new byte[bytes];
+                    Array.Copy(data, 1, com.data, 0, bytes);
+
+                    IPEndPoint remoteFullIp = remoteIP as IPEndPoint;   //получаем данные о подключении
+                    receivedDebug?.Invoke(com, remoteFullIp);                //генерируем событие
+
+                    /*if (socket.Available > 0)
                     {
                         byte[] tmp = new byte[socket.Available];
                         bytes = socket.ReceiveFrom(tmp, ref remoteIP);
@@ -123,11 +202,11 @@ namespace _7637_WS4
                             IPEndPoint remoteFullIp = remoteIP as IPEndPoint;   //получаем данные о подключении
                             received?.Invoke(com, remoteFullIp);                //генерируем событие
                         }
-                    }
+                    }*/
                 }
                 catch (Exception ex)
                 {
-                    warningException?.Invoke(ex.Message);       //генерируем событие о возникшей ошибке
+                    warningException?.Invoke("SocketDebug \n\r" + ex.Message);       //генерируем событие о возникшей ошибке
                 }
                 finally
                 {
@@ -136,21 +215,54 @@ namespace _7637_WS4
             }
         }
 
-        public void SendCommand(byte[] buf)
+        public bool SendCommand(UDPCommand com)
         {
-            socket.SendTo(buf, remotePoint);        //отправка сообщения на удаленный адрес
+            try
+            {
+                byte[] buf = new byte[com.data.Length + 1];
+                buf[0] = com.descriptor;
+                Array.Copy(com.data, 0, buf, 1, com.data.Length);
+
+                socketService.SendTo(buf, remotePoint);        //отправка сообщения на удаленный адрес
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool SendCommand(byte[] buf)
+        {
+            try
+            {
+                socketService.SendTo(buf, remotePoint);
+                return true;
+
+            }
+            catch { return false; }
         }
 
         public void Close()
         {
-            if(socket != null)
+            if(socketService != null)
             {
-                socket.Shutdown(SocketShutdown.Both);   //блокируем передачу и отправку по всем портам нашего сокета
-                socket.Close();                         //закрываем подключение
-                socket = null;
-
                 cancelTokenSource.Cancel();             //завершаем выполнение потока
+
+                socketService.Shutdown(SocketShutdown.Both);   //блокируем передачу и отправку по всем портам нашего сокета
+                socketService.Close();                         //закрываем подключение
+                socketService = null;
             }
+            if (socketDebug != null)
+            {
+                cancelTokenSource.Cancel();             //завершаем выполнение потока
+
+                socketDebug.Shutdown(SocketShutdown.Both);   //блокируем передачу и отправку по всем портам нашего сокета
+                socketDebug.Close();                         //закрываем подключение
+                socketDebug = null;
+
+            }
+            bIsClosed = true;
         }
     }
 }

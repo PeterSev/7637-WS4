@@ -1,18 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BOARDS>
+	<BOARD NAME="7064.01.00.000">
+		<CATALOG>7064.01.00.000</CATALOG>
+		<IMAGELINK>7064.01.00.000.jpg</IMAGELINK>
+		<COMMENT>Блок зеркала, вариант исполнения 7064.01.00.000</COMMENT>
+	</BOARD>
 	<BOARD NAME="Board1">
 		<CATALOG>Board1</CATALOG>
 		<IMAGELINK>Board1.jpg</IMAGELINK>
-		<COMMENT>Первый вариант платы</COMMENT>
-	</BOARD>
-	<BOARD NAME="Board2">
-		<CATALOG>Board2</CATALOG>
-		<IMAGELINK>Board2.jpg</IMAGELINK>
-		<COMMENT>Второй вариант платы</COMMENT>
-	</BOARD>
-	<BOARD NAME="Board3">
-		<CATALOG>Board3</CATALOG>
-		<IMAGELINK>Board3.jpg</IMAGELINK>
-		<COMMENT>Третий вариант платы</COMMENT>
+		<COMMENT>Блок зеркала, вариант исполнения Board1</COMMENT>
 	</BOARD>
 </BOARDS>
