@@ -14,6 +14,9 @@ using System.Net;
 
 namespace _7637_WS4
 {
+    public enum ResDescr2 {Success, FileOpenError, ConnectionLost, ComOpenError};
+    public enum ResDescr3 { Success, TestError, ConnectionLost, WrongStep};
+
     public partial class frmUDPDebug : Form
     {
         public UDPCommand comUDPout2, comUDPout3;
@@ -22,6 +25,7 @@ namespace _7637_WS4
         int ListCountService = 0;
         int servicePort = 55060, debugPort = 55061;
         int remotePort = 55062;
+        public readonly string LexaFileName = "india_mane_prog";
         public frmUDPDebug()
         {
             InitializeComponent();
@@ -45,6 +49,7 @@ namespace _7637_WS4
                 _frmMain._frmPP_Test.udp.receivedService -= Udp_received;
                 _frmMain._frmPP_Test.udp.receivedDebug -= Udp_received;
                 _frmMain._frmPP_Test.udp.warningException -= Udp_warningException;
+                //CloseUDP();
             }
             this.Hide();
         }
@@ -106,27 +111,30 @@ namespace _7637_WS4
                     s2 = "№ отлад. порта " + ((ushort)(com_in.data[2] + (com_in.data[3] << 8))).ToString();
                     break;
                 case 0x2:
-                    
-                    switch (com_in.data[0])
+                    tmp = ((ResDescr2)(com_in.data[0])).ToString();
+
+                    Invoke((MethodInvoker)delegate
                     {
-                        default:
-                        case 0: tmp = "Штатная работа"; break;
-                        case 1: tmp = "Ошибка открытия файла"; break;
-                        case 2: tmp = "Потеряна связь со стендом"; break;
-                        case 3: tmp = "Ошибка открытия ком-порта"; break;
-                    }
+                        _frmMain._frmPP_Test.txtDAQInfo.Text = tmp;
+                    });
+                    
                     s1 = "Статус: " + tmp;
-                    s2 = "Количество шагов в тесте: " + ((ushort)(com_in.data[1] + (com_in.data[2] << 8))).ToString();
+                    ushort numOfTests = (ushort)((com_in.data[1] + (com_in.data[2] << 8)));
+                    Invoke((MethodInvoker)delegate
+                    {
+                        _frmMain._frmPP_Test.lblTEstCount.Text = numOfTests.ToString();
+                    });
+                    
+                    s2 = "Количество шагов в тесте: " + numOfTests.ToString();
                     break;
                 case 0x3:
-                    switch (com_in.data[0])
+                    tmp = ((ResDescr3)(com_in.data[0])).ToString();
+
+                    Invoke((MethodInvoker)delegate
                     {
-                        default:
-                        case 0: tmp = "Штатная работа"; break;
-                        case 1: tmp = "Ошибка выполнения теста"; break;
-                        case 2: tmp = "Потеряна связь со стендом"; break;
-                        case 3: tmp = "Номер шага больше, чем кол-во шагов в открытом тесте"; break;
-                    }
+                        _frmMain._frmPP_Test.lblResult.Text = tmp;
+                    });
+
                     s1 = "Статус: " + tmp;
                     break;
                 case 0x10:
@@ -138,7 +146,7 @@ namespace _7637_WS4
                 date,
                 descr.ToString("X2").PadRight(10),
                 s1.PadRight(40),
-                s2.PadRight(25),
+                s2.PadRight(30),
                 endPoint.Address.ToString() + ":" + endPoint.Port.ToString());
 
             if (InvokeRequired)
@@ -264,7 +272,7 @@ namespace _7637_WS4
             SendCommand(com);
         }
 
-        private void SendCommandDescr3(UInt16 step)
+        public void SendCommandDescr3(UInt16 step)
         {
             UDPCommand com = comUDPout3;
 
@@ -319,7 +327,7 @@ namespace _7637_WS4
             else
                 MessageBox.Show($"Файл {startInfo.FileName} не найден");*/
 
-            string filename = Application.StartupPath + "/ALEKSENKO/india_mane_prog.exe";
+            string filename = Application.StartupPath + "/ALEKSENKO/" + LexaFileName + ".exe";
             if (File.Exists(filename))
                 Process.Start(filename, "nogui");
         }
@@ -336,6 +344,7 @@ namespace _7637_WS4
                 if (_frmMain._frmPP_Test.udp != null)
                 {
                     _frmMain._frmPP_Test.udp.Close();
+                    _frmMain._frmPP_Test.udp = null;
                     AddToList("Сокеты закрыты");
                     btnCreateUDP.Enabled = true;
                 }

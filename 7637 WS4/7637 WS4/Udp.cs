@@ -106,6 +106,7 @@ namespace _7637_WS4
                     
                     if (token.IsCancellationRequested)
                     {
+                        socket.Close();
                         return;
                     }
                     EndPoint remoteIP = new IPEndPoint(IPAddress.Any, 0);
@@ -156,6 +157,7 @@ namespace _7637_WS4
 
                     if (token.IsCancellationRequested)
                     {
+                        socket.Close();
                         return;
                     }
                     EndPoint remoteIP = new IPEndPoint(IPAddress.Any, 0);

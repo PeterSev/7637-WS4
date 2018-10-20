@@ -146,7 +146,8 @@ namespace _7637_WS4
                 e.Cancel = true;
                 bNeedReload = true;
                 //bNeedStop = true;
-                cancelTokenSource.Cancel();
+                if(cancelTokenSource!=null)
+                    cancelTokenSource.Cancel();
 
                 _frmMain.niControl.CloseDMM();
                 //CloseDCIVISession();
@@ -206,6 +207,7 @@ namespace _7637_WS4
         {
             _frmMain._frmNI.txtDMMWarning.Text = "";
             BPPPTest test = tests[num]; //получаем текущий тест из общего списка
+            lblRunCount.Text = num.ToString();
 
             if (lastTest != null) //будет НУЛЛОМ только в первый заход в цикл
             {

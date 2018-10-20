@@ -314,7 +314,8 @@ namespace _7637_WS4
 
         public void CreateDMM()
         {
-            dmmSession = new NIDmm(listDeviceDMM[0], true, true);
+            if(listDeviceDMM.Count > 0)
+                dmmSession = new NIDmm(listDeviceDMM[0], true, true);
         }
 
         public void CloseDMM()

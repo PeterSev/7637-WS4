@@ -146,6 +146,7 @@ namespace _7637_WS4
                 e.Cancel = true;
                 bNeedReload = true;
                 selectedBoard = string.Empty;
+                _frmMain._frmUDPDebug.CloseUDP();
                 this.Hide();
                 _frmMain._frmTests.Show();
             }
