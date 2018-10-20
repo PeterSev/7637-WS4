@@ -247,11 +247,14 @@ namespace _7637_WS4
             _frmNI.Close();
             Thread.Sleep(200);
 
-            niControl?.CloseDCIVISession();
-            niControl?.CloseRelaySession();
-            niControl?.daqEtalon.Dispose();
-            niControl?.daqMeasured.Dispose();
-
+            try
+            {
+                niControl?.CloseDCIVISession();
+                niControl?.CloseRelaySession();
+                niControl?.daqEtalon.Dispose();
+                niControl?.daqMeasured.Dispose();
+            }
+            catch { }
         }
 
         private void frmMain_MouseDoubleClick(object sender, MouseEventArgs e)

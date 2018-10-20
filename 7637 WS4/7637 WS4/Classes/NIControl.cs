@@ -295,20 +295,23 @@ namespace _7637_WS4
             //powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
             //resolutionDMM = resolutionValues[2]; //6.5
 
-            //Составляем список DMM оборудования
-            ModularInstrumentsSystem modularInstrumentsSystem = new ModularInstrumentsSystem("NI-DMM");
-            foreach (DeviceInfo device in modularInstrumentsSystem.DeviceCollection)
-                listDeviceDMM.Add(device.Name);
-            if (listDeviceDMM.Count < 1)
-                WarningDMMUpdate?.Invoke("No DMM device found!");
-            else
-                WarningDMMUpdate?.Invoke("Device " + listDeviceDMM[0] + " found");
+            try
+            {
+                //Составляем список DMM оборудования
+                ModularInstrumentsSystem modularInstrumentsSystem = new ModularInstrumentsSystem("NI-DMM");
+                foreach (DeviceInfo device in modularInstrumentsSystem.DeviceCollection)
+                    listDeviceDMM.Add(device.Name);
+                if (listDeviceDMM.Count < 1)
+                    WarningDMMUpdate?.Invoke("No DMM device found!");
+                else
+                    WarningDMMUpdate?.Invoke("Device " + listDeviceDMM[0] + " found");
 
-            //Составляем список режимов измерения DMM
-            listMeasureModeDMM.AddRange(Enum.GetNames(typeof(DmmMeasurementFunction)));
-            listMeasureModeDMM.Remove(DmmMeasurementFunction.WaveformCurrent.ToString());
-            listMeasureModeDMM.Remove(DmmMeasurementFunction.WaveformVoltage.ToString());
-
+                //Составляем список режимов измерения DMM
+                listMeasureModeDMM.AddRange(Enum.GetNames(typeof(DmmMeasurementFunction)));
+                listMeasureModeDMM.Remove(DmmMeasurementFunction.WaveformCurrent.ToString());
+                listMeasureModeDMM.Remove(DmmMeasurementFunction.WaveformVoltage.ToString());
+            }
+            catch { }
 
         }
 
@@ -393,8 +396,12 @@ namespace _7637_WS4
 
         public void InitDAQ()
         {
-            daqEtalon = new DAQ_Device("/ai1");
-            daqMeasured = new DAQ_Device("/ai0");
+            try
+            {
+                daqEtalon = new DAQ_Device("/ai1");
+                daqMeasured = new DAQ_Device("/ai0");
+            }
+            catch { }
         }
 
         #endregion
