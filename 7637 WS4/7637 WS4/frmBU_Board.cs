@@ -48,7 +48,7 @@ namespace _7637_WS4
                     MessageBox.Show(ex.Message, "Error");
                     return;
                 }
-                pict.SizeMode = PictureBoxSizeMode.StretchImage;
+                pict.SizeMode = PictureBoxSizeMode.Zoom;
                 pict.Image = Properties.Resources.ListBpppBoardInitmage;
                 txtComment.Text = Properties.Resources.comment_ListBpppBoards_Initial;
 

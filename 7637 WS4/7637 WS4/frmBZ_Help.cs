@@ -29,13 +29,13 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             indexPic = 0;
-            pict.SizeMode = PictureBoxSizeMode.StretchImage;
+            pict.SizeMode = PictureBoxSizeMode.Zoom;
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BZ/" + _frmMain._frmBZ.curBZBoard.Name + "/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " Блок зеркала. Плата " + _frmMain._frmBZ.curBZBoard.Name;
+            this.Text = curBoard.Name + " Mirror Unit. Board " + _frmMain._frmBZ.curBZBoard.Name;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 

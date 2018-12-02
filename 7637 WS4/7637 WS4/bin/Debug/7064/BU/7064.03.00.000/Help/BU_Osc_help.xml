@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HELPS>
 	<HELP>
-		<IMAGELINK>TRANS_7064.jpg</IMAGELINK>
-		<COMMENT>Подключить Блок Управления согласно представленной схеме</COMMENT>
+		<IMAGELINK>trans7064.jpg</IMAGELINK>
+		<COMMENT>Connect unit according to scheme</COMMENT>
 	</HELP>
 </HELPS>

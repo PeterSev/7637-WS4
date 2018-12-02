@@ -16,12 +16,13 @@ namespace _7637_WS4
         bool bNeedReload = true;
         int cntToPaint2 = 0;
         double[] bufToPaintGraph = new double[1000];
-
+        public AutoResetEvent dmmMeasuredEvent = new AutoResetEvent(false);
 
         public frmNI()
         {
             InitializeComponent();
             //Init();
+
         }
 
         void Init()
@@ -75,24 +76,33 @@ namespace _7637_WS4
         //DMM events
         private void NiControl_warningDMMUpdate(string msg)
         {
-            txtDMMWarning.Text = msg;
+            Invoke((MethodInvoker)delegate
+            {
+                txtDMMWarning.Text = msg;
+            });
         }
 
         private void NiControl_statusDMMUpdate(string msg)
         {
-            txtDMMStatus.Text = msg;
+                Invoke((MethodInvoker)delegate
+                {
+                    txtDMMStatus.Text = msg;
+                });
         }
 
         private void NiControl_bufReadDMMReceived(DMMResult dmmResult)
         {
-            lstDMMValues.Items.Clear();
-            foreach (double d in dmmResult.buf)
-                lstDMMValues.Items.Add(d);
-            txtDMMMeasurementMode.Text = dmmResult.measurementMode;
+            Invoke((MethodInvoker)delegate
+            {
+                lstDMMValues.Items.Clear();
+                foreach (double d in dmmResult.buf)
+                    lstDMMValues.Items.Add(d);
+                txtDMMMeasurementMode.Text = dmmResult.measurementMode;
 
-            //_frmMain.resultOfMeasurementDMM = dmmResult.buf[0];
-            _frmMain.resultOfMeasurementDMM = dmmResult.buf.Average();
-
+                //_frmMain.resultOfMeasurementDMM = dmmResult.buf[0];
+                _frmMain.resultOfMeasurementDMM = dmmResult.buf.Average();
+            });
+            dmmMeasuredEvent.Set();
         }
 
         //SWITCH events
@@ -193,25 +203,22 @@ namespace _7637_WS4
             _frmMain.amplOfMeasuredSignal = Math.Round((Math.Abs(_frmMain.maxOfMeasuredSignal) + Math.Abs(buf.Min())), 3);
             _frmMain._frmBU_Prozv_Test.eventDAQMeasuredUpdate.Set();
 
-            //BeginInvoke((MethodInvoker)delegate
-            //{
-            /*lstDAQMeasuredValues.Items.Clear();
-            foreach (double d in buf)
-                lstDAQMeasuredValues.Items.Add(d);*/
             if (_frmMain._frmBU_Prozv_Test.curMode == ProzvMode.Выборочная)
             {
                 cntToPaint2++;
-
-                if (_frmMain.amplOfMeasuredSignal >= _frmMain.amplOfEtalonSignal - 2)
+                Invoke((MethodInvoker)delegate
                 {
-                    _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.ForeColor = Color.LightGreen;
-                    _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.Text = "PASSED";
-                }
-                else
-                {
-                    _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.ForeColor = Color.Red;
-                    _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.Text = "FAILED";
-                }
+                    if (_frmMain.amplOfMeasuredSignal >= _frmMain.amplOfEtalonSignal - 2)
+                    {
+                        _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.ForeColor = Color.LightGreen;
+                        _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.Text = "PASSED";
+                    }
+                    else
+                    {
+                        _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.ForeColor = Color.Red;
+                        _frmMain._frmBU_Prozv_Test.lblResultOfDAQ.Text = "FAILED";
+                    }
+                });
             }
             else if (_frmMain._frmBU_Prozv_Test.curMode == ProzvMode.КонтрольОбрыв)
                 cntToPaint2 = 50;
@@ -220,17 +227,18 @@ namespace _7637_WS4
 
             if (cntToPaint2 >= 50)          //прореживаем отрисовку графика
             {
-                lblMaxMeasured.Text = "Measured MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfMeasuredSignal, 3).ToString("F3").PadLeft(7);
-                lblMeasuredSum.Text = "Measured AMPL: ".PadRight(16) + _frmMain.amplOfMeasuredSignal.ToString("F3").PadLeft(7);
-
-
-                chart1.Series[1].Points.Clear();
-                Array.Copy(buf, bufToPaintGraph, bufToPaintGraph.Length);   //чтобы не нагружать график, рисуем лишь первых 1000 точек входящего буфера
-                for (int i = 0; i < bufToPaintGraph.Length; i++)
+                Invoke((MethodInvoker)delegate
                 {
-                    chart1.Series[1].Points.AddXY(i, bufToPaintGraph[i]);
-                }
+                    lblMaxMeasured.Text = "Measured MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfMeasuredSignal, 3).ToString("F3").PadLeft(7);
+                    lblMeasuredSum.Text = "Measured AMPL: ".PadRight(16) + _frmMain.amplOfMeasuredSignal.ToString("F3").PadLeft(7);
 
+                    chart1.Series[1].Points.Clear();
+                    Array.Copy(buf, bufToPaintGraph, bufToPaintGraph.Length);   //чтобы не нагружать график, рисуем лишь первых 1000 точек входящего буфера
+                    for (int i = 0; i < bufToPaintGraph.Length; i++)
+                    {
+                        chart1.Series[1].Points.AddXY(i, bufToPaintGraph[i]);
+                    }
+                });
                 cntToPaint2 = 0;
             }
         }
@@ -245,12 +253,8 @@ namespace _7637_WS4
 
             //BeginInvoke((MethodInvoker)delegate
             //{
-            /*lstDAQEtalonValues.Items.Clear();
-            foreach (double d in buf)
-                lstDAQEtalonValues.Items.Add(d);*/
-            //cntToPaint++;
-            //if (cntToPaint >= 10)
-            //{
+            Invoke((MethodInvoker)delegate
+            {
                 lblMaxEtalon.Text = "Etalon MAX: ".PadRight(16) + Math.Round(_frmMain.maxOfEtalonSignal, 3).ToString("F3").PadLeft(7);
 
                 chart1.Series[0].Points.Clear();
@@ -260,15 +264,12 @@ namespace _7637_WS4
                 {
                     chart1.Series[0].Points.AddXY(i, bufToPaintGraph[i]);
                 }
-
-                //cntToPaint = 0;
-            //}
-            //});
+            });
         }
 
         private void NiControl_warningDAQUpdate(string msg)
         {
-            BeginInvoke((MethodInvoker)delegate
+            Invoke((MethodInvoker)delegate
             {
                 txtDAQWarning.Text = msg;
                 _frmMain._frmBU_Prozv_Test.ResetControls(true);

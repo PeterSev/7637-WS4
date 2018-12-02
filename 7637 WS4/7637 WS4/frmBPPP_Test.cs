@@ -93,21 +93,22 @@ namespace _7637_WS4
             
         }
 
+        async void RunAllBpppTestAsync()
+        {
+            await Task.Factory.StartNew(RunBPPPAllTests, tests.Length);
+        }
+
         void RunBPPPAllTests(object cnt_)
         {
             int cnt = (int)cnt_;
-            //cnt = 1000000;
-            //_frmMain.niControl.DCSetOnOff("0", 24, true);
-            //_frmMain.niControl.OpenCloseRelay(true, "R6", "64");
-            //_frmMain.niControl.OpenCloseRelay(true, "R7", "66");
-            sw.Start();
+            sw.Restart();
 
             for (int i = 0; i < cnt; i++)
             {
                 if (token.IsCancellationRequested)
                 {
                     delFinishTests?.Invoke();
-                    break;
+                    return;
                 }
 
                 Invoke((MethodInvoker)delegate ()
@@ -115,17 +116,13 @@ namespace _7637_WS4
                     lblRunCount.Text = (i + 1).ToString();
                     int v = ((i + 1) * 100 / cnt);
                     if (colorProgressBar.Value != v) colorProgressBar.Value = v;
-
-                    RunBPPPTest(i, cnt);
                 });
+                RunBPPPTest(i, cnt);
             }
 
             sw.Stop();
 
             delFinishTests?.Invoke();
-            //_frmMain.niControl.OpenCloseRelay(false, "R6", "64");
-            //_frmMain.niControl.OpenCloseRelay(false, "R7", "66");
-            //_frmMain.niControl.DCSetOnOff("0", 24, false);
         }
 
         public frmBPPP_Test()
@@ -149,10 +146,11 @@ namespace _7637_WS4
                 if(cancelTokenSource!=null)
                     cancelTokenSource.Cancel();
 
-                _frmMain.niControl.CloseDMM();
+                //_frmMain.niControl.CloseDMM();
                 //CloseDCIVISession();
                 this.Hide();
                 _frmMain._frmBPPP.Show();
+                _frmMain.niControl.CloseDMM();
             }
         }
 
@@ -205,9 +203,17 @@ namespace _7637_WS4
         
         private void RunBPPPTest(int num, int cntTotal)
         {
-            _frmMain._frmNI.txtDMMWarning.Text = "";
+            Invoke((MethodInvoker)delegate ()
+            {
+                _frmMain._frmNI.txtDMMWarning.Text = "";
+            });
+
             BPPPTest test = tests[num]; //получаем текущий тест из общего списка
-            lblRunCount.Text = num.ToString();
+
+            /*Invoke((MethodInvoker)delegate ()
+            {
+                lblRunCount.Text = num.ToString();
+            });*/
 
             if (lastTest != null) //будет НУЛЛОМ только в первый заход в цикл
             {
@@ -256,12 +262,26 @@ namespace _7637_WS4
 
             lastTest = test;
 
-            //После включения реле выжидаем паузу
-            Thread.Sleep(test.Delay);
+            try
+            {
+                //Проведение измерений---------------------------------------------
+                _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range, test.Accuracy);   //инициирование чтения мультиметра
 
-            //Проведение измерений---------------------------------------------
-            _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range, test.Accuracy);   //инициирование чтения мультиметра
-            
+                // выжидаем паузу
+                Thread.Sleep(test.Delay);
+
+                //Проведение измерений---------------------------------------------
+                _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range, test.Accuracy);   //инициирование чтения мультиметра
+
+                //выжидаем паузу
+                Thread.Sleep(test.Delay);
+
+                //Проведение измерений---------------------------------------------
+                _frmMain.niControl.ReadDMM(MultimeterMode.TwoWireResistance, test.Range, test.Accuracy);   //инициирование чтения мультиметра
+            }
+            catch { }
+
+            _frmMain._frmNI.dmmMeasuredEvent.WaitOne(1000);
 
             if (double.IsNaN(_frmMain.resultOfMeasurementDMM))
                 _frmMain.resultOfMeasurementDMM = double.PositiveInfinity - 1;
@@ -280,7 +300,6 @@ namespace _7637_WS4
                 lblResultOfDMM.ForeColor = Color.LightGreen;
                 sRes = "PASSED";
             }
-
             else
             {
                 lblResultOfDMM.ForeColor = Color.Red;
@@ -288,9 +307,11 @@ namespace _7637_WS4
                 sRes = "FAILED";
             }
 
-            
 
-            lblResultOfDMM.Text = Math.Round(_frmMain.resultOfMeasurementDMM, 6).ToString();    //запоминаем последнее значение от мультиметра
+            Invoke((MethodInvoker)delegate
+            {
+                lblResultOfDMM.Text = Math.Round(_frmMain.resultOfMeasurementDMM, 6).ToString();    //запоминаем последнее значение от мультиметра
+            });
             tests[num].Value = Math.Round(_frmMain.resultOfMeasurementDMM, 6);                  //записываем измеренное значение в текущий тест
             tests[num].Result = sRes;                                                           //записываем результат проверки
 
@@ -341,7 +362,7 @@ namespace _7637_WS4
             }
         }
 
-        private void btnRunAllBPPPTest_ClickAsync(object sender, EventArgs e)
+        private void btnRunAllBPPPTest_Click(object sender, EventArgs e)
         {
             cancelTokenSource = new CancellationTokenSource();
             token = cancelTokenSource.Token;
@@ -349,11 +370,8 @@ namespace _7637_WS4
 
             PrepareToTest();
 
-            //Task.Run(() => RunBPPPAllTests(tests.Length));
-            //Task.Factory.StartNew(RunBPPPAllTests, tests.Length);
-            RunBPPPAllTests(tests.Length);
-
-            //SaveReportAndShowResult();
+            //RunBPPPAllTests(tests.Length);
+            RunAllBpppTestAsync();
         }
 
         void PrepareToTest()
@@ -363,6 +381,8 @@ namespace _7637_WS4
             btnStopAllTest.Enabled = true;
             btnRunAllBPPPTest.Enabled = false;
             colorProgressBar.Visible = true;
+            btnRunBPPPTest.Enabled = false;
+            numTest.Enabled = false;
             badTests.Clear();
             //_frmMain._frmBPPP_Report.Close();
             if (_frmMain._frmBPPP_Report.IsHandleCreated)
@@ -382,6 +402,8 @@ namespace _7637_WS4
             btnRunAllBPPPTest.Enabled = true;
             colorProgressBar.Visible = false;
             btnShowReport.Visible = true;
+            btnRunBPPPTest.Enabled = true;
+            numTest.Enabled = true;
             Task.Factory.StartNew(() =>
             {
                 try

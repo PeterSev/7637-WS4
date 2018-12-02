@@ -24,13 +24,13 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             indexPic = 0;
-            pict.SizeMode = PictureBoxSizeMode.StretchImage;
+            pict.SizeMode = PictureBoxSizeMode.Zoom;
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/PP/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " Проверка плат";
+            this.Text = curBoard.Name + " Board checking";
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -58,9 +58,9 @@ namespace _7637_WS4
             else
             {
                 pict.Image = Properties.Resources.pictLoadError;
-                txtComment.Text = "Отсутствует запись о выбранном файле";
+                txtComment.Text = "No file record";
             }
-            lblNum.Text = (index + 1).ToString() + " из " + listHelp.Count;
+            lblNum.Text = (index + 1).ToString() + " of " + listHelp.Count;
         }
 
         public frmPP_Help()
@@ -114,10 +114,17 @@ namespace _7637_WS4
             this.Hide();
             bNeedReload = true;
             _frmMain._frmPP.Show();
-                if (_frmMain._frmUDPDebug.CreateUDP())
-                    _frmMain._frmPP.txtComment.BackColor = Color.LightGreen;
-                else
-                    _frmMain._frmPP.txtComment.BackColor = Color.LightBlue;
+            if (_frmMain._frmUDPDebug.CreateUDP())
+            {
+                _frmMain._frmPP.txtComment.BackColor = Color.LightGreen;
+                if (!Utils.isProcessRunning(_frmMain._frmUDPDebug.LexaFileName))
+                {
+                    _frmMain._frmUDPDebug.StartAlexProg();
+                    _frmMain._frmPP_Test.descr1Event.WaitOne(10000);
+                }
+            }
+            else
+                _frmMain._frmPP.txtComment.BackColor = Color.LightBlue;
 
             //_frmMain._frmUDPDebug.Show();
         }

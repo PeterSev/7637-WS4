@@ -66,12 +66,12 @@
             // 
             this.grpBoards.Controls.Add(this.panel);
             this.grpBoards.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.grpBoards.Location = new System.Drawing.Point(12, 12);
+            this.grpBoards.Location = new System.Drawing.Point(2, 12);
             this.grpBoards.Name = "grpBoards";
-            this.grpBoards.Size = new System.Drawing.Size(306, 697);
+            this.grpBoards.Size = new System.Drawing.Size(316, 697);
             this.grpBoards.TabIndex = 22;
             this.grpBoards.TabStop = false;
-            this.grpBoards.Text = "Список плат";
+            this.grpBoards.Text = "List of boards";
             // 
             // panel
             // 
@@ -79,7 +79,7 @@
             this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel.Location = new System.Drawing.Point(3, 19);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(300, 675);
+            this.panel.Size = new System.Drawing.Size(310, 675);
             this.panel.TabIndex = 0;
             // 
             // txtComment
@@ -118,6 +118,8 @@
             this.Controls.Add(this.grpBoards);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.pict);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "frmPP";
             this.Text = "frmPP";
             this.Activated += new System.EventHandler(this.frmPP_Activated);

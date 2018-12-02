@@ -445,7 +445,7 @@
             this.btnRunAllBPPPTest.TabIndex = 8;
             this.btnRunAllBPPPTest.Text = "Run all tests";
             this.btnRunAllBPPPTest.UseVisualStyleBackColor = false;
-            this.btnRunAllBPPPTest.Click += new System.EventHandler(this.btnRunAllBPPPTest_ClickAsync);
+            this.btnRunAllBPPPTest.Click += new System.EventHandler(this.btnRunAllBPPPTest_Click);
             // 
             // btnRunBPPPTest
             // 

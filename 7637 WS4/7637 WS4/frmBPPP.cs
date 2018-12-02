@@ -50,7 +50,7 @@ namespace _7637_WS4
                     MessageBox.Show(ex.Message, "Error");
                     return;
                 }
-                pict.SizeMode = PictureBoxSizeMode.StretchImage;
+                pict.SizeMode = PictureBoxSizeMode.Zoom;
                 pict.Image = Properties.Resources.ListBpppBoardInitmage;
                 txtComment.Text = Properties.Resources.comment_ListBpppBoards_Initial;
 
@@ -71,7 +71,7 @@ namespace _7637_WS4
             {
                 Button btn = new Button();
                 string name = list[i].Name;
-                if (name.Length > 20) name = name.Substring(0, 20) + "..";
+                if (name.Length > 25) name = name.Substring(0, 25) + "..";
                 btn.Text = name;
 
                 btn.Name = "btn" + i.ToString();
@@ -81,11 +81,11 @@ namespace _7637_WS4
                 btn.MouseHover += Btn_MouseHover;
                 btn.Enter += Btn_MouseEnter;
                 btn.Leave += Btn_MouseLeave;
-                btn.Font = new Font("Verdana", 16);
-                btn.Left = 10;
+                btn.Font = new Font("Verdana", 13);
+                btn.Left = 2;
                 btn.Top = i * 50 + 0;
                 btn.Height = 42;
-                btn.Width = 260;
+                btn.Width = 290;
 
                 panel.Controls.Add(btn);
             }
@@ -130,6 +130,7 @@ namespace _7637_WS4
             Button btn = (Button)sender;
             int index = int.Parse(btn.Name.Substring(3, btn.Name.Length - 3));
             curBpppBoard = listBpppBoards[index];
+            curBpppBoard.Name = curBpppBoard.Name.Substring(0, curBpppBoard.Name.IndexOf('(') - 1);
             this.Hide();
             _frmMain._frmBPPP_Help.Show();
         }

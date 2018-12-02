@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.panelRight = new System.Windows.Forms.Panel();
-            this.btnOK = new System.Windows.Forms.Button();
             this.lblLeft = new System.Windows.Forms.Label();
+            this.btnOK = new System.Windows.Forms.Button();
             this.lblNum = new System.Windows.Forms.Label();
             this.lblRight = new System.Windows.Forms.Label();
             this.txtComment = new System.Windows.Forms.TextBox();
@@ -51,18 +51,6 @@
             this.panelRight.Size = new System.Drawing.Size(140, 94);
             this.panelRight.TabIndex = 15;
             // 
-            // btnOK
-            // 
-            this.btnOK.Font = new System.Drawing.Font("Verdana", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnOK.Location = new System.Drawing.Point(12, 54);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(120, 40);
-            this.btnOK.TabIndex = 7;
-            this.btnOK.Text = "ОК";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Visible = false;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
             // lblLeft
             // 
             this.lblLeft.AutoSize = true;
@@ -74,6 +62,18 @@
             this.lblLeft.TabIndex = 8;
             this.lblLeft.Text = "<<";
             this.lblLeft.Click += new System.EventHandler(this.lblLeft_Click);
+            // 
+            // btnOK
+            // 
+            this.btnOK.Font = new System.Drawing.Font("Verdana", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnOK.Location = new System.Drawing.Point(12, 54);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(120, 40);
+            this.btnOK.TabIndex = 7;
+            this.btnOK.Text = "ОК";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Visible = false;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // lblNum
             // 
@@ -105,9 +105,9 @@
             this.txtComment.Multiline = true;
             this.txtComment.Name = "txtComment";
             this.txtComment.ReadOnly = true;
+            this.txtComment.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtComment.Size = new System.Drawing.Size(654, 91);
             this.txtComment.TabIndex = 14;
-            this.txtComment.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pict
             // 

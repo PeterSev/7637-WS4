@@ -125,6 +125,7 @@
             this.Controls.Add(this.panelRight);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.pict);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmBU_Prozv_Help";
             this.Text = "frmBU_Prozv_Help";
             this.Activated += new System.EventHandler(this.frmBU_Prozv_Help_Activated);

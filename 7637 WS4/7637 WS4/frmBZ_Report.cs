@@ -28,7 +28,7 @@ namespace _7637_WS4
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
             lstBad = _frmMain._frmBZ_Test.badTests;
-            this.Text = curBoard.Name + " Блок зеркала. Отчет. Тесты, не прошедшие проверку";
+            this.Text = curBoard.Name + " Mirror unit. Report. Failed tests";
             this.BackColor = Color.RoyalBlue;
 
             lstTest.BackColor = Color.RoyalBlue;
@@ -60,7 +60,7 @@ namespace _7637_WS4
                 listCount = 1;
             }
 
-            string outstr = string.Format("{0:0000}     Между контактами {1} разъема Х1 измеренное значение R = {2} при граничных условиях ({3} -> {4})Ом",
+            string outstr = string.Format("{0:0000}     Between contacts {1} connector Х1 measured value R = {2} when limit is (from {3} -> to {4}) Omh",
                 listCount,
                 test.Comment,
                 test.Value,

@@ -29,7 +29,7 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             indexPic = 0;
-            pict.SizeMode = PictureBoxSizeMode.StretchImage;
+            pict.SizeMode = PictureBoxSizeMode.Zoom;
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BU/" + _frmMain._frmBU_Board.curBUBoard.Name + "/Help/";
             btnOK.Visible = false;

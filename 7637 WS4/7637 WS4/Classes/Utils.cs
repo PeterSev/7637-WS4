@@ -22,6 +22,12 @@ namespace _7637_WS4
                 p.Kill();
         }
 
+        public static bool isProcessRunning(string processName)
+        {
+            Process[] procs = Process.GetProcessesByName(processName);
+            return procs.Length > 0 ? true : false;
+        }
+
         public static void WriteLineToFile(string fullFileName, string message)
         {
             using (StreamWriter sw = new StreamWriter(fullFileName, true))

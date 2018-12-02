@@ -28,13 +28,13 @@ namespace _7637_WS4
 
             bNeedReload = false;
             indexPic = 0;
-            pict.SizeMode = PictureBoxSizeMode.StretchImage;
+            pict.SizeMode = PictureBoxSizeMode.Zoom;
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/PP/" + _frmMain._frmPP.selectedBoard + "/Help/";
             btnOK.Visible = false;
             listHelp = null;
 
-            this.Text = curBoard.Name + " Проверка платы №" + _frmMain._frmPP.selectedBoard;
+            this.Text = curBoard.Name + " Board checking #" + _frmMain._frmPP.selectedBoard;
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -62,7 +62,7 @@ namespace _7637_WS4
             else
             {
                 pict.Image = Properties.Resources.pictLoadError;
-                txtComment.Text = "Отсутствует запись о выбранном файле";
+                txtComment.Text = "No file record";
             }
             lblNum.Text = (index + 1).ToString() + " из " + listHelp.Count;
         }

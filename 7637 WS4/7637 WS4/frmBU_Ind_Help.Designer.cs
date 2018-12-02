@@ -125,6 +125,8 @@
             this.Controls.Add(this.panelRight);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.pict);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "frmBU_Ind_Help";
             this.Text = "frmBU_Ind_Help";
             this.Activated += new System.EventHandler(this.frmBU_Ind_Help_Activated);

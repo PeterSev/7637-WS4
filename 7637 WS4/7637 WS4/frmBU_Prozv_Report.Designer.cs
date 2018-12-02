@@ -48,7 +48,7 @@
             this.lstTest.Location = new System.Drawing.Point(0, 0);
             this.lstTest.Name = "lstTest";
             this.lstTest.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstTest.Size = new System.Drawing.Size(1422, 420);
+            this.lstTest.Size = new System.Drawing.Size(1362, 420);
             this.lstTest.TabIndex = 1;
             // 
             // contextMenuStrip1
@@ -58,19 +58,19 @@
             this.скопироватьВБуферToolStripMenuItem,
             this.печататьВыделенныеСтрокиToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(238, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(238, 70);
             // 
             // очиститьЛогToolStripMenuItem
             // 
             this.очиститьЛогToolStripMenuItem.Name = "очиститьЛогToolStripMenuItem";
-            this.очиститьЛогToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.очиститьЛогToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.очиститьЛогToolStripMenuItem.Text = "Очистить лог";
             this.очиститьЛогToolStripMenuItem.Click += new System.EventHandler(this.очиститьЛогToolStripMenuItem_Click);
             // 
             // скопироватьВБуферToolStripMenuItem
             // 
             this.скопироватьВБуферToolStripMenuItem.Name = "скопироватьВБуферToolStripMenuItem";
-            this.скопироватьВБуферToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.скопироватьВБуферToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.скопироватьВБуферToolStripMenuItem.Text = "Скопировать в буфер";
             this.скопироватьВБуферToolStripMenuItem.Click += new System.EventHandler(this.скопироватьВБуферToolStripMenuItem_Click);
             // 
@@ -85,7 +85,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1422, 420);
+            this.ClientSize = new System.Drawing.Size(1362, 420);
             this.Controls.Add(this.lstTest);
             this.Name = "frmBU_Prozv_Report";
             this.Text = "frmBU_Prozv_Report";
