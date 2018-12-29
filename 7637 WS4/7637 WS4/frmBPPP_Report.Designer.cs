@@ -58,27 +58,27 @@
             this.скопироватьВБуферToolStripMenuItem,
             this.печататьВыделенныеСтрокиToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(238, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(184, 92);
             // 
             // очиститьЛогToolStripMenuItem
             // 
             this.очиститьЛогToolStripMenuItem.Name = "очиститьЛогToolStripMenuItem";
-            this.очиститьЛогToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-            this.очиститьЛогToolStripMenuItem.Text = "Очистить лог";
+            this.очиститьЛогToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.очиститьЛогToolStripMenuItem.Text = "Clear log";
             this.очиститьЛогToolStripMenuItem.Click += new System.EventHandler(this.очиститьЛогToolStripMenuItem_Click);
             // 
             // скопироватьВБуферToolStripMenuItem
             // 
             this.скопироватьВБуферToolStripMenuItem.Name = "скопироватьВБуферToolStripMenuItem";
-            this.скопироватьВБуферToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-            this.скопироватьВБуферToolStripMenuItem.Text = "Скопировать в буфер";
+            this.скопироватьВБуферToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.скопироватьВБуферToolStripMenuItem.Text = "Copy to buffer";
             this.скопироватьВБуферToolStripMenuItem.Click += new System.EventHandler(this.скопироватьВБуферToolStripMenuItem_Click);
             // 
             // печататьВыделенныеСтрокиToolStripMenuItem
             // 
             this.печататьВыделенныеСтрокиToolStripMenuItem.Name = "печататьВыделенныеСтрокиToolStripMenuItem";
-            this.печататьВыделенныеСтрокиToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-            this.печататьВыделенныеСтрокиToolStripMenuItem.Text = "Печатать выделенные строки";
+            this.печататьВыделенныеСтрокиToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.печататьВыделенныеСтрокиToolStripMenuItem.Text = "Print selected strings";
             this.печататьВыделенныеСтрокиToolStripMenuItem.Click += new System.EventHandler(this.печататьВыделенныеСтрокиToolStripMenuItem_Click);
             // 
             // frmBPPP_Report

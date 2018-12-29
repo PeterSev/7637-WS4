@@ -29,7 +29,7 @@ namespace _7637_WS4
             curBoard = _frmMain.curBoard;
             lstBad = _frmMain._frmBU_Prozv_Test.badTests;
 
-            this.Text = curBoard.Name + " БУ. Прозвонка. Отчет. Тесты, не прошедшие проверку";
+            this.Text = curBoard.Name + " CU. Continuity. Report. Failed tests";
             this.BackColor = Color.RoyalBlue;
             lstTest.BackColor = Color.RoyalBlue;
             lstTest.ForeColor = Color.White;

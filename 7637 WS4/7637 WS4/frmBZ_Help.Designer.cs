@@ -47,6 +47,7 @@
             this.txtComment.Multiline = true;
             this.txtComment.Name = "txtComment";
             this.txtComment.ReadOnly = true;
+            this.txtComment.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtComment.Size = new System.Drawing.Size(654, 91);
             this.txtComment.TabIndex = 3;
             this.txtComment.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

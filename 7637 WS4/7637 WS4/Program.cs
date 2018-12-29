@@ -14,13 +14,14 @@ namespace _7637_WS4
         [STAThread]
         static void Main()
         {
-            /*Application.SetCompatibleTextRenderingDefault(false);
+            Application.SetCompatibleTextRenderingDefault(false);
             frmLogo first = new frmLogo();
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(2);
             first.Show();
             while (end > DateTime.Now) { Application.DoEvents(); }
             first.Close();
-            first.Dispose();*/
+            first.Dispose();
+
             Application.EnableVisualStyles();
             Application.Run(new frmMain());
         }

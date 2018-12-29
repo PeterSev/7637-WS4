@@ -31,12 +31,13 @@
             this.btnShowUDPDebug = new System.Windows.Forms.Button();
             this.grpPPTest = new System.Windows.Forms.GroupBox();
             this.txtDAQInfo = new System.Windows.Forms.TextBox();
+            this.colorProgressBar = new _7637_WS4.ColorProgressBar();
             this.lblT = new System.Windows.Forms.Label();
             this.lblRunCount = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnShowReport = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lblTEstCount = new System.Windows.Forms.Label();
+            this.lblTestCount = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnStopAllTest = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -45,7 +46,6 @@
             this.numTest = new System.Windows.Forms.NumericUpDown();
             this.btnRunAllPPTest = new System.Windows.Forms.Button();
             this.btnRunPPTest = new System.Windows.Forms.Button();
-            this.colorProgressBar = new _7637_WS4.ColorProgressBar();
             this.grpPPTest.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTest)).BeginInit();
             this.SuspendLayout();
@@ -60,6 +60,7 @@
             this.btnShowUDPDebug.TabIndex = 2;
             this.btnShowUDPDebug.Text = "UDP Debug";
             this.btnShowUDPDebug.UseVisualStyleBackColor = false;
+            this.btnShowUDPDebug.Visible = false;
             this.btnShowUDPDebug.Click += new System.EventHandler(this.btnShowUDPDebug_Click);
             // 
             // grpPPTest
@@ -69,10 +70,10 @@
             this.grpPPTest.Controls.Add(this.colorProgressBar);
             this.grpPPTest.Controls.Add(this.lblT);
             this.grpPPTest.Controls.Add(this.lblRunCount);
-            this.grpPPTest.Controls.Add(this.button1);
+            this.grpPPTest.Controls.Add(this.btnShowReport);
             this.grpPPTest.Controls.Add(this.label6);
             this.grpPPTest.Controls.Add(this.label5);
-            this.grpPPTest.Controls.Add(this.lblTEstCount);
+            this.grpPPTest.Controls.Add(this.lblTestCount);
             this.grpPPTest.Controls.Add(this.label4);
             this.grpPPTest.Controls.Add(this.btnStopAllTest);
             this.grpPPTest.Controls.Add(this.label7);
@@ -102,10 +103,28 @@
             this.txtDAQInfo.TabIndex = 9;
             this.txtDAQInfo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // colorProgressBar
+            // 
+            this.colorProgressBar.BackColor = System.Drawing.Color.White;
+            this.colorProgressBar.BorderColor = System.Drawing.Color.Black;
+            this.colorProgressBar.BorderWidth = 0;
+            this.colorProgressBar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.colorProgressBar.Location = new System.Drawing.Point(9, 120);
+            this.colorProgressBar.MaxValue = 100;
+            this.colorProgressBar.MinValue = 0;
+            this.colorProgressBar.Name = "colorProgressBar";
+            this.colorProgressBar.ProgressColor = System.Drawing.Color.LightGreen;
+            this.colorProgressBar.ProgressTextType = _7637_WS4.ColorProgressBar.FsProgressTextType.Percent;
+            this.colorProgressBar.ShowProgressText = true;
+            this.colorProgressBar.Size = new System.Drawing.Size(541, 25);
+            this.colorProgressBar.TabIndex = 13;
+            this.colorProgressBar.Value = 0;
+            this.colorProgressBar.Visible = false;
+            // 
             // lblT
             // 
             this.lblT.AutoSize = true;
-            this.lblT.Location = new System.Drawing.Point(386, 94);
+            this.lblT.Location = new System.Drawing.Point(347, 94);
             this.lblT.Name = "lblT";
             this.lblT.Size = new System.Drawing.Size(16, 17);
             this.lblT.TabIndex = 11;
@@ -120,23 +139,23 @@
             this.lblRunCount.TabIndex = 4;
             this.lblRunCount.Text = "0";
             // 
-            // button1
+            // btnShowReport
             // 
-            this.button1.BackColor = System.Drawing.Color.RoyalBlue;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(475, 16);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 25);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Report";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.btnShowReport_Click);
+            this.btnShowReport.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnShowReport.ForeColor = System.Drawing.Color.White;
+            this.btnShowReport.Location = new System.Drawing.Point(475, 16);
+            this.btnShowReport.Name = "btnShowReport";
+            this.btnShowReport.Size = new System.Drawing.Size(75, 25);
+            this.btnShowReport.TabIndex = 1;
+            this.btnShowReport.Text = "Report";
+            this.btnShowReport.UseVisualStyleBackColor = false;
+            this.btnShowReport.Visible = false;
+            this.btnShowReport.Click += new System.EventHandler(this.btnShowReport_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(300, 94);
+            this.label6.Location = new System.Drawing.Point(298, 94);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(43, 17);
             this.label6.TabIndex = 10;
@@ -145,29 +164,30 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(300, 77);
+            this.label5.Location = new System.Drawing.Point(289, 72);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 17);
             this.label5.TabIndex = 10;
             this.label5.Text = "Result:";
             // 
-            // lblTEstCount
+            // lblTestCount
             // 
-            this.lblTEstCount.AutoSize = true;
-            this.lblTEstCount.Location = new System.Drawing.Point(187, 24);
-            this.lblTEstCount.Name = "lblTEstCount";
-            this.lblTEstCount.Size = new System.Drawing.Size(16, 17);
-            this.lblTEstCount.TabIndex = 4;
-            this.lblTEstCount.Text = "0";
+            this.lblTestCount.AutoSize = true;
+            this.lblTestCount.Location = new System.Drawing.Point(187, 24);
+            this.lblTestCount.Name = "lblTestCount";
+            this.lblTestCount.Size = new System.Drawing.Size(16, 17);
+            this.lblTestCount.TabIndex = 4;
+            this.lblTestCount.Text = "0";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(52, 51);
+            this.label4.Location = new System.Drawing.Point(3, 47);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(129, 17);
             this.label4.TabIndex = 10;
             this.label4.Text = "Index of single test:";
+            this.label4.Visible = false;
             // 
             // btnStopAllTest
             // 
@@ -180,6 +200,7 @@
             this.btnStopAllTest.TabIndex = 9;
             this.btnStopAllTest.Text = "Stop";
             this.btnStopAllTest.UseVisualStyleBackColor = false;
+            this.btnStopAllTest.Click += new System.EventHandler(this.btnStopAllTest_Click);
             // 
             // label7
             // 
@@ -202,7 +223,7 @@
             // lblResult
             // 
             this.lblResult.AutoSize = true;
-            this.lblResult.Location = new System.Drawing.Point(358, 78);
+            this.lblResult.Location = new System.Drawing.Point(347, 72);
             this.lblResult.Name = "lblResult";
             this.lblResult.Size = new System.Drawing.Size(16, 17);
             this.lblResult.TabIndex = 3;
@@ -212,7 +233,7 @@
             // 
             this.numTest.BackColor = System.Drawing.Color.RoyalBlue;
             this.numTest.ForeColor = System.Drawing.Color.White;
-            this.numTest.Location = new System.Drawing.Point(197, 49);
+            this.numTest.Location = new System.Drawing.Point(148, 45);
             this.numTest.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -231,6 +252,7 @@
             0,
             0,
             0});
+            this.numTest.Visible = false;
             // 
             // btnRunAllPPTest
             // 
@@ -242,36 +264,20 @@
             this.btnRunAllPPTest.TabIndex = 8;
             this.btnRunAllPPTest.Text = "Run all tests";
             this.btnRunAllPPTest.UseVisualStyleBackColor = false;
+            this.btnRunAllPPTest.Click += new System.EventHandler(this.btnRunAllPPTest_Click);
             // 
             // btnRunPPTest
             // 
             this.btnRunPPTest.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnRunPPTest.ForeColor = System.Drawing.Color.White;
-            this.btnRunPPTest.Location = new System.Drawing.Point(264, 48);
+            this.btnRunPPTest.Location = new System.Drawing.Point(215, 44);
             this.btnRunPPTest.Name = "btnRunPPTest";
             this.btnRunPPTest.Size = new System.Drawing.Size(75, 25);
             this.btnRunPPTest.TabIndex = 0;
             this.btnRunPPTest.Text = "Run";
             this.btnRunPPTest.UseVisualStyleBackColor = false;
+            this.btnRunPPTest.Visible = false;
             this.btnRunPPTest.Click += new System.EventHandler(this.btnRunPPTest_Click);
-            // 
-            // colorProgressBar
-            // 
-            this.colorProgressBar.BackColor = System.Drawing.Color.White;
-            this.colorProgressBar.BorderColor = System.Drawing.Color.Black;
-            this.colorProgressBar.BorderWidth = 0;
-            this.colorProgressBar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.colorProgressBar.Location = new System.Drawing.Point(9, 120);
-            this.colorProgressBar.MaxValue = 100;
-            this.colorProgressBar.MinValue = 0;
-            this.colorProgressBar.Name = "colorProgressBar";
-            this.colorProgressBar.ProgressColor = System.Drawing.Color.LightGreen;
-            this.colorProgressBar.ProgressTextType = _7637_WS4.ColorProgressBar.FsProgressTextType.Percent;
-            this.colorProgressBar.ShowProgressText = true;
-            this.colorProgressBar.Size = new System.Drawing.Size(541, 25);
-            this.colorProgressBar.TabIndex = 13;
-            this.colorProgressBar.Value = 0;
-            this.colorProgressBar.Visible = false;
             // 
             // frmPP_Test
             // 
@@ -286,6 +292,7 @@
             this.Text = "frmPP_Test";
             this.Activated += new System.EventHandler(this.frmPP_Test_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPP_Test_FormClosing);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.frmPP_Test_MouseDoubleClick);
             this.grpPPTest.ResumeLayout(false);
             this.grpPPTest.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTest)).EndInit();
@@ -299,7 +306,7 @@
         private ColorProgressBar colorProgressBar;
         private System.Windows.Forms.Label lblT;
         private System.Windows.Forms.Label lblRunCount;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnShowReport;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -309,7 +316,7 @@
         private System.Windows.Forms.NumericUpDown numTest;
         private System.Windows.Forms.Button btnRunAllPPTest;
         private System.Windows.Forms.Button btnRunPPTest;
-        public System.Windows.Forms.Label lblTEstCount;
+        public System.Windows.Forms.Label lblTestCount;
         public System.Windows.Forms.Label lblResult;
         public System.Windows.Forms.TextBox txtDAQInfo;
     }

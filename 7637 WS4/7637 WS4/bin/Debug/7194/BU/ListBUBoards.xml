@@ -1,13 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BOARDS>
-	<BOARD NAME="Board1">
-		<CATALOG>Board1</CATALOG>
-		<IMAGELINK>Board1.jpg</IMAGELINK>
-		<COMMENT>Первый вариант платы</COMMENT>
+	<BOARD NAME="7194.03.00.000">
+		<CATALOG>7194.03.00.000</CATALOG>
+		<IMAGELINK>BU_7194.jpg</IMAGELINK>
+		<COMMENT>Version of Control Unit</COMMENT>
 	</BOARD>
-	<BOARD NAME="Board2">
-		<CATALOG>Board2</CATALOG>
-		<IMAGELINK>Board2.jpg</IMAGELINK>
-		<COMMENT>Второй вариант платы</COMMENT>
-	</BOARD>
+
 </BOARDS>

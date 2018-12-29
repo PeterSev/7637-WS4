@@ -25,7 +25,7 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
-            pict.SizeMode = PictureBoxSizeMode.StretchImage;
+            pict.SizeMode = PictureBoxSizeMode.Zoom;
             catalog = curBoard.Catalog + "/BU/bin/";
 
             this.Text = curBoard.Name + " CU. Continuity. Select check mode";

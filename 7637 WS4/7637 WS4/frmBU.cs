@@ -22,7 +22,7 @@ namespace _7637_WS4
         void Init()
         {
             bNeedReload = false;
-            pict.SizeMode = PictureBoxSizeMode.StretchImage;
+            pict.SizeMode = PictureBoxSizeMode.Zoom;
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BU/bin/";
 

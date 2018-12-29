@@ -61,7 +61,7 @@
             this.btnShowReport.Name = "btnShowReport";
             this.btnShowReport.Size = new System.Drawing.Size(75, 25);
             this.btnShowReport.TabIndex = 1;
-            this.btnShowReport.Text = "Отчет";
+            this.btnShowReport.Text = "Report";
             this.btnShowReport.UseVisualStyleBackColor = false;
             this.btnShowReport.Click += new System.EventHandler(this.btnShowReport_Click);
             // 
@@ -73,7 +73,7 @@
             this.btnRunDAQTest.Name = "btnRunDAQTest";
             this.btnRunDAQTest.Size = new System.Drawing.Size(63, 25);
             this.btnRunDAQTest.TabIndex = 3;
-            this.btnRunDAQTest.Text = "Запуск";
+            this.btnRunDAQTest.Text = "Run";
             this.btnRunDAQTest.UseVisualStyleBackColor = false;
             this.btnRunDAQTest.Click += new System.EventHandler(this.btnRunTest_Click);
             // 
@@ -85,9 +85,19 @@
             0,
             0,
             0});
+            this.numTest.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numTest.Name = "numTest";
             this.numTest.Size = new System.Drawing.Size(73, 23);
             this.numTest.TabIndex = 4;
+            this.numTest.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // btnRunDAQ
             // 
@@ -119,13 +129,13 @@
             this.groupBox1.Controls.Add(this.btnRunDAQTest);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(558, 217);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Тесты";
+            this.groupBox1.Text = "Tests";
             // 
             // colorProgressBarSmall
             // 
@@ -186,7 +196,7 @@
             this.btnStopAllTest.Name = "btnStopAllTest";
             this.btnStopAllTest.Size = new System.Drawing.Size(75, 25);
             this.btnStopAllTest.TabIndex = 18;
-            this.btnStopAllTest.Text = "Стоп";
+            this.btnStopAllTest.Text = "Stop";
             this.btnStopAllTest.UseVisualStyleBackColor = false;
             this.btnStopAllTest.Click += new System.EventHandler(this.btnStopAllTest_Click);
             // 
@@ -225,7 +235,7 @@
             this.btnRunAllDAQTest.Name = "btnRunAllDAQTest";
             this.btnRunAllDAQTest.Size = new System.Drawing.Size(172, 25);
             this.btnRunAllDAQTest.TabIndex = 14;
-            this.btnRunAllDAQTest.Text = "Запуск всех тестов";
+            this.btnRunAllDAQTest.Text = "Run all tests";
             this.btnRunAllDAQTest.UseVisualStyleBackColor = false;
             this.btnRunAllDAQTest.Click += new System.EventHandler(this.btnRunAllDAQTest_Click);
             // 
@@ -234,9 +244,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(415, 57);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 17);
+            this.label5.Size = new System.Drawing.Size(52, 17);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Результат:";
+            this.label5.Text = "Result:";
             // 
             // lblResultOfDAQ
             // 
@@ -250,11 +260,11 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 53);
+            this.label4.Location = new System.Drawing.Point(63, 55);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(180, 17);
+            this.label4.Size = new System.Drawing.Size(129, 17);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Запуск одиночного теста:";
+            this.label4.Text = "Index of single test:";
             // 
             // lblTestCount
             // 
@@ -273,7 +283,7 @@
             this.btnStopDAQTest.Name = "btnStopDAQTest";
             this.btnStopDAQTest.Size = new System.Drawing.Size(63, 25);
             this.btnStopDAQTest.TabIndex = 3;
-            this.btnStopDAQTest.Text = "Стоп";
+            this.btnStopDAQTest.Text = "Stop";
             this.btnStopDAQTest.UseVisualStyleBackColor = false;
             this.btnStopDAQTest.Visible = false;
             this.btnStopDAQTest.Click += new System.EventHandler(this.btnStopDAQTest_Click);
@@ -281,11 +291,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 23);
+            this.label1.Location = new System.Drawing.Point(47, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(186, 17);
+            this.label1.Size = new System.Drawing.Size(145, 17);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Общее количество тестов:";
+            this.label1.Text = "Total amount of tests:";
             // 
             // button1
             // 

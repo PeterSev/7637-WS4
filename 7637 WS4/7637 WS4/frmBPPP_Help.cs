@@ -29,7 +29,7 @@ namespace _7637_WS4
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
             indexPic = 0;
-            pict.SizeMode = PictureBoxSizeMode.StretchImage;
+            pict.SizeMode = PictureBoxSizeMode.Zoom;
 
             catalog = curBoard.Catalog + "/BPPP/" + _frmMain._frmBPPP.curBpppBoard.Name + "/Help/";
             btnOK.Visible = false;

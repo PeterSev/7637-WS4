@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ivi.DCPwr, Version=1.2.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -111,6 +114,24 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ExcelLib\Excel.cs" />
+    <Compile Include="frmBU_Ind_Test_Light.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Ind_Test_Light.Designer.cs">
+      <DependentUpon>frmBU_Ind_Test_Light.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBU_Ind_Test_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBU_Ind_Test_Report.Designer.cs">
+      <DependentUpon>frmBU_Ind_Test_Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmComPort.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmComPort.Designer.cs">
+      <DependentUpon>frmComPort.cs</DependentUpon>
+    </Compile>
     <Compile Include="Print.cs" />
     <Compile Include="UDPCommand.cs" />
     <Compile Include="ExcelLib\BPPPTest.cs" />
@@ -294,6 +315,7 @@
     <Compile Include="Udp.cs" />
     <EmbeddedResource Include="frmBPPP.resx">
       <DependentUpon>frmBPPP.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBPPP_Help.resx">
       <DependentUpon>frmBPPP_Help.cs</DependentUpon>
@@ -315,6 +337,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBU_Ind_Test.resx">
       <DependentUpon>frmBU_Ind_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Ind_Test_Light.resx">
+      <DependentUpon>frmBU_Ind_Test_Light.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBU_Ind_Test_Report.resx">
+      <DependentUpon>frmBU_Ind_Test_Report.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBU_Osc_Help.resx">
       <DependentUpon>frmBU_Osc_Help.cs</DependentUpon>
@@ -345,6 +373,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBZ_Test.resx">
       <DependentUpon>frmBZ_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmComPort.resx">
+      <DependentUpon>frmComPort.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogo.resx">
       <DependentUpon>frmLogo.cs</DependentUpon>
@@ -431,6 +462,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pict_BPPP.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

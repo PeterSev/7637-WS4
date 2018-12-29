@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="comment_ListBoards_Initial" xml:space="preserve">
-    <value>In the top panel select the desired item to check</value>
+    <value>On the top panel select the tested item</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ListBoardsInitImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -140,7 +140,7 @@
     <value>Mirror unit check</value>
   </data>
   <data name="comment_PP" xml:space="preserve">
-    <value>Inspection of circuit boards using test signal block</value>
+    <value>Check the circuit boards using the test signal unit</value>
   </data>
   <data name="pict_BU" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\bin\pict_BU.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -152,13 +152,13 @@
     <value>..\bin\Debug\bin\pict_PP.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="comment_ListBpppBoards_Initial" xml:space="preserve">
-    <value>On the left select the board to check</value>
+    <value>On the left panel select the tested board</value>
   </data>
   <data name="ListBpppBoardInitmage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ListBpppBoardInitmage.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="comment_ListBU_Initial" xml:space="preserve">
-    <value>Select desired type of check</value>
+    <value>Select desired type of test</value>
   </data>
   <data name="pict_BPPP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pict_BPPP.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -167,6 +167,6 @@
     <value>Select version of mirror unit to check</value>
   </data>
   <data name="comment_OSC_Test" xml:space="preserve">
-    <value>Control the frequency and amplitude of the signals Up 1, Up 1 L, Uop 2, Uop 2 L on the oscilloscope. Switch them with the help of toggle switches of the transition unit. U=27±2V, f=400±8 Hz</value>
+    <value>Control the frequency and amplitude of the signals Up 1, Up 1 L, Uop 2, Uop 2 L on the oscilloscope. Switch them with the help of toggle switches of the transition unit. V1 = 22.7±2 V, V2 = 16.1±2 V.  f=400±10 Hz</value>
   </data>
 </root>

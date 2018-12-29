@@ -111,7 +111,11 @@ namespace _7637_WS4
                 default: return;
             }
             //curRelay.ChangeRelayState(b, "k"+channel);
-            curRelay.ChangeRelayState(b, "ch" + channel);
+            try
+            {
+                curRelay.ChangeRelayState(b, "ch" + channel);
+            }
+            catch { }
         }
 
         public void CloseRelaySession()
@@ -345,7 +349,13 @@ namespace _7637_WS4
             powerlineFrequencyDMM = powerlineFrequencyValues[1]; //60
             //resolutionDMM = resolutionValues[2]; //6.5
             samplesPerReading = 7;
-            if (accuracy == 0) accuracy = resolutionValues[2];   //если в таблице неверно указан параметр, то по умолчанию берем точность 4.5
+            //if (accuracy == 0) accuracy = resolutionValues[2];   //если в таблице неверно указан параметр, то по умолчанию берем точность 5.5
+            switch (accuracy)
+            {
+                default:
+                case 0: accuracy = resolutionValues[2]; break;
+                case 1: accuracy = resolutionValues[3]; break;
+            }
             dmmSession.ConfigureMeasurementDigits(measurementMode, range, accuracy);
             dmmSession.Advanced.PowerlineFrequency = powerlineFrequencyDMM;
             
@@ -356,23 +366,19 @@ namespace _7637_WS4
 
         public void ReadDMM(MultimeterMode measurementFunction, double range, double accuracy)
         {
-            //Application.DoEvents();
             double[] readBuf;
             try
             {
-                //dmmSession = new NIDmm(listDeviceDMM[0], true, true);
-
-                
                 ConfigureDMM(measurementFunction, range, accuracy);                
-
                 dmmSession.Measurement.Initiate();
 
                 Application.DoEvents();
                 readBuf = dmmSession.Measurement.FetchMultiPoint(samplesPerReading);
+
                 StatusDMMUpdate?.Invoke("SUCCESS");
 
                 dmmResult.buf = readBuf;
-                //dmmResult.temp = dmmSession.Temperature.ToString();
+
                 dmmResult.measurementMode = dmmSession.MeasurementFunction.ToString();
 
                 bufReadDMMReceived?.Invoke(dmmResult);

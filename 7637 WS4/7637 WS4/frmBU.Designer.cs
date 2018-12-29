@@ -113,6 +113,7 @@
             this.Controls.Add(this.btn0);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.pict);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBU";

@@ -11,6 +11,7 @@ namespace _7637_WS4
         string name;
         public string Name
         {
+            set { name = value; }
             get { return name; }
         }
 

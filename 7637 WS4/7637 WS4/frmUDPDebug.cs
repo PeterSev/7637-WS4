@@ -14,7 +14,7 @@ using System.Net;
 
 namespace _7637_WS4
 {
-    public enum ResDescr2 {Success, FileOpenError, ConnectionLost, ComOpenError};
+    public enum ResDescr2 {ConnectionEstablished, FileOpenError, ConnectionLost, ComOpenError};
     public enum ResDescr3 { Success, TestError, ConnectionLost, WrongStep};
 
     public partial class frmUDPDebug : Form
@@ -26,6 +26,8 @@ namespace _7637_WS4
         int servicePort = 55060, debugPort = 55061;
         int remotePort = 55062;
         public readonly string LexaFileName = "india_mane_prog";
+        public string sComport = "Com1";
+
         public frmUDPDebug()
         {
             InitializeComponent();
@@ -62,8 +64,7 @@ namespace _7637_WS4
 
         private void btnCreateUDP_Click(object sender, EventArgs e)
         {
-            CreateUDP();
-            
+            CreateUDP();   
         }
 
         public bool CreateUDP()
@@ -109,6 +110,7 @@ namespace _7637_WS4
                 case 0x1:
                     s1 = "№ служ. порта " + ((ushort)(com_in.data[0] + (com_in.data[1] << 8))).ToString();
                     s2 = "№ отлад. порта " + ((ushort)(com_in.data[2] + (com_in.data[3] << 8))).ToString();
+                    _frmMain._frmPP_Test.descr1Event.Set();
                     break;
                 case 0x2:
                     tmp = ((ResDescr2)(com_in.data[0])).ToString();
@@ -122,10 +124,12 @@ namespace _7637_WS4
                     ushort numOfTests = (ushort)((com_in.data[1] + (com_in.data[2] << 8)));
                     Invoke((MethodInvoker)delegate
                     {
-                        _frmMain._frmPP_Test.lblTEstCount.Text = numOfTests.ToString();
+                        _frmMain._frmPP_Test.lblTestCount.Text = numOfTests.ToString();
                     });
                     
                     s2 = "Количество шагов в тесте: " + numOfTests.ToString();
+
+                    //_frmMain._frmPP_Test.descr2Event.Set();
                     break;
                 case 0x3:
                     tmp = ((ResDescr3)(com_in.data[0])).ToString();
@@ -133,6 +137,12 @@ namespace _7637_WS4
                     Invoke((MethodInvoker)delegate
                     {
                         _frmMain._frmPP_Test.lblResult.Text = tmp;
+                        if (tmp != (ResDescr3.Success.ToString()))
+                        {
+                            _frmMain._frmPP_Test.bIsPPTestFailed = true;
+                            _frmMain._frmPP_Test.cancelTokenSource.Cancel();
+                        }
+                        _frmMain._frmPP_Test.ansEvent.Set();
                     });
 
                     s1 = "Статус: " + tmp;
@@ -249,13 +259,20 @@ namespace _7637_WS4
             AddToServiceList(com_in, endPoint);
         }
 
-        private void SendCommandDescr2()
+        public void GetComPortName()
+        {
+            sComport = "COM1";
+
+            _frmMain._frmComPort.ShowDialog();
+            
+        }
+
+        public void SendCommandDescr2(string _filename)
         {
             UDPCommand com = comUDPout2;
-            string sComport = "COM1";
-            string filename = Application.StartupPath + "\\ALEKSENKO\\7025.32.04.400.csv";
-            //string filename = @"D:\WORK\REPOSITORIES\7637 - WS4\7637 - WS4\7637 WS4\7637 WS4\bin\Debug\ALEKSENKO\7025.32.04.400.csv";
-            //string filename = "Hello";
+            //GetComPortName();
+
+            string filename = Application.StartupPath + "//" + _filename;
 
             byte[] bComport = new byte[5];
             Array.Copy(Encoding.Default.GetBytes(sComport), bComport, sComport.Length);
@@ -278,7 +295,6 @@ namespace _7637_WS4
 
             byte[] bStep = BitConverter.GetBytes(step);
 
-
             com.descriptor = 0x3;
             com.data = new byte[bStep.Length];
             Array.Copy(bStep, com.data, bStep.Length);
@@ -291,7 +307,7 @@ namespace _7637_WS4
             switch (numDescr.Value)
             {
                 case 2:
-                    SendCommandDescr2();
+                    SendCommandDescr2("\\ALEKSENKO\\7025.32.04.400.csv");
                     break;
                 case 3:
                     SendCommandDescr3((UInt16)numStep.Value);
@@ -327,9 +343,17 @@ namespace _7637_WS4
             else
                 MessageBox.Show($"Файл {startInfo.FileName} не найден");*/
 
-            string filename = Application.StartupPath + "/ALEKSENKO/" + LexaFileName + ".exe";
+            StartAlexProg();
+        }
+
+        public void StartAlexProg()
+        {
+            string filename = Application.StartupPath + "/sbin/" + LexaFileName + ".exe";
             if (File.Exists(filename))
-                Process.Start(filename, "nogui");
+            {
+                //Process.Start(filename, "nogui");
+                Process.Start(new ProcessStartInfo(filename, "-nogui"));
+            }
         }
 
         private void btnCloseUDP_Click(object sender, EventArgs e)

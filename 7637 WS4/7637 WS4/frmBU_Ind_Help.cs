@@ -29,7 +29,7 @@ namespace _7637_WS4
         {
             bNeedReload = false;
             indexPic = 0;
-            pict.SizeMode = PictureBoxSizeMode.StretchImage;
+            pict.SizeMode = PictureBoxSizeMode.Zoom;
             curBoard = _frmMain.curBoard;
             catalog = curBoard.Catalog + "/BU/" + _frmMain._frmBU_Board.curBUBoard.Name + "/Help/";
             btnOK.Visible = false;
@@ -65,7 +65,7 @@ namespace _7637_WS4
                 pict.Image = Properties.Resources.pictLoadError;
                 txtComment.Text = "Отсутствует запись о выбранном файле";
             }
-            lblNum.Text = (index + 1).ToString() + " из " + listHelp.Count;
+            lblNum.Text = (index + 1).ToString() + " of " + listHelp.Count;
 
         }
 

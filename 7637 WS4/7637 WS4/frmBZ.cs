@@ -29,7 +29,7 @@ namespace _7637_WS4
             bNeedReload = false;
             curBoard = _frmMain.curBoard;
             grpBoards.ForeColor = Color.White;
-            this.Text = curBoard.Name + " БЗ";
+            this.Text = curBoard.Name + " MU";
             this.BackColor = Color.RoyalBlue;
             txtComment.BackColor = Color.LightBlue;
 
@@ -49,14 +49,14 @@ namespace _7637_WS4
                     return;
                 }
 
-                pict.SizeMode = PictureBoxSizeMode.StretchImage;
+                pict.SizeMode = PictureBoxSizeMode.Zoom;
                 pict.Image = Properties.Resources.ListBpppBoardInitmage;
                 txtComment.Text = Properties.Resources.comment_ListBZ_Initial;
 
                 ShowBoards(listBZBoards);
             }
             else
-                MessageBox.Show("Список плат " + listBZBoardsFileName + " не найден!", "Ошибка");
+                MessageBox.Show("List of boards " + listBZBoardsFileName + " is not found!", "Error");
         }
 
         void ShowBoards(List<Board> list)

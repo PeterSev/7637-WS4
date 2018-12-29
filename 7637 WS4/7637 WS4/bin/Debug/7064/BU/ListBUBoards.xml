@@ -3,11 +3,7 @@
 	<BOARD NAME="7064.03.00.000">
 		<CATALOG>7064.03.00.000</CATALOG>
 		<IMAGELINK>BU.jpg</IMAGELINK>
-		<COMMENT>Вариант исполнения блока</COMMENT>
+		<COMMENT>Version of Control Unit</COMMENT>
 	</BOARD>
-	<BOARD NAME="Board2">
-		<CATALOG>Board2</CATALOG>
-		<IMAGELINK>Board2.jpg</IMAGELINK>
-		<COMMENT>Второй вариант платы</COMMENT>
-	</BOARD>
+
 </BOARDS>

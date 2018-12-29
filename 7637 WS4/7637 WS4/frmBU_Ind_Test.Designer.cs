@@ -29,7 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.colorProgressBar = new _7637_WS4.ColorProgressBar();
+            this.btnStopAllTests = new System.Windows.Forms.Button();
+            this.btnRunAllTests = new System.Windows.Forms.Button();
+            this.btnMeasure = new System.Windows.Forms.Button();
             this.btnStopIndTest = new System.Windows.Forms.Button();
             this.txtDAQInfo = new System.Windows.Forms.TextBox();
             this.btnShowReport = new System.Windows.Forms.Button();
@@ -47,7 +50,10 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.colorProgressBar);
+            this.groupBox1.Controls.Add(this.btnStopAllTests);
+            this.groupBox1.Controls.Add(this.btnRunAllTests);
+            this.groupBox1.Controls.Add(this.btnMeasure);
             this.groupBox1.Controls.Add(this.btnStopIndTest);
             this.groupBox1.Controls.Add(this.txtDAQInfo);
             this.groupBox1.Controls.Add(this.btnShowReport);
@@ -63,22 +69,65 @@
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(558, 154);
+            this.groupBox1.Size = new System.Drawing.Size(555, 215);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tests";
             // 
-            // button1
+            // colorProgressBar
             // 
-            this.button1.BackColor = System.Drawing.Color.RoyalBlue;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(337, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(73, 25);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "Measure";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.colorProgressBar.BackColor = System.Drawing.Color.White;
+            this.colorProgressBar.BorderColor = System.Drawing.Color.Black;
+            this.colorProgressBar.BorderWidth = 0;
+            this.colorProgressBar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.colorProgressBar.Location = new System.Drawing.Point(6, 113);
+            this.colorProgressBar.MaxValue = 100;
+            this.colorProgressBar.MinValue = 0;
+            this.colorProgressBar.Name = "colorProgressBar";
+            this.colorProgressBar.ProgressColor = System.Drawing.Color.LightGreen;
+            this.colorProgressBar.ProgressTextType = _7637_WS4.ColorProgressBar.FsProgressTextType.Percent;
+            this.colorProgressBar.ShowProgressText = true;
+            this.colorProgressBar.Size = new System.Drawing.Size(541, 25);
+            this.colorProgressBar.TabIndex = 19;
+            this.colorProgressBar.Value = 0;
+            this.colorProgressBar.Visible = false;
+            // 
+            // btnStopAllTests
+            // 
+            this.btnStopAllTests.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnStopAllTests.ForeColor = System.Drawing.Color.White;
+            this.btnStopAllTests.Location = new System.Drawing.Point(337, 82);
+            this.btnStopAllTests.Name = "btnStopAllTests";
+            this.btnStopAllTests.Size = new System.Drawing.Size(142, 25);
+            this.btnStopAllTests.TabIndex = 18;
+            this.btnStopAllTests.Text = "Stop All Tests";
+            this.btnStopAllTests.UseVisualStyleBackColor = false;
+            this.btnStopAllTests.Visible = false;
+            this.btnStopAllTests.Click += new System.EventHandler(this.btnStopAllTests_Click);
+            // 
+            // btnRunAllTests
+            // 
+            this.btnRunAllTests.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRunAllTests.ForeColor = System.Drawing.Color.White;
+            this.btnRunAllTests.Location = new System.Drawing.Point(189, 82);
+            this.btnRunAllTests.Name = "btnRunAllTests";
+            this.btnRunAllTests.Size = new System.Drawing.Size(142, 25);
+            this.btnRunAllTests.TabIndex = 17;
+            this.btnRunAllTests.Text = "Run All Tests";
+            this.btnRunAllTests.UseVisualStyleBackColor = false;
+            this.btnRunAllTests.Click += new System.EventHandler(this.btnRunAllTests_Click);
+            // 
+            // btnMeasure
+            // 
+            this.btnMeasure.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnMeasure.ForeColor = System.Drawing.Color.White;
+            this.btnMeasure.Location = new System.Drawing.Point(337, 19);
+            this.btnMeasure.Name = "btnMeasure";
+            this.btnMeasure.Size = new System.Drawing.Size(73, 25);
+            this.btnMeasure.TabIndex = 16;
+            this.btnMeasure.Text = "Measure";
+            this.btnMeasure.UseVisualStyleBackColor = false;
+            this.btnMeasure.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnStopIndTest
             // 
@@ -90,6 +139,7 @@
             this.btnStopIndTest.TabIndex = 16;
             this.btnStopIndTest.Text = "Stop";
             this.btnStopIndTest.UseVisualStyleBackColor = false;
+            this.btnStopIndTest.Visible = false;
             this.btnStopIndTest.Click += new System.EventHandler(this.btnStopIndTest_Click);
             // 
             // txtDAQInfo
@@ -97,7 +147,7 @@
             this.txtDAQInfo.BackColor = System.Drawing.Color.RoyalBlue;
             this.txtDAQInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txtDAQInfo.ForeColor = System.Drawing.Color.White;
-            this.txtDAQInfo.Location = new System.Drawing.Point(6, 82);
+            this.txtDAQInfo.Location = new System.Drawing.Point(6, 144);
             this.txtDAQInfo.Multiline = true;
             this.txtDAQInfo.Name = "txtDAQInfo";
             this.txtDAQInfo.ReadOnly = true;
@@ -170,9 +220,19 @@
             0,
             0,
             0});
+            this.numTest.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numTest.Name = "numTest";
             this.numTest.Size = new System.Drawing.Size(73, 23);
             this.numTest.TabIndex = 4;
+            this.numTest.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // btnRunIndTest
             // 
@@ -200,8 +260,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(579, 172);
+            this.ClientSize = new System.Drawing.Size(577, 235);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmBU_Ind_Test";
             this.Text = "frmBU_Ind_Tests";
             this.Activated += new System.EventHandler(this.frmBU_Ind_Tests_Activated);
@@ -227,6 +288,9 @@
         private System.Windows.Forms.Button btnRunIndTest;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnStopIndTest;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnMeasure;
+        private System.Windows.Forms.Button btnRunAllTests;
+        private System.Windows.Forms.Button btnStopAllTests;
+        private ColorProgressBar colorProgressBar;
     }
 }

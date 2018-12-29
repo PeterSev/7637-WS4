@@ -122,9 +122,9 @@
             this.lblPP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblPP.Location = new System.Drawing.Point(397, 563);
             this.lblPP.Name = "lblPP";
-            this.lblPP.Size = new System.Drawing.Size(121, 17);
+            this.lblPP.Size = new System.Drawing.Size(113, 17);
             this.lblPP.TabIndex = 1;
-            this.lblPP.Text = "Test signals block";
+            this.lblPP.Text = "Test signals Unit";
             this.lblPP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblBU

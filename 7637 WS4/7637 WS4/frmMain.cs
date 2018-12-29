@@ -55,6 +55,9 @@ namespace _7637_WS4
         public frmBU_Board _frmBU_Board;
         public frmUDPDebug _frmUDPDebug;
         public NIControl niControl;
+        public frmBU_Ind_Test_Report _frmBU_Ind_Test_Report;
+        public frmComPort _frmComPort;
+        public frmBU_Ind_Test_Light _frmBU_Test_Light;
 
         public string ListBoardsFileName { get; } = "bin\\ListBoards.xml";
 
@@ -93,7 +96,7 @@ namespace _7637_WS4
             {
                 listBoards = XMLParser.OpenListBoards(ListBoardsFileName);
                 ShowBoards(listBoards);
-                pict.SizeMode = PictureBoxSizeMode.StretchImage;
+                pict.SizeMode = PictureBoxSizeMode.Zoom;
                 pict.Image = Properties.Resources.ListBoardsInitImage;
 
                 txtComment.Text = Properties.Resources.comment_ListBoards_Initial;
@@ -135,6 +138,9 @@ namespace _7637_WS4
             _frmBZ = new frmBZ();
             _frmBU_Board = new frmBU_Board();
             _frmUDPDebug = new frmUDPDebug();
+            _frmBU_Ind_Test_Report = new frmBU_Ind_Test_Report();
+            _frmComPort = new frmComPort();
+            _frmBU_Test_Light = new frmBU_Ind_Test_Light();
 
             _frmTests._frmMain = _frmBZ_Help._frmMain = _frmBZ_Test._frmMain = _frmBZ_Report._frmMain = 
                 _frmBPPP._frmMain = _frmBPPP_Help._frmMain = _frmBPPP_Test._frmMain = _frmBPPP_Report._frmMain =
@@ -142,7 +148,7 @@ namespace _7637_WS4
                 _frmPP_Report._frmMain = _frmBU._frmMain = _frmBU_Prozv_Help._frmMain = _frmBU_Prozv_Mode._frmMain = 
                 _frmBU_Prozv_Report._frmMain = _frmBU_Prozv_Test._frmMain = _frmBU_Ind_Help._frmMain = _frmBU_Ind_Test._frmMain = 
                 _frmBU_Osc_Help._frmMain = _frmBU_Osc_Test._frmMain = _frmNI._frmMain = _frmBZ._frmMain = _frmBU_Board._frmMain = 
-                _frmUDPDebug._frmMain =
+                _frmUDPDebug._frmMain = _frmBU_Ind_Test_Report._frmMain = _frmComPort._frmMain = _frmBU_Test_Light._frmMain =
                 this;
 
             //niControl = new NIControl();
@@ -152,7 +158,7 @@ namespace _7637_WS4
             
             
             _frmNI.Show();
-            //_frmNI.Hide();
+            _frmNI.Hide();
         }
 
         
@@ -166,10 +172,11 @@ namespace _7637_WS4
             {
                 if (i >= 4) continue;
 
-                Button btn = new Button();
-
-                btn.Text = list[i].Name;
-                btn.Name = "btn" + i.ToString();
+                Button btn = new Button
+                {
+                    Text = list[i].Name,
+                    Name = "btn" + i.ToString()
+                };
                 btn.Click += btn_Click;
                 btn.MouseHover += btn_MouseHover;
                 btn.MouseEnter += btn_MouseEnter;
@@ -255,6 +262,8 @@ namespace _7637_WS4
                 niControl?.daqMeasured.Dispose();
             }
             catch { }
+
+            Utils.KillProcess(_frmUDPDebug.LexaFileName);
         }
 
         private void frmMain_MouseDoubleClick(object sender, MouseEventArgs e)
